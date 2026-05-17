@@ -1,17 +1,16 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname, join } from 'path';
-import { randomUUID } from 'crypto';
 import { AssetsService } from './assets.service';
-
-const UPLOADS_DIR = join(process.cwd(), 'uploads');
+import { StorageService } from './providers/storage.provider';
 
 @Controller('projects/:projectId/assets')
 @UseGuards(AuthGuard('jwt'))
 export class AssetsController {
-  constructor(private readonly assets: AssetsService) {}
+  constructor(
+    private readonly assets: AssetsService,
+    private readonly storage: StorageService,
+  ) {}
 
   @Get()
   async list(@Param('projectId') projectId: string, @Query('folderId') folderId?: string) {
@@ -19,29 +18,23 @@ export class AssetsController {
   }
 
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file', {
-    storage: diskStorage({
-      destination: UPLOADS_DIR,
-      filename: (_req, file, cb) => {
-        const ext = extname(file.originalname);
-        cb(null, `${randomUUID()}${ext}`);
-      },
-    }),
-    limits: { fileSize: 10 * 1024 * 1024 },
-  }))
+  @UseInterceptors(FileInterceptor('file', { limits: { fileSize: 10 * 1024 * 1024 } }))
   async upload(
     @Param('projectId') projectId: string,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() file: { buffer: Buffer; originalname: string; mimetype: string; size: number },
     @Body() body: { folderId?: string },
   ) {
     if (!file) return { error: 'No file provided.' };
-    const url = `/uploads/${file.filename}`;
+
+    const result = await this.storage.upload(file.buffer, file.originalname, file.mimetype);
+
     return this.assets.create(projectId, {
       filename: file.originalname,
-      url,
-      size: file.size,
+      url: result.url,
+      size: result.size,
       mimeType: file.mimetype,
       folderId: body.folderId,
+      metadata: { storageKey: result.key },
     });
   }
 

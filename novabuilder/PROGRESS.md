@@ -139,11 +139,14 @@
 - Frontend profile page (`/dashboard/profile`) with Profile and Password tabs
 - Search and Profile links in dashboard header
 
-### Analytics
+### Analytics (Full)
 - `AnalyticsModule` with event tracking (`POST /api/projects/:projectId/analytics/track`)
+- Page view tracking with visitor/session IDs (`POST /api/projects/:projectId/analytics/pageview`)
 - Event listing and summary endpoints with date range filtering
-- Public track endpoint (no auth), protected management endpoints
-- Frontend analytics dashboard (`/dashboard/projects/[id]/analytics`) with stats cards, bar chart, and event log
+- Summary includes: total events, page views, unique visitors, top pages, referrers, daily time series
+- Public track/pageview endpoints (no auth), protected management endpoints
+- Frontend analytics dashboard (`/dashboard/projects/[id]/analytics`) with 4-stat grid, traffic time series chart
+- Tabbed views: By Type, Top Pages, Referrers, Events Log
 - Configurable time range (7/30/90 days)
 
 ### Audit Logging
@@ -264,8 +267,23 @@
 - Mock mode when `STRIPE_SECRET_KEY` not configured (graceful dev fallback)
 - `stripeCustomerId` and `stripeSubId` fields on Subscription model
 
-### Medium Priority
-- Asset storage migration to S3/R2 for production
+### S3/R2 Storage Provider
+- Dual-mode `StorageService` supporting local disk and S3/R2
+- AWS Signature V4 signing for S3 uploads (no AWS SDK dependency)
+- Configurable via env vars: `STORAGE_DRIVER`, `S3_BUCKET`, `S3_REGION`, `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_ENDPOINT`
+- Local fallback (default) stores files in `uploads/` directory
+- Signed URL generation for private S3 objects
+
+### Auth Email Integration
+- Welcome email on signup
+- Magic link email with clickable link
+- Password reset email with reset link
+- Fire-and-forget delivery (non-blocking auth responses)
+
+### Rate Limiting
+- Configurable per-route throttle guard via `@Throttle(limit, windowSeconds)` decorator
+- In-memory sliding window rate limiter
+- IP-based tracking with automatic window cleanup
 
 ### AI Generation
 - `AiModule` with page generation, block suggestions, copy generation, content improvement
@@ -277,15 +295,19 @@
 - Standalone AI Page Generator (`/dashboard/ai`) with project selector and prompt templates
 - Prompt preset buttons for common page types (Portfolio, Ecommerce, SaaS, Restaurant)
 
-### Plugin Marketplace
+### Plugin Marketplace (Full)
 - `MarketplaceModule` with plugin publishing, installation, purchasing
 - Plugin listing with search and category filtering
 - Plugin installation per project with custom config
 - Plugin uninstallation
 - Marketplace items with pricing (free or paid)
 - Purchase tracking per user
+- Review/rating system: create, update, delete reviews with 1-5 star ratings
+- One review per user per plugin (upsert on duplicate)
+- Average rating calculation on plugin detail
 - Frontend marketplace page (`/dashboard/marketplace`) with search, category filters, plugin cards
-- Install button, version display, install count, author attribution
+- Plugin detail page (`/dashboard/marketplace/[pluginId]`) with reviews, rating display, review submission form
+- Install button, version display, install count, review count, author attribution
 
 ### Test Suite
 - Vitest configured at root and API app level
@@ -299,8 +321,8 @@
 ### Lower Priority
 - Conflict resolution via OT/CRDT for concurrent block edits
 - Integrate OpenAI/Anthropic API for more intelligent generation (currently rule-based)
-- Analytics: page views, heatmaps, funnel tracking
-- Marketplace: plugin review/rating system, developer API docs
+- Analytics: heatmaps, funnel tracking
+- Marketplace: developer API docs, plugin versioning
 - Webhooks and integrations (third-party service connectors)
 - Expand test coverage (integration tests, e2e with Playwright)
 

@@ -44,6 +44,7 @@ model User {
   subscriptions        Subscription[]
   pluginInstallations  PluginInstallation[]
   marketplacePurchases MarketplacePurchase[]
+  pluginReviews        PluginReview[]
   auditLogs            AuditLog[]
   securityLogs         SecurityLog[]
   apiKeys              ApiKey[]
@@ -680,6 +681,7 @@ model Plugin {
 
   installations    PluginInstallation[]
   marketplaceItems MarketplaceItem[]
+  reviews          PluginReview[]
 
   @@index([name])
 }
@@ -722,6 +724,23 @@ model MarketplacePurchase {
 
   @@index([itemId])
   @@index([buyerId])
+}
+
+model PluginReview {
+  id        String   @id @default(uuid())
+  pluginId  String
+  userId    String
+  rating    Int
+  title     String?
+  body      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  plugin Plugin @relation(fields: [pluginId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([pluginId, userId])
+  @@index([pluginId])
 }
 
 model FeatureFlag {

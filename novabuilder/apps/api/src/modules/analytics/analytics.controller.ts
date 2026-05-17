@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AnalyticsService } from './analytics.service';
 
@@ -10,6 +10,23 @@ export class AnalyticsController {
   async track(@Param('projectId') projectId: string, @Body() body: { type: string; payload?: Record<string, unknown> }) {
     if (!body.type) return { error: 'Event type is required.' };
     await this.analytics.trackEvent(projectId, { type: body.type, payload: body.payload || {} });
+    return { ok: true };
+  }
+
+  @Post('pageview')
+  async trackPageView(
+    @Param('projectId') projectId: string,
+    @Req() req: any,
+    @Body() body: { path: string; referrer?: string; visitorId?: string; sessionId?: string },
+  ) {
+    if (!body.path) return { error: 'Path is required.' };
+    await this.analytics.trackPageView(projectId, {
+      path: body.path,
+      referrer: body.referrer,
+      userAgent: req.headers['user-agent'],
+      visitorId: body.visitorId,
+      sessionId: body.sessionId,
+    });
     return { ok: true };
   }
 

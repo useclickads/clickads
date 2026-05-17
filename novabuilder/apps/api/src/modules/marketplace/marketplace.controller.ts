@@ -49,4 +49,24 @@ export class MarketplaceController {
   async listPurchases(@Req() req: any) {
     return this.marketplace.listPurchases(req.user.userId);
   }
+
+  @Get('plugins/:pluginId/reviews')
+  async getReviews(@Param('pluginId') pluginId: string) {
+    return this.marketplace.getReviews(pluginId);
+  }
+
+  @Post('plugins/:pluginId/reviews')
+  async createReview(
+    @Req() req: any,
+    @Param('pluginId') pluginId: string,
+    @Body() body: { rating: number; title?: string; body?: string },
+  ) {
+    if (!body.rating || body.rating < 1 || body.rating > 5) return { error: 'Rating must be between 1 and 5.' };
+    return this.marketplace.createReview(pluginId, req.user.userId, body);
+  }
+
+  @Delete('plugins/:pluginId/reviews')
+  async deleteReview(@Req() req: any, @Param('pluginId') pluginId: string) {
+    return this.marketplace.deleteReview(pluginId, req.user.userId);
+  }
 }

@@ -10,7 +10,7 @@ type Plugin = {
   name: string;
   version: string;
   manifest: { description?: string; author?: string; icon?: string; category?: string };
-  _count: { installations: number };
+  _count: { installations: number; reviews: number };
   marketplaceItems: { id: string; price: number }[];
 };
 
@@ -85,22 +85,25 @@ function MarketplaceContent() {
       ) : (
         <div style={gridStyle}>
           {filtered.map((plugin) => (
-            <div key={plugin.id} style={pluginCard}>
-              <div style={pluginIcon}>{plugin.manifest?.icon || '🧩'}</div>
-              <h3 style={pluginName}>{plugin.name}</h3>
-              <p style={pluginDesc}>{plugin.manifest?.description || 'No description'}</p>
-              <div style={pluginMeta}>
-                <span style={metaText}>v{plugin.version}</span>
-                <span style={metaText}>{plugin._count.installations} installs</span>
-                {plugin.marketplaceItems[0] && (
-                  <span style={priceTag}>
-                    {plugin.marketplaceItems[0].price === 0 ? 'Free' : `$${plugin.marketplaceItems[0].price}`}
-                  </span>
-                )}
+            <Link key={plugin.id} href={`/dashboard/marketplace/${plugin.id}`} style={{ textDecoration: 'none' }}>
+              <div style={pluginCard}>
+                <div style={pluginIcon}>{plugin.manifest?.icon || '🧩'}</div>
+                <h3 style={pluginName}>{plugin.name}</h3>
+                <p style={pluginDesc}>{plugin.manifest?.description || 'No description'}</p>
+                <div style={pluginMeta}>
+                  <span style={metaText}>v{plugin.version}</span>
+                  <span style={metaText}>{plugin._count.installations} installs</span>
+                  {plugin._count.reviews > 0 && <span style={metaText}>{plugin._count.reviews} reviews</span>}
+                  {plugin.marketplaceItems[0] && (
+                    <span style={priceTag}>
+                      {plugin.marketplaceItems[0].price === 0 ? 'Free' : `$${plugin.marketplaceItems[0].price}`}
+                    </span>
+                  )}
+                </div>
+                {plugin.manifest?.author && <p style={authorText}>by {plugin.manifest.author}</p>}
+                <button style={installBtn}>Install</button>
               </div>
-              {plugin.manifest?.author && <p style={authorText}>by {plugin.manifest.author}</p>}
-              <button style={installBtn}>Install</button>
-            </div>
+            </Link>
           ))}
         </div>
       )}

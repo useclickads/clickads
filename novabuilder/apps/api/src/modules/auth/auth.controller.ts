@@ -3,10 +3,16 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { RbacGuard } from './guards/rbac.guard';
 import { Permissions } from './decorators/permissions.decorator';
+import { EmailService } from '../email/email.service';
+
+const APP_URL = process.env.APP_URL || 'http://localhost:3000';
 
 @Controller('auth')
 export class AuthController {
-  constructor(@Inject(AuthService) private readonly authService: AuthService) {}
+  constructor(
+    @Inject(AuthService) private readonly authService: AuthService,
+    private readonly email: EmailService,
+  ) {}
 
   @Post('signup')
   async signup(@Body() body: { email: string; password: string; name?: string }) {
@@ -15,6 +21,9 @@ export class AuthController {
     }
     const result = await this.authService.signupWithEmail(body.email, body.password, body.name);
     if (!result) return { error: 'Account with this email already exists.' };
+
+    this.email.sendWelcome(body.email, { name: body.name || body.email }).catch(() => {});
+
     return { accessToken: result.accessToken, refreshToken: result.refreshToken, user: result.user };
   }
 
@@ -29,11 +38,11 @@ export class AuthController {
   @Post('magic-link')
   async requestMagicLink(@Body() body: { email: string }) {
     const token = await this.authService.requestMagicLink(body.email);
-    return {
-      ok: true,
-      message: 'Magic link token created. Replace this with email delivery in production.',
-      token,
-    };
+    const link = `${APP_URL}/auth/magic-link/verify?token=${token}`;
+
+    this.email.sendMagicLink(body.email, { name: body.email, link }).catch(() => {});
+
+    return { ok: true, message: 'Magic link sent to your email.' };
   }
 
   @Post('magic-link/verify')
@@ -64,11 +73,11 @@ export class AuthController {
   async forgotPassword(@Body() body: { email: string }) {
     const token = await this.authService.requestPasswordReset(body.email);
     if (!token) return { ok: true, message: 'If this email exists, a reset link has been sent.' };
-    return {
-      ok: true,
-      message: 'Password reset token created. Replace this with email delivery in production.',
-      token,
-    };
+
+    const link = `${APP_URL}/auth/reset-password?token=${token}`;
+    this.email.sendPasswordReset(body.email, { name: body.email, link }).catch(() => {});
+
+    return { ok: true, message: 'If this email exists, a reset link has been sent.' };
   }
 
   @Post('reset-password')

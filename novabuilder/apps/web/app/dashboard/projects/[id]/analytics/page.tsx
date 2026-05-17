@@ -6,7 +6,15 @@ import Link from 'next/link';
 import { ProtectedRoute } from '../../../../../components/protected-route';
 import { useApi } from '../../../../../lib/use-api';
 
-type Summary = { totalEvents: number; byType: Record<string, number> };
+type Summary = {
+  totalEvents: number;
+  pageViews: number;
+  uniqueVisitors: number;
+  byType: Record<string, number>;
+  topPages: { path: string; views: number }[];
+  referrers: { source: string; count: number }[];
+  timeSeries: { date: string; count: number }[];
+};
 type Event = { id: string; type: string; payload: Record<string, unknown>; createdAt: string };
 
 export default function AnalyticsPage() {
@@ -24,6 +32,7 @@ function AnalyticsDashboard() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [days, setDays] = useState(30);
+  const [tab, setTab] = useState<'overview' | 'pages' | 'referrers' | 'events'>('overview');
 
   const load = useCallback(async () => {
     try {
@@ -43,6 +52,8 @@ function AnalyticsDashboard() {
 
   const sortedTypes = summary ? Object.entries(summary.byType).sort((a, b) => b[1] - a[1]) : [];
   const maxCount = sortedTypes.length > 0 ? sortedTypes[0][1] : 1;
+  const maxPageViews = summary?.topPages?.[0]?.views || 1;
+  const maxTimeCount = summary?.timeSeries ? Math.max(...summary.timeSeries.map((t) => t.count), 1) : 1;
 
   return (
     <div style={containerStyle}>
@@ -64,78 +75,124 @@ function AnalyticsDashboard() {
       </header>
 
       <div style={statsGrid}>
-        <div style={statCard}>
-          <p style={statLabel}>Total Events</p>
-          <p style={statValue}>{summary?.totalEvents ?? 0}</p>
-        </div>
-        <div style={statCard}>
-          <p style={statLabel}>Event Types</p>
-          <p style={statValue}>{sortedTypes.length}</p>
-        </div>
-        <div style={statCard}>
-          <p style={statLabel}>Period</p>
-          <p style={statValue}>{days} days</p>
-        </div>
+        <div style={statCard}><p style={statLabel}>Page Views</p><p style={statValue}>{summary?.pageViews ?? 0}</p></div>
+        <div style={statCard}><p style={statLabel}>Unique Visitors</p><p style={statValue}>{summary?.uniqueVisitors ?? 0}</p></div>
+        <div style={statCard}><p style={statLabel}>Total Events</p><p style={statValue}>{summary?.totalEvents ?? 0}</p></div>
+        <div style={statCard}><p style={statLabel}>Event Types</p><p style={statValue}>{sortedTypes.length}</p></div>
       </div>
 
-      {sortedTypes.length > 0 && (
+      {summary?.timeSeries && summary.timeSeries.length > 0 && (
         <div style={{ marginTop: 28 }}>
-          <h3 style={sectionTitle}>Events by Type</h3>
-          <div style={barChart}>
-            {sortedTypes.map(([type, count]) => (
-              <div key={type} style={barRow}>
-                <span style={barLabel}>{type}</span>
-                <div style={barTrack}>
-                  <div style={{ ...barFill, width: `${(count / maxCount) * 100}%` }} />
-                </div>
-                <span style={barCount}>{count}</span>
+          <h3 style={sectionTitle}>Traffic Over Time</h3>
+          <div style={chartContainer}>
+            {summary.timeSeries.map((t) => (
+              <div key={t.date} style={chartBar}>
+                <div style={{ ...chartBarFill, height: `${(t.count / maxTimeCount) * 100}%` }} />
+                <span style={chartLabel}>{t.date.slice(5)}</span>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      <div style={{ marginTop: 28 }}>
-        <h3 style={sectionTitle}>Recent Events</h3>
-        {events.length === 0 ? (
-          <div style={emptyState}>
-            <p style={{ margin: 0, fontWeight: 600 }}>No events yet</p>
-            <p style={muted}>Events will appear here once your site is live and tracking.</p>
-          </div>
-        ) : (
-          <div style={listStyle}>
-            {events.slice(0, 50).map((e) => (
-              <div key={e.id} style={eventRow}>
-                <span style={eventType}>{e.type}</span>
-                <span style={eventPayload}>{JSON.stringify(e.payload).slice(0, 80)}</span>
-                <span style={eventDate}>{new Date(e.createdAt).toLocaleString()}</span>
-              </div>
-            ))}
-          </div>
-        )}
+      <div style={tabRow}>
+        <button onClick={() => setTab('overview')} style={tab === 'overview' ? tabActive : tabBtn}>By Type</button>
+        <button onClick={() => setTab('pages')} style={tab === 'pages' ? tabActive : tabBtn}>Top Pages</button>
+        <button onClick={() => setTab('referrers')} style={tab === 'referrers' ? tabActive : tabBtn}>Referrers</button>
+        <button onClick={() => setTab('events')} style={tab === 'events' ? tabActive : tabBtn}>Events Log</button>
       </div>
+
+      {tab === 'overview' && sortedTypes.length > 0 && (
+        <div style={barChart}>
+          {sortedTypes.map(([type, count]) => (
+            <div key={type} style={barRow}>
+              <span style={barLabel}>{type}</span>
+              <div style={barTrack}><div style={{ ...barFill, width: `${(count / maxCount) * 100}%` }} /></div>
+              <span style={barCount}>{count}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {tab === 'pages' && (
+        <div style={barChart}>
+          {(summary?.topPages || []).length === 0 ? (
+            <p style={muted}>No page view data yet.</p>
+          ) : (
+            summary!.topPages.map((p) => (
+              <div key={p.path} style={barRow}>
+                <span style={barLabel}>{p.path}</span>
+                <div style={barTrack}><div style={{ ...barFill, width: `${(p.views / maxPageViews) * 100}%` }} /></div>
+                <span style={barCount}>{p.views}</span>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+
+      {tab === 'referrers' && (
+        <div style={barChart}>
+          {(summary?.referrers || []).length === 0 ? (
+            <p style={muted}>No referrer data yet.</p>
+          ) : (
+            summary!.referrers.map((r) => (
+              <div key={r.source} style={barRow}>
+                <span style={barLabel}>{r.source}</span>
+                <div style={barTrack}><div style={{ ...barFillGreen, width: `${(r.count / (summary!.referrers[0]?.count || 1)) * 100}%` }} /></div>
+                <span style={barCount}>{r.count}</span>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+
+      {tab === 'events' && (
+        <div>
+          {events.length === 0 ? (
+            <div style={emptyState}><p style={{ margin: 0, fontWeight: 600 }}>No events yet</p><p style={muted}>Events will appear here once your site is live.</p></div>
+          ) : (
+            <div style={listStyle}>
+              {events.slice(0, 50).map((e) => (
+                <div key={e.id} style={eventRow}>
+                  <span style={eventType}>{e.type}</span>
+                  <span style={eventPayload}>{JSON.stringify(e.payload).slice(0, 80)}</span>
+                  <span style={eventDate}>{new Date(e.createdAt).toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
 
-const containerStyle: React.CSSProperties = { maxWidth: 900, margin: '0 auto', padding: '40px 24px' };
+const containerStyle: React.CSSProperties = { maxWidth: 1000, margin: '0 auto', padding: '40px 24px' };
 const navStyle: React.CSSProperties = { display: 'flex', gap: 8, alignItems: 'center', fontSize: '0.9rem' };
 const headerStyle: React.CSSProperties = { marginTop: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center' };
-const titleStyle: React.CSSProperties = { fontSize: '1.5rem', margin: 0, color: '#0f172a' };
+const titleStyle: React.CSSProperties = { fontSize: '1.5rem', margin: 0, color: '#0f172a', fontWeight: 800 };
 const selectStyle: React.CSSProperties = { padding: '8px 12px', borderRadius: 8, border: '1px solid #cbd5e1', fontSize: '0.85rem' };
-const statsGrid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginTop: 24 };
-const statCard: React.CSSProperties = { padding: 20, borderRadius: 14, background: '#f8fafc', border: '1px solid #e2e8f0', textAlign: 'center' };
-const statLabel: React.CSSProperties = { margin: 0, fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' };
-const statValue: React.CSSProperties = { margin: '8px 0 0', fontSize: '1.75rem', fontWeight: 700, color: '#0f172a' };
-const sectionTitle: React.CSSProperties = { fontSize: '1rem', margin: '0 0 12px', color: '#334155' };
-const barChart: React.CSSProperties = { display: 'grid', gap: 8 };
-const barRow: React.CSSProperties = { display: 'grid', gridTemplateColumns: '120px 1fr 50px', alignItems: 'center', gap: 12 };
+const statsGrid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginTop: 24 };
+const statCard: React.CSSProperties = { padding: 20, borderRadius: 14, background: '#fff', border: '1px solid #e2e8f0', textAlign: 'center' };
+const statLabel: React.CSSProperties = { margin: 0, fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 };
+const statValue: React.CSSProperties = { margin: '8px 0 0', fontSize: '1.75rem', fontWeight: 800, color: '#0f172a' };
+const sectionTitle: React.CSSProperties = { fontSize: '1rem', margin: '0 0 12px', color: '#334155', fontWeight: 700 };
+const chartContainer: React.CSSProperties = { display: 'flex', alignItems: 'flex-end', gap: 2, height: 120, padding: '0 0 24px', borderBottom: '1px solid #e2e8f0' };
+const chartBar: React.CSSProperties = { flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'flex-end' };
+const chartBarFill: React.CSSProperties = { width: '100%', maxWidth: 24, background: 'linear-gradient(180deg, #2563eb, #1e40af)', borderRadius: '3px 3px 0 0', minHeight: 2 };
+const chartLabel: React.CSSProperties = { fontSize: '0.55rem', color: '#94a3b8', marginTop: 4 };
+const tabRow: React.CSSProperties = { marginTop: 28, display: 'flex', gap: 4, borderBottom: '1px solid #e2e8f0', paddingBottom: 0 };
+const tabBtn: React.CSSProperties = { padding: '10px 16px', border: 'none', background: 'transparent', color: '#64748b', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer', borderBottom: '2px solid transparent' };
+const tabActive: React.CSSProperties = { ...tabBtn, color: '#0f172a', borderBottom: '2px solid #2563eb' };
+const barChart: React.CSSProperties = { display: 'grid', gap: 8, marginTop: 16 };
+const barRow: React.CSSProperties = { display: 'grid', gridTemplateColumns: '140px 1fr 50px', alignItems: 'center', gap: 12 };
 const barLabel: React.CSSProperties = { fontSize: '0.8rem', color: '#334155', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' };
 const barTrack: React.CSSProperties = { height: 8, background: '#f1f5f9', borderRadius: 4, overflow: 'hidden' };
 const barFill: React.CSSProperties = { height: '100%', background: 'linear-gradient(90deg, #2563eb, #1e40af)', borderRadius: 4, minWidth: 4 };
+const barFillGreen: React.CSSProperties = { height: '100%', background: 'linear-gradient(90deg, #16a34a, #15803d)', borderRadius: 4, minWidth: 4 };
 const barCount: React.CSSProperties = { fontSize: '0.8rem', color: '#64748b', textAlign: 'right' };
 const emptyState: React.CSSProperties = { padding: 32, borderRadius: 16, background: '#f8fafc', border: '1px solid #e2e8f0', textAlign: 'center' };
-const listStyle: React.CSSProperties = { display: 'grid', gap: 6 };
+const listStyle: React.CSSProperties = { display: 'grid', gap: 6, marginTop: 12 };
 const eventRow: React.CSSProperties = { display: 'grid', gridTemplateColumns: '120px 1fr auto', gap: 12, padding: '10px 14px', borderRadius: 8, background: '#fff', border: '1px solid #f1f5f9', alignItems: 'center' };
 const eventType: React.CSSProperties = { fontSize: '0.8rem', fontWeight: 600, color: '#2563eb' };
 const eventPayload: React.CSSProperties = { fontSize: '0.75rem', color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' };
