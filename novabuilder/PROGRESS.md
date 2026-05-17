@@ -55,7 +55,11 @@
 - Live canvas with drag-to-reorder and drop-to-add
 - Properties panel with type-aware inputs (text, textarea, color picker, select, checkbox, number)
 - Block actions: select, duplicate, delete (via panel or keyboard)
-- Keyboard shortcuts: Cmd+S to save, Delete/Backspace to remove, Escape to deselect
+- Keyboard shortcuts: Cmd+S save, Cmd+Z undo, Cmd+Shift+Z redo, Cmd+D duplicate, Delete remove, Escape deselect
+- Undo/redo with 50-step history stack
+- Responsive preview toggle (Desktop / Tablet 768px / Mobile 375px)
+- Page publish/unpublish toggle from project detail
+- Project preview page (`/preview/[projectId]`) renders all blocks without editor chrome
 - Editor state management via React useReducer (add, remove, move, update, duplicate, set)
 - Page content saved as JSON to the `Page.content` field via `PUT /api/projects/:id/pages/:id/content`
 - Each block has a visual renderer matching its type (full preview in canvas)
@@ -83,10 +87,9 @@
 ### High Priority
 - Run `prisma migrate dev` to apply latest schema changes (MagicLink, PasswordReset, User.passwordHash, Page.content)
 - Implement email delivery for magic links and password reset tokens (currently tokens returned in response for dev)
-- Add undo/redo to the editor
-- Add responsive preview (mobile/tablet/desktop) toggle
 - Implement nested blocks (children inside Columns block)
-- Add page publish/preview functionality
+- Add inline text editing (contentEditable) in the canvas
+- Add block reordering via up/down buttons (not just drag)
 
 ### Medium Priority
 - Expand RBAC: project-scoped roles, team member access, collaborator invites

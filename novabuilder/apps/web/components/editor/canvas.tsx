@@ -5,9 +5,12 @@ import { useEditor } from '../../lib/editor/editor-context';
 import { BlockRenderer } from './block-renderer';
 import type { BlockType } from '../../lib/editor/types';
 
+const VIEWPORT_WIDTHS = { desktop: '100%', tablet: '768px', mobile: '375px' } as const;
+
 export function Canvas() {
-  const { state, addBlock, selectBlock, moveBlock, setDragging, setDragOver } = useEditor();
+  const { state, addBlock, selectBlock, moveBlock, setDragging, setDragOver, viewport } = useEditor();
   const { blocks, selectedBlockId, dragOverIndex } = state;
+  const canvasWidth = VIEWPORT_WIDTHS[viewport];
 
   const handleDrop = useCallback((e: React.DragEvent, index: number) => {
     e.preventDefault();
@@ -36,7 +39,7 @@ export function Canvas() {
 
   return (
     <div style={canvasContainer} onClick={() => selectBlock(null)}>
-      <div style={canvasInner}>
+      <div style={{ ...canvasInner, maxWidth: canvasWidth, transition: 'max-width 0.3s' }}>
         {blocks.length === 0 && (
           <div
             style={emptyCanvas}

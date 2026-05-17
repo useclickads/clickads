@@ -41,6 +41,22 @@ export class PagesController {
     return { ok: true, updatedAt: updated.updatedAt };
   }
 
+  @Patch(':id/publish')
+  async publish(@Param('id') id: string) {
+    const page = await this.pages.getById(id);
+    if (!page) return { error: 'Page not found.' };
+    const updated = await this.pages.update(id, { published: true });
+    return { ok: true, published: true, updatedAt: updated.updatedAt };
+  }
+
+  @Patch(':id/unpublish')
+  async unpublish(@Param('id') id: string) {
+    const page = await this.pages.getById(id);
+    if (!page) return { error: 'Page not found.' };
+    const updated = await this.pages.update(id, { published: false });
+    return { ok: true, published: false, updatedAt: updated.updatedAt };
+  }
+
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(@Param('id') id: string) {

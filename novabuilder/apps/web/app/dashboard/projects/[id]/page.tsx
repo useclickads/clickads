@@ -94,19 +94,40 @@ function ProjectDetail() {
       ) : (
         <div style={listStyle}>
           {project.pages.map((page) => (
-            <div key={page.id} style={pageRow}>
-              <div>
-                <p style={pageTitle}>{page.title}</p>
-                <p style={pagePath}>{page.path}</p>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <Link href={`/editor/${project.id}/${page.id}`} style={editLink}>Edit</Link>
-                <span style={badge(page.published)}>{page.published ? 'Published' : 'Draft'}</span>
-              </div>
-            </div>
+            <PageRow key={page.id} page={page} projectId={project.id} api={api} onUpdate={load} />
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function PageRow({ page, projectId, api, onUpdate }: { page: Page; projectId: string; api: ReturnType<typeof useApi>; onUpdate: () => void }) {
+  const [toggling, setToggling] = useState(false);
+
+  async function togglePublish() {
+    setToggling(true);
+    try {
+      const endpoint = page.published ? 'unpublish' : 'publish';
+      await api.patch(`/projects/${projectId}/pages/${page.id}/${endpoint}`, {});
+      onUpdate();
+    } catch {}
+    setToggling(false);
+  }
+
+  return (
+    <div style={pageRow}>
+      <div>
+        <p style={pageTitle}>{page.title}</p>
+        <p style={pagePath}>{page.path}</p>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <Link href={`/editor/${projectId}/${page.id}`} style={editLink}>Edit</Link>
+        <button onClick={togglePublish} disabled={toggling} style={publishBtn(page.published)}>
+          {page.published ? 'Unpublish' : 'Publish'}
+        </button>
+        <span style={badge(page.published)}>{page.published ? 'Live' : 'Draft'}</span>
+      </div>
     </div>
   );
 }
@@ -182,6 +203,7 @@ const pageRow: React.CSSProperties = { padding: 16, borderRadius: 12, background
 const pageTitle: React.CSSProperties = { margin: 0, fontWeight: 600, color: '#0f172a', fontSize: '0.95rem' };
 const pagePath: React.CSSProperties = { margin: '2px 0 0', fontSize: '0.8rem', color: '#94a3b8' };
 const editLink: React.CSSProperties = { padding: '6px 14px', borderRadius: 8, background: '#f1f5f9', color: '#2563eb', fontSize: '0.8rem', fontWeight: 600, textDecoration: 'none' };
+const publishBtn = (published: boolean): React.CSSProperties => ({ padding: '6px 12px', borderRadius: 8, border: published ? '1px solid #fecaca' : '1px solid #bbf7d0', background: '#fff', color: published ? '#dc2626' : '#16a34a', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer' });
 const badge = (published: boolean): React.CSSProperties => ({ padding: '4px 10px', borderRadius: 8, fontSize: '0.75rem', fontWeight: 600, background: published ? '#dcfce7' : '#f1f5f9', color: published ? '#16a34a' : '#64748b' });
 const formCard: React.CSSProperties = { marginTop: 16, padding: 24, borderRadius: 14, background: '#f8fafc', border: '1px solid #e2e8f0', display: 'grid', gap: 14 };
 const labelStyle: React.CSSProperties = { display: 'grid', gap: 6, color: '#334155', fontSize: '0.9rem' };
