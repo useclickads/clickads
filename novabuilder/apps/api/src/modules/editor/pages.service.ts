@@ -30,6 +30,10 @@ export class PagesService {
     return this.prisma.client.page.update({ where: { id }, data: { content: content as any } });
   }
 
+  async updateSeo(id: string, seo: { metaTitle?: string; metaDescription?: string; ogImage?: string; noIndex?: boolean }) {
+    return this.prisma.client.page.update({ where: { id }, data: { seo: seo as any } });
+  }
+
   async softDelete(id: string) {
     return this.prisma.client.page.update({
       where: { id },

@@ -83,6 +83,29 @@
 - Publish history per deployment with user attribution
 - Frontend deploy page (`/dashboard/projects/[id]/deploy`) with deploy button and history list
 
+### SEO Settings
+- Per-page SEO: meta title, meta description, OG image, noIndex flag
+- Backend endpoints: `PUT/GET /api/projects/:projectId/pages/:id/seo`
+- SEO panel in editor with Google SERP preview
+- Character counters for title (70) and description (160)
+
+### Theme / Design Tokens
+- `ThemeModule` with CRUD for design tokens (`/api/projects/:projectId/theme/tokens`)
+- Token types: color, font, spacing, border-radius, shadow
+- Theme versioning (snapshot all tokens at a point in time)
+- Frontend theme settings page (`/dashboard/projects/[id]/theme`) with color picker
+
+### Domain Management
+- `DomainsModule` with domain CRUD (`/api/projects/:projectId/domains`)
+- DNS instruction generation (CNAME + TXT verification record)
+- Domain verification flow
+- Frontend domains page (`/dashboard/projects/[id]/domains`) with DNS table
+
+### Page Templates
+- 5 starter templates: Blank, Landing Page, About, Contact, Blog Post
+- Template selection in the "Add Page" form
+- Templates pre-populate blocks on page creation
+
 ### Editor Module (Backend)
 - Pages CRUD nested under projects (`/api/projects/:projectId/pages`)
 - Content save endpoint (`PUT /api/projects/:projectId/pages/:id/content`)
@@ -111,9 +134,9 @@
 - Wire billing module to Stripe API (checkout, webhooks, subscription management)
 - CMS collections frontend (create/manage dynamic content types UI)
 - Asset management: file upload (S3/R2), folder management, image optimization
-- Domain management: custom domain verification, DNS instructions, SSL
-- SEO settings per page (meta title, description, OG tags)
-- Theme/style system: global colors, fonts, spacing variables
+- Form submissions handling (store and view form data)
+- Site-wide global header/footer settings
+- Custom code injection (head/body scripts per page)
 
 ### Lower Priority
 - Admin panel (apps/admin) for platform management

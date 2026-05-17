@@ -150,7 +150,7 @@ function PropField({ label, value, onChange }: { label: string; value: unknown; 
   );
 }
 
-const panelStyle: React.CSSProperties = { width: 280, background: '#fff', borderLeft: '1px solid #e2e8f0', padding: 16, overflow: 'auto', display: 'flex', flexDirection: 'column', gap: 12 };
+const panelStyle: React.CSSProperties = { flex: 1, background: '#fff', padding: 16, overflow: 'auto', display: 'flex', flexDirection: 'column', gap: 12 };
 const emptyText: React.CSSProperties = { color: '#94a3b8', fontSize: '0.85rem', textAlign: 'center', marginTop: 32 };
 const headerStyle: React.CSSProperties = { display: 'flex', justifyContent: 'space-between', alignItems: 'center' };
 const titleStyle: React.CSSProperties = { margin: 0, fontSize: '0.95rem', color: '#0f172a' };

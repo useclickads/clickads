@@ -205,6 +205,7 @@ model Page {
   slug      String
   path      String
   content   Json?
+  seo       Json?
   published Boolean   @default(false)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ProtectedRoute } from '../../../../components/protected-route';
 import { useApi } from '../../../../lib/use-api';
+import { pageTemplates } from '../../../../lib/editor/templates';
 import type { Page, Project } from '../../../../lib/api';
 
 export default function ProjectDetailPage() {
@@ -71,6 +72,8 @@ function ProjectDetail() {
           <Link href={`/dashboard/projects/${id}/cms`} style={secondaryBtn}>CMS</Link>
           <Link href={`/dashboard/projects/${id}/assets`} style={secondaryBtn}>Assets</Link>
           <Link href={`/dashboard/projects/${id}/team`} style={secondaryBtn}>Team</Link>
+          <Link href={`/dashboard/projects/${id}/theme`} style={secondaryBtn}>Theme</Link>
+          <Link href={`/dashboard/projects/${id}/domains`} style={secondaryBtn}>Domains</Link>
           <Link href={`/dashboard/projects/${id}/deploy`} style={deployBtnStyle}>Deploy</Link>
           <Link href={`/preview/${id}`} style={secondaryBtn} target="_blank">Preview</Link>
           <button onClick={handleDelete} style={dangerBtn} disabled={deleting}>
@@ -143,6 +146,7 @@ function AddPageForm({ api, projectId, onCreated, onCancel }: { api: ReturnType<
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [path, setPath] = useState('');
+  const [templateId, setTemplateId] = useState('blank');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -158,7 +162,12 @@ function AddPageForm({ api, projectId, onCreated, onCancel }: { api: ReturnType<
     setLoading(true);
     setError(null);
     try {
-      await api.post(`/projects/${projectId}/pages`, { title, slug, path });
+      const template = pageTemplates.find((t) => t.id === templateId);
+      const blocks = template?.blocks ?? [];
+      const page = await api.post<{ id: string }>(`/projects/${projectId}/pages`, { title, slug, path });
+      if (blocks.length > 0 && page.id) {
+        await api.put(`/projects/${projectId}/pages/${page.id}/content`, { blocks });
+      }
       onCreated();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create page.');
@@ -170,6 +179,17 @@ function AddPageForm({ api, projectId, onCreated, onCancel }: { api: ReturnType<
   return (
     <form onSubmit={handleSubmit} style={formCard}>
       <h3 style={{ margin: 0, color: '#0f172a' }}>New Page</h3>
+      <label style={labelStyle}>
+        Template
+        <div style={templateGrid}>
+          {pageTemplates.map((t) => (
+            <button type="button" key={t.id} onClick={() => setTemplateId(t.id)} style={templateCard(templateId === t.id)}>
+              <p style={{ margin: 0, fontWeight: 600, fontSize: '0.85rem' }}>{t.name}</p>
+              <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: '#64748b' }}>{t.description}</p>
+            </button>
+          ))}
+        </div>
+      </label>
       <label style={labelStyle}>
         Title
         <input type="text" required value={title} onChange={(e) => handleTitleChange(e.target.value)} style={inputStyle} />
@@ -217,3 +237,5 @@ const badge = (published: boolean): React.CSSProperties => ({ padding: '4px 10px
 const formCard: React.CSSProperties = { marginTop: 16, padding: 24, borderRadius: 14, background: '#f8fafc', border: '1px solid #e2e8f0', display: 'grid', gap: 14 };
 const labelStyle: React.CSSProperties = { display: 'grid', gap: 6, color: '#334155', fontSize: '0.9rem' };
 const inputStyle: React.CSSProperties = { width: '100%', padding: '10px 12px', borderRadius: 10, border: '1px solid #cbd5e1', fontSize: '0.95rem' };
+const templateGrid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 8, marginTop: 4 };
+const templateCard = (active: boolean): React.CSSProperties => ({ padding: 12, borderRadius: 10, border: active ? '2px solid #2563eb' : '1px solid #e2e8f0', background: active ? '#eff6ff' : '#fff', cursor: 'pointer', textAlign: 'left' });

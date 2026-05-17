@@ -57,6 +57,22 @@ export class PagesController {
     return { ok: true, published: false, updatedAt: updated.updatedAt };
   }
 
+  @Put(':id/seo')
+  @HttpCode(HttpStatus.OK)
+  async saveSeo(@Param('id') id: string, @Body() body: { metaTitle?: string; metaDescription?: string; ogImage?: string; noIndex?: boolean }) {
+    const page = await this.pages.getById(id);
+    if (!page) return { error: 'Page not found.' };
+    const updated = await this.pages.updateSeo(id, body);
+    return { ok: true, updatedAt: updated.updatedAt };
+  }
+
+  @Get(':id/seo')
+  async getSeo(@Param('id') id: string) {
+    const page = await this.pages.getById(id);
+    if (!page) return { error: 'Page not found.' };
+    return page.seo || { metaTitle: '', metaDescription: '', ogImage: '', noIndex: false };
+  }
+
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(@Param('id') id: string) {
