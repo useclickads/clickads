@@ -8,6 +8,7 @@ import { BlockPanel } from '../../../../components/editor/block-panel';
 import { Canvas } from '../../../../components/editor/canvas';
 import { PropsPanel } from '../../../../components/editor/props-panel';
 import { SeoPanel } from '../../../../components/editor/seo-panel';
+import { VersionsPanel } from '../../../../components/editor/versions-panel';
 import { EditorToolbar } from '../../../../components/editor/editor-toolbar';
 import { EditorKeybindings } from '../../../../components/editor/editor-keybindings';
 import { useApi } from '../../../../lib/use-api';
@@ -62,7 +63,7 @@ function EditorShell({ projectId, pageId, pageTitle }: { projectId: string; page
   const { state } = useEditor();
   const api = useApi();
   const [saving, setSaving] = useState(false);
-  const [rightTab, setRightTab] = useState<'props' | 'seo'>('props');
+  const [rightTab, setRightTab] = useState<'props' | 'seo' | 'versions'>('props');
 
   const handleSave = useCallback(async () => {
     setSaving(true);
@@ -84,10 +85,11 @@ function EditorShell({ projectId, pageId, pageTitle }: { projectId: string; page
         <Canvas />
         <div style={rightPanelStyle}>
           <div style={tabBar}>
-            <button onClick={() => setRightTab('props')} style={tabBtn(rightTab === 'props')}>Properties</button>
+            <button onClick={() => setRightTab('props')} style={tabBtn(rightTab === 'props')}>Props</button>
             <button onClick={() => setRightTab('seo')} style={tabBtn(rightTab === 'seo')}>SEO</button>
+            <button onClick={() => setRightTab('versions')} style={tabBtn(rightTab === 'versions')}>History</button>
           </div>
-          {rightTab === 'props' ? <PropsPanel /> : <SeoPanel projectId={projectId} pageId={pageId} />}
+          {rightTab === 'props' ? <PropsPanel /> : rightTab === 'seo' ? <SeoPanel projectId={projectId} pageId={pageId} /> : <VersionsPanel projectId={projectId} pageId={pageId} />}
         </div>
       </div>
     </div>

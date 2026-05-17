@@ -73,6 +73,18 @@ export class PagesController {
     return page.seo || { metaTitle: '', metaDescription: '', ogImage: '', noIndex: false };
   }
 
+  @Get(':id/versions')
+  async listVersions(@Param('projectId') projectId: string, @Param('id') id: string) {
+    return this.pages.listVersions(id, projectId);
+  }
+
+  @Post(':id/versions/:snapshotId/restore')
+  async restoreVersion(@Param('id') id: string, @Param('snapshotId') snapshotId: string) {
+    const result = await this.pages.restoreVersion(id, snapshotId);
+    if (!result) return { error: 'Snapshot not found.' };
+    return { ok: true, updatedAt: result.updatedAt };
+  }
+
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(@Param('id') id: string) {

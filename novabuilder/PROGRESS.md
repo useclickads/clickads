@@ -120,6 +120,32 @@
 - Frontend settings page (`/dashboard/projects/[id]/settings`) with General and Code Injection tabs
 - Deploy pipeline now includes: SEO meta, global header/footer, head/body scripts, favicon in generated HTML
 
+### Version History & Rollback
+- Auto-snapshots on every content save (previous state stored as Snapshot)
+- Version history endpoint (`GET /api/projects/:projectId/pages/:id/versions`)
+- Restore endpoint (`POST /api/projects/:projectId/pages/:id/versions/:snapshotId/restore`)
+- Version history panel in the editor (History tab) with one-click restore
+
+### Global Search
+- `SearchModule` with cross-entity search (`GET /api/search?q=...`)
+- Searches projects (name, slug, description), pages (title, slug, path), CMS collections (name, slug)
+- Scoped to the authenticated user's projects
+- Frontend search page (`/dashboard/search`) with categorized results and direct links
+
+### User Profile & Account
+- `UsersModule` with profile CRUD (`GET/PATCH /api/users/profile`)
+- Password change endpoint with current password verification
+- Account deletion (soft delete)
+- Frontend profile page (`/dashboard/profile`) with Profile and Password tabs
+- Search and Profile links in dashboard header
+
+### Analytics
+- `AnalyticsModule` with event tracking (`POST /api/projects/:projectId/analytics/track`)
+- Event listing and summary endpoints with date range filtering
+- Public track endpoint (no auth), protected management endpoints
+- Frontend analytics dashboard (`/dashboard/projects/[id]/analytics`) with stats cards, bar chart, and event log
+- Configurable time range (7/30/90 days)
+
 ### Editor Module (Backend)
 - Pages CRUD nested under projects (`/api/projects/:projectId/pages`)
 - Content save endpoint (`PUT /api/projects/:projectId/pages/:id/content`)
@@ -147,10 +173,10 @@
 ### Medium Priority
 - Wire billing module to Stripe API (checkout, webhooks, subscription management)
 - Asset management: file upload (S3/R2), folder management, image optimization
-- Version history / rollback for pages
-- Global search across projects, pages, CMS entries
-- User profile and account settings page
 - Responsive email templates for invites, magic links, password reset
+- Audit log viewer (who changed what, when)
+- Notification center (in-app notifications UI)
+- Export project as ZIP (pages + assets + config)
 
 ### Lower Priority
 - Admin panel (apps/admin) for platform management

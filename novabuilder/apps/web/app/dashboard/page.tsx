@@ -42,7 +42,11 @@ function DashboardContent() {
           <h1 style={titleStyle}>Dashboard</h1>
           <p style={subtitleStyle}>Welcome, {user?.name || user?.email}</p>
         </div>
-        <button onClick={signOut} style={logoutStyle}>Sign out</button>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <Link href="/dashboard/search" style={navBtn}>Search</Link>
+          <Link href="/dashboard/profile" style={navBtn}>Profile</Link>
+          <button onClick={signOut} style={logoutStyle}>Sign out</button>
+        </div>
       </header>
 
       <div style={toolbarStyle}>
@@ -142,6 +146,7 @@ const containerStyle: React.CSSProperties = { maxWidth: 1000, margin: '0 auto', 
 const headerStyle: React.CSSProperties = { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' };
 const titleStyle: React.CSSProperties = { fontSize: '1.75rem', margin: 0, color: '#0f172a' };
 const subtitleStyle: React.CSSProperties = { marginTop: 4, color: '#64748b', fontSize: '0.9rem' };
+const navBtn: React.CSSProperties = { padding: '10px 16px', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', textDecoration: 'none', fontWeight: 600, color: '#475569', fontSize: '0.85rem' };
 const logoutStyle: React.CSSProperties = { padding: '10px 16px', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontWeight: 600, color: '#475569' };
 const toolbarStyle: React.CSSProperties = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 32 };
 const sectionTitle: React.CSSProperties = { fontSize: '1.2rem', margin: 0, color: '#0f172a' };

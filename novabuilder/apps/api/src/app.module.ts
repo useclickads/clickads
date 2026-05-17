@@ -12,9 +12,12 @@ import { ThemeModule } from './modules/theme/theme.module';
 import { DomainsModule } from './modules/domains/domains.module';
 import { FormsModule } from './modules/forms/forms.module';
 import { SettingsModule } from './modules/settings/settings.module';
+import { SearchModule } from './modules/search/search.module';
+import { UsersModule } from './modules/users/users.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
 
 @Module({
-  imports: [AuthModule, ProjectsModule, EditorModule, CmsModule, AssetsModule, TeamsModule, DeployModule, ThemeModule, DomainsModule, FormsModule, SettingsModule],
+  imports: [AuthModule, ProjectsModule, EditorModule, CmsModule, AssetsModule, TeamsModule, DeployModule, ThemeModule, DomainsModule, FormsModule, SettingsModule, SearchModule, UsersModule, AnalyticsModule],
   controllers: [AppController],
   providers: [AppService],
 })
