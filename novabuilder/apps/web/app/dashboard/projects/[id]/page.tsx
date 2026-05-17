@@ -70,6 +70,8 @@ function ProjectDetail() {
         <div style={{ display: 'flex', gap: 8 }}>
           <Link href={`/dashboard/projects/${id}/cms`} style={secondaryBtn}>CMS</Link>
           <Link href={`/dashboard/projects/${id}/assets`} style={secondaryBtn}>Assets</Link>
+          <Link href={`/dashboard/projects/${id}/team`} style={secondaryBtn}>Team</Link>
+          <Link href={`/dashboard/projects/${id}/deploy`} style={deployBtnStyle}>Deploy</Link>
           <Link href={`/preview/${id}`} style={secondaryBtn} target="_blank">Preview</Link>
           <button onClick={handleDelete} style={dangerBtn} disabled={deleting}>
             {deleting ? 'Deleting…' : 'Delete'}
@@ -199,6 +201,7 @@ const sectionHeader: React.CSSProperties = { display: 'flex', justifyContent: 's
 const sectionTitle: React.CSSProperties = { fontSize: '1.1rem', margin: 0, color: '#0f172a' };
 const primaryBtn: React.CSSProperties = { padding: '10px 18px', borderRadius: 10, border: 'none', background: '#0f172a', color: '#fff', fontWeight: 600, cursor: 'pointer' };
 const secondaryBtn: React.CSSProperties = { padding: '10px 16px', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', color: '#475569', fontWeight: 600, cursor: 'pointer', textDecoration: 'none', fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center' };
+const deployBtnStyle: React.CSSProperties = { padding: '10px 16px', borderRadius: 10, border: 'none', background: 'linear-gradient(135deg, #0f172a, #1e40af)', color: '#fff', fontWeight: 600, cursor: 'pointer', textDecoration: 'none', fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center' };
 const dangerBtn: React.CSSProperties = { padding: '10px 16px', borderRadius: 10, border: '1px solid #fecaca', background: '#fff', color: '#dc2626', fontWeight: 600, cursor: 'pointer' };
 const cancelBtn: React.CSSProperties = { padding: '10px 16px', borderRadius: 10, border: '1px solid #e2e8f0', background: '#fff', cursor: 'pointer', fontWeight: 600, color: '#475569' };
 const muted: React.CSSProperties = { color: '#64748b', fontSize: '0.9rem' };

@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 import { useEditor } from '../../lib/editor/editor-context';
-import { BlockRenderer } from './block-renderer';
+import { EditableBlockRenderer } from './editable-block-renderer';
 import type { BlockType } from '../../lib/editor/types';
 
 const VIEWPORT_WIDTHS = { desktop: '100%', tablet: '768px', mobile: '375px' } as const;
@@ -63,6 +63,7 @@ export function Canvas() {
             <CanvasBlock
               block={block}
               index={index}
+              totalBlocks={blocks.length}
               isSelected={selectedBlockId === block.id}
               onSelect={() => selectBlock(block.id)}
             />
@@ -82,13 +83,14 @@ export function Canvas() {
   );
 }
 
-function CanvasBlock({ block, index, isSelected, onSelect }: {
-  block: { id: string; type: string; props: Record<string, unknown> };
+function CanvasBlock({ block, index, totalBlocks, isSelected, onSelect }: {
+  block: { id: string; type: string; props: Record<string, unknown>; children?: any[] };
   index: number;
+  totalBlocks: number;
   isSelected: boolean;
   onSelect: () => void;
 }) {
-  const { setDragging } = useEditor();
+  const { setDragging, moveBlock, removeBlock, duplicateBlock } = useEditor();
 
   function handleDragStart(e: React.DragEvent) {
     e.dataTransfer.setData('block-index', String(index));
@@ -112,8 +114,34 @@ function CanvasBlock({ block, index, isSelected, onSelect }: {
         outlineOffset: 2,
       }}
     >
-      {isSelected && <div style={dragHandle}>⋮⋮</div>}
-      <BlockRenderer block={block as any} />
+      {isSelected && (
+        <div style={toolbarOverlay}>
+          <button
+            style={toolBtn}
+            disabled={index === 0}
+            onClick={(e) => { e.stopPropagation(); moveBlock(index, index - 1); }}
+            title="Move up"
+          >↑</button>
+          <button
+            style={toolBtn}
+            disabled={index === totalBlocks - 1}
+            onClick={(e) => { e.stopPropagation(); moveBlock(index, index + 1); }}
+            title="Move down"
+          >↓</button>
+          <button
+            style={toolBtn}
+            onClick={(e) => { e.stopPropagation(); duplicateBlock(block.id); }}
+            title="Duplicate"
+          >⧉</button>
+          <button
+            style={{ ...toolBtn, color: '#dc2626' }}
+            onClick={(e) => { e.stopPropagation(); removeBlock(block.id); }}
+            title="Delete"
+          >✕</button>
+          <span style={dragHandle}>⋮⋮</span>
+        </div>
+      )}
+      <EditableBlockRenderer block={block as any} />
     </div>
   );
 }
@@ -133,7 +161,6 @@ function DropZone({ index, isActive, onDragOver, onDragLeave, onDrop }: {
       onDrop={onDrop}
       style={{
         height: isActive ? 4 : 8,
-        margin: '0 0',
         background: isActive ? '#2563eb' : 'transparent',
         borderRadius: 2,
         transition: 'all 0.15s',
@@ -146,4 +173,6 @@ const canvasContainer: React.CSSProperties = { flex: 1, overflow: 'auto', backgr
 const canvasInner: React.CSSProperties = { maxWidth: 900, margin: '0 auto', background: '#fff', borderRadius: 16, padding: 32, minHeight: 600, boxShadow: '0 4px 24px rgba(0,0,0,0.06)' };
 const emptyCanvas: React.CSSProperties = { padding: 64, textAlign: 'center', border: '2px dashed #cbd5e1', borderRadius: 12 };
 const blockWrapper: React.CSSProperties = { position: 'relative', cursor: 'pointer', borderRadius: 8, transition: 'outline 0.1s' };
-const dragHandle: React.CSSProperties = { position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', background: '#2563eb', color: '#fff', padding: '2px 8px', borderRadius: 6, fontSize: '0.7rem', cursor: 'grab', zIndex: 10 };
+const toolbarOverlay: React.CSSProperties = { position: 'absolute', top: -14, right: 0, display: 'flex', gap: 2, background: '#fff', borderRadius: 8, padding: '2px 4px', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', zIndex: 10 };
+const toolBtn: React.CSSProperties = { width: 24, height: 24, borderRadius: 4, border: 'none', background: 'transparent', cursor: 'pointer', fontSize: '0.8rem', display: 'flex', alignItems: 'center', justifyContent: 'center' };
+const dragHandle: React.CSSProperties = { padding: '0 4px', cursor: 'grab', fontSize: '0.75rem', color: '#94a3b8', display: 'flex', alignItems: 'center' };

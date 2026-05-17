@@ -64,6 +64,25 @@
 - Page content saved as JSON to the `Page.content` field via `PUT /api/projects/:id/pages/:id/content`
 - Each block has a visual renderer matching its type (full preview in canvas)
 
+### Canvas Enhancements
+- Block action toolbar: move up/down, duplicate, delete buttons on each block
+- Inline text editing via `contentEditable` (InlineEdit component)
+- EditableBlockRenderer wraps hero, text, button, card blocks for direct editing
+- Nested block support (children inside Columns block)
+
+### Teams & Collaboration (Backend)
+- `TeamsModule` with collaborator CRUD (`/api/projects/:projectId/team/collaborators`)
+- Invite by email, role assignment (viewer/editor/admin), accept invite
+- Team creation and team member management
+- Frontend team management page (`/dashboard/projects/[id]/team`) with invite form and role editing
+
+### Deployment/Publishing
+- `DeployModule` with deploy trigger + history endpoints (`/api/projects/:projectId/deploy`)
+- Static HTML generation from block JSON (hero, text, image, button, spacer, columns, card)
+- Deployment record tracking (status, URL, timestamp)
+- Publish history per deployment with user attribution
+- Frontend deploy page (`/dashboard/projects/[id]/deploy`) with deploy button and history list
+
 ### Editor Module (Backend)
 - Pages CRUD nested under projects (`/api/projects/:projectId/pages`)
 - Content save endpoint (`PUT /api/projects/:projectId/pages/:id/content`)
@@ -87,17 +106,14 @@
 ### High Priority
 - Run `prisma migrate dev` to apply latest schema changes (MagicLink, PasswordReset, User.passwordHash, Page.content)
 - Implement email delivery for magic links and password reset tokens (currently tokens returned in response for dev)
-- Implement nested blocks (children inside Columns block)
-- Add inline text editing (contentEditable) in the canvas
-- Add block reordering via up/down buttons (not just drag)
 
 ### Medium Priority
-- Expand RBAC: project-scoped roles, team member access, collaborator invites
 - Wire billing module to Stripe API (checkout, webhooks, subscription management)
-- Implement CMS collections CRUD (create/manage dynamic content types)
+- CMS collections frontend (create/manage dynamic content types UI)
 - Asset management: file upload (S3/R2), folder management, image optimization
-- Deployment/publishing pipeline: build pages → static output → deploy to edge
 - Domain management: custom domain verification, DNS instructions, SSL
+- SEO settings per page (meta title, description, OG tags)
+- Theme/style system: global colors, fonts, spacing variables
 
 ### Lower Priority
 - Admin panel (apps/admin) for platform management
