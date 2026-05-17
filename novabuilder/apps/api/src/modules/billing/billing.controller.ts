@@ -1,11 +1,15 @@
 import { Body, Controller, Delete, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { BillingService } from './billing.service';
+import { StripeProvider } from './providers/stripe.provider';
 
 @Controller('billing')
 @UseGuards(AuthGuard('jwt'))
 export class BillingController {
-  constructor(private readonly billing: BillingService) {}
+  constructor(
+    private readonly billing: BillingService,
+    private readonly stripe: StripeProvider,
+  ) {}
 
   @Get('plans')
   async plans() {
@@ -23,6 +27,29 @@ export class BillingController {
     if (!body.plan) return { error: 'Plan is required.' };
     const sub = await this.billing.createSubscription(req.user.userId, body.plan);
     return { subscription: sub };
+  }
+
+  @Post('checkout')
+  async createCheckout(@Req() req: any, @Body() body: { plan: string }) {
+    if (!body.plan || body.plan === 'free') return { error: 'Invalid plan for checkout.' };
+    const customerId = await this.billing.getOrCreateStripeCustomer(req.user.userId, req.user.email);
+    const session = await this.stripe.createCheckoutSession(
+      customerId,
+      body.plan,
+      `${process.env.APP_URL || 'http://localhost:3000'}/dashboard/billing?success=true`,
+      `${process.env.APP_URL || 'http://localhost:3000'}/dashboard/billing?canceled=true`,
+    );
+    return { url: session.url };
+  }
+
+  @Post('portal')
+  async createPortal(@Req() req: any) {
+    const customerId = await this.billing.getOrCreateStripeCustomer(req.user.userId, req.user.email);
+    const session = await this.stripe.createPortalSession(
+      customerId,
+      `${process.env.APP_URL || 'http://localhost:3000'}/dashboard/billing`,
+    );
+    return { url: session.url };
   }
 
   @Delete('subscription')

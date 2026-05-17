@@ -241,10 +241,30 @@
 - Projects page with table, pagination, delete action
 - Activity page with color-coded audit log
 
+### Email System
+- `EmailModule` (global) with SMTP transport via nodemailer
+- Dev mode: logs emails to console when SMTP not configured
+- 5 responsive HTML email templates: magic link, password reset, team invite, welcome, deploy notification
+- Table-based layout for cross-client email rendering
+- Consistent branding with NovaBuilder header and footer
+
+### Usage Metrics
+- `UsageModule` with per-user and per-project usage tracking
+- Metrics: projects, pages, storage (from asset sizes), API calls, deployments, bandwidth
+- Plan-aware limits tied to subscription tier
+- Frontend usage dashboard (`/dashboard/usage`) with progress bars and percentage indicators
+- Color-coded bars (green/amber/red) based on consumption level
+
+### Stripe Integration
+- Full `StripeProvider` with Stripe API communication
+- Checkout session creation for plan upgrades
+- Customer portal session for self-service billing management
+- Subscription cancellation via Stripe API
+- Webhook signature verification (HMAC SHA-256)
+- Mock mode when `STRIPE_SECRET_KEY` not configured (graceful dev fallback)
+- `stripeCustomerId` and `stripeSubId` fields on Subscription model
+
 ### Medium Priority
-- Wire billing module to Stripe API (checkout, webhooks, subscription management)
-- Responsive email templates for invites, magic links, password reset
-- Usage metrics dashboard (storage, bandwidth, API calls)
 - Asset storage migration to S3/R2 for production
 
 ### AI Generation

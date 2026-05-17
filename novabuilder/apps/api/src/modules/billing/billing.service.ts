@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { StripeProvider } from './providers/stripe.provider';
 
 const PLANS = {
   free: { name: 'Free', price: 0, limits: { projects: 3, pages: 10, storage: 100 } },
@@ -9,7 +10,12 @@ const PLANS = {
 
 @Injectable()
 export class BillingService {
-  constructor(private readonly prisma: PrismaService) {}
+  private stripeCustomerCache = new Map<string, string>();
+
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly stripe: StripeProvider,
+  ) {}
 
   getPlans() {
     return PLANS;
@@ -71,5 +77,33 @@ export class BillingService {
     return this.prisma.client.billingUsage.findMany({
       where: { subscriptionId: sub.id, periodStart: { gte: periodStart } },
     });
+  }
+
+  async getOrCreateStripeCustomer(userId: string, email: string): Promise<string> {
+    if (this.stripeCustomerCache.has(userId)) {
+      return this.stripeCustomerCache.get(userId)!;
+    }
+
+    const sub = await this.prisma.client.subscription.findFirst({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (sub?.stripeCustomerId) {
+      this.stripeCustomerCache.set(userId, sub.stripeCustomerId);
+      return sub.stripeCustomerId;
+    }
+
+    const customer = await this.stripe.createCustomer(email);
+    this.stripeCustomerCache.set(userId, customer.id);
+
+    if (sub) {
+      await this.prisma.client.subscription.update({
+        where: { id: sub.id },
+        data: { stripeCustomerId: customer.id },
+      });
+    }
+
+    return customer.id;
   }
 }

@@ -26,6 +26,8 @@ import { AdminModule } from './modules/admin/admin.module';
 import { AiModule } from './modules/ai/ai.module';
 import { RealtimeModule } from './modules/realtime/realtime.module';
 import { MarketplaceModule } from './modules/marketplace/marketplace.module';
+import { EmailModule } from './modules/email/email.module';
+import { UsageModule } from './modules/usage/usage.module';
 
 @Module({
   imports: [
@@ -33,7 +35,7 @@ import { MarketplaceModule } from './modules/marketplace/marketplace.module';
     TeamsModule, DeployModule, ThemeModule, DomainsModule, FormsModule,
     SettingsModule, SearchModule, UsersModule, AnalyticsModule,
     AuditModule, NotificationsModule, WebhooksModule, ExportModule,
-    ApiKeysModule, ImportModule, BillingModule, AdminModule, AiModule, RealtimeModule, MarketplaceModule,
+    ApiKeysModule, ImportModule, BillingModule, AdminModule, AiModule, RealtimeModule, MarketplaceModule, EmailModule, UsageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
