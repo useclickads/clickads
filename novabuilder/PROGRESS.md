@@ -257,11 +257,21 @@
 - Standalone AI Page Generator (`/dashboard/ai`) with project selector and prompt templates
 - Prompt preset buttons for common page types (Portfolio, Ecommerce, SaaS, Restaurant)
 
+### Plugin Marketplace
+- `MarketplaceModule` with plugin publishing, installation, purchasing
+- Plugin listing with search and category filtering
+- Plugin installation per project with custom config
+- Plugin uninstallation
+- Marketplace items with pricing (free or paid)
+- Purchase tracking per user
+- Frontend marketplace page (`/dashboard/marketplace`) with search, category filters, plugin cards
+- Install button, version display, install count, author attribution
+
 ### Lower Priority
 - Conflict resolution via OT/CRDT for concurrent block edits
 - Integrate OpenAI/Anthropic API for more intelligent generation (currently rule-based)
 - Analytics: page views, heatmaps, funnel tracking
-- Marketplace: plugin publishing, purchasing, installation
+- Marketplace: plugin review/rating system, developer API docs
 - Webhooks and integrations (third-party service connectors)
 - Add comprehensive test suites (unit, integration, e2e)
 
