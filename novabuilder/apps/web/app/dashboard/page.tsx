@@ -15,17 +15,28 @@ export default function DashboardPage() {
   );
 }
 
+type AuditEntry = { id: string; action: string; resource: string; resourceId?: string; details?: string; createdAt: string };
+type Notification = { id: string; type: string; title: string; read: boolean; createdAt: string };
+
 function DashboardContent() {
   const { user, signOut } = useAuth();
   const api = useApi();
   const [projects, setProjects] = useState<Project[]>([]);
+  const [activity, setActivity] = useState<AuditEntry[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreate, setShowCreate] = useState(false);
 
   const loadProjects = useCallback(async () => {
     try {
-      const data = await api.get<Project[]>('/projects');
+      const [data, act, notifs] = await Promise.all([
+        api.get<Project[]>('/projects'),
+        api.get<AuditEntry[]>('/audit?limit=5').catch(() => []),
+        api.get<Notification[]>('/notifications?limit=5').catch(() => []),
+      ]);
       setProjects(data);
+      setActivity(act);
+      setNotifications(notifs);
     } catch {
       setProjects([]);
     } finally {
@@ -34,6 +45,10 @@ function DashboardContent() {
   }, [api]);
 
   useEffect(() => { loadProjects(); }, [loadProjects]);
+
+  const totalPages = projects.reduce((sum, p) => sum + (p._count?.pages ?? 0), 0);
+  const totalDeploys = projects.reduce((sum, p) => sum + (p._count?.deployments ?? 0), 0);
+  const unreadNotifs = notifications.filter((n) => !n.read).length;
 
   return (
     <div style={containerStyle}>
@@ -55,6 +70,29 @@ function DashboardContent() {
           <button onClick={signOut} style={logoutStyle}>Sign out</button>
         </div>
       </header>
+
+      <div style={statsRow}>
+        <div style={statCard}><p style={statLabel}>Projects</p><p style={statValue}>{projects.length}</p></div>
+        <div style={statCard}><p style={statLabel}>Total Pages</p><p style={statValue}>{totalPages}</p></div>
+        <div style={statCard}><p style={statLabel}>Deployments</p><p style={statValue}>{totalDeploys}</p></div>
+        <div style={statCard}><p style={statLabel}>Unread</p><p style={statValue}>{unreadNotifs}</p></div>
+      </div>
+
+      {activity.length > 0 && (
+        <div style={{ marginTop: 24 }}>
+          <h3 style={sectionTitleSm}>Recent Activity</h3>
+          <div style={{ display: 'grid', gap: 6 }}>
+            {activity.map((a) => (
+              <div key={a.id} style={activityRow}>
+                <span style={activityAction}>{a.action}</span>
+                <span style={activityResource}>{a.resource}{a.resourceId ? ` #${a.resourceId.slice(0, 8)}` : ''}</span>
+                <span style={activityDate}>{new Date(a.createdAt).toLocaleDateString()}</span>
+              </div>
+            ))}
+          </div>
+          <Link href="/dashboard/activity" style={{ fontSize: '0.8rem', color: '#2563eb', textDecoration: 'none', fontWeight: 600 }}>View all activity →</Link>
+        </div>
+      )}
 
       <div style={toolbarStyle}>
         <h2 style={sectionTitle}>Projects</h2>
@@ -170,3 +208,12 @@ const cardStats: React.CSSProperties = { marginTop: 12, display: 'flex', gap: 16
 const formCard: React.CSSProperties = { marginTop: 16, padding: 24, borderRadius: 14, background: '#f8fafc', border: '1px solid #e2e8f0', display: 'grid', gap: 14 };
 const labelStyle: React.CSSProperties = { display: 'grid', gap: 6, color: '#334155', fontSize: '0.9rem' };
 const inputStyle: React.CSSProperties = { width: '100%', padding: '10px 12px', borderRadius: 10, border: '1px solid #cbd5e1', fontSize: '0.95rem' };
+const statsRow: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginTop: 24 };
+const statCard: React.CSSProperties = { padding: 16, borderRadius: 12, background: '#fff', border: '1px solid #e2e8f0', textAlign: 'center' };
+const statLabel: React.CSSProperties = { margin: 0, fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 };
+const statValue: React.CSSProperties = { margin: '6px 0 0', fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' };
+const sectionTitleSm: React.CSSProperties = { fontSize: '0.95rem', margin: '0 0 10px', color: '#334155', fontWeight: 700 };
+const activityRow: React.CSSProperties = { display: 'grid', gridTemplateColumns: '100px 1fr auto', gap: 12, padding: '8px 12px', borderRadius: 8, background: '#f8fafc', border: '1px solid #f1f5f9', alignItems: 'center' };
+const activityAction: React.CSSProperties = { fontSize: '0.75rem', fontWeight: 700, color: '#2563eb', textTransform: 'uppercase' };
+const activityResource: React.CSSProperties = { fontSize: '0.8rem', color: '#475569' };
+const activityDate: React.CSSProperties = { fontSize: '0.7rem', color: '#94a3b8' };

@@ -80,6 +80,7 @@ function ProjectDetail() {
           <Link href={`/dashboard/projects/${id}/settings`} style={secondaryBtn}>Settings</Link>
           <Link href={`/dashboard/projects/${id}/deploy`} style={deployBtnStyle}>Deploy</Link>
           <Link href={`/preview/${id}`} style={secondaryBtn} target="_blank">Preview</Link>
+          <button onClick={async () => { await api.post(`/projects/${id}/clone`, {}); router.push('/dashboard'); }} style={secondaryBtn}>Clone</button>
           <button onClick={handleDelete} style={dangerBtn} disabled={deleting}>
             {deleting ? 'Deleting…' : 'Delete'}
           </button>
@@ -157,6 +158,7 @@ function PageRow({ page, projectId, api, onUpdate }: { page: Page & { scheduledA
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <Link href={`/editor/${projectId}/${page.id}`} style={editLink}>Edit</Link>
+          <button onClick={async () => { await api.post(`/projects/${projectId}/pages/${page.id}/duplicate`, {}); onUpdate(); }} style={dupBtn}>Duplicate</button>
           <button onClick={togglePublish} disabled={toggling} style={publishBtn(page.published)}>
             {page.published ? 'Unpublish' : 'Publish'}
           </button>
@@ -285,6 +287,7 @@ const labelStyle: React.CSSProperties = { display: 'grid', gap: 6, color: '#3341
 const inputStyle: React.CSSProperties = { width: '100%', padding: '10px 12px', borderRadius: 10, border: '1px solid #cbd5e1', fontSize: '0.95rem' };
 const templateGrid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 8, marginTop: 4 };
 const templateCard = (active: boolean): React.CSSProperties => ({ padding: 12, borderRadius: 10, border: active ? '2px solid #2563eb' : '1px solid #e2e8f0', background: active ? '#eff6ff' : '#fff', cursor: 'pointer', textAlign: 'left' });
+const dupBtn: React.CSSProperties = { padding: '6px 12px', borderRadius: 8, border: '1px solid #e2e8f0', background: '#fff', color: '#475569', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer' };
 const scheduleBtn: React.CSSProperties = { padding: '6px 12px', borderRadius: 8, border: '1px solid #c4b5fd', background: '#fff', color: '#7c3aed', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer' };
 const scheduledBadge: React.CSSProperties = { padding: '6px 10px', borderRadius: 8, border: 'none', background: '#ede9fe', color: '#7c3aed', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer' };
 const scheduleRow: React.CSSProperties = { display: 'flex', gap: 8, alignItems: 'center', padding: '8px 16px', background: '#faf5ff', borderRadius: '0 0 12px 12px', border: '1px solid #e2e8f0', borderTop: 'none' };

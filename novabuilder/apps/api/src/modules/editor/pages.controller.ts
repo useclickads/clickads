@@ -104,6 +104,34 @@ export class PagesController {
     return { ok: true };
   }
 
+  @Post(':id/duplicate')
+  async duplicate(@Param('id') id: string) {
+    const result = await this.pages.duplicate(id);
+    if (!result) return { error: 'Page not found.' };
+    return result;
+  }
+
+  @Post('bulk/publish')
+  async bulkPublish(@Body() body: { ids: string[] }) {
+    if (!body.ids?.length) return { error: 'No page IDs provided.' };
+    const result = await this.pages.bulkPublish(body.ids);
+    return { ok: true, count: result.count };
+  }
+
+  @Post('bulk/unpublish')
+  async bulkUnpublish(@Body() body: { ids: string[] }) {
+    if (!body.ids?.length) return { error: 'No page IDs provided.' };
+    const result = await this.pages.bulkUnpublish(body.ids);
+    return { ok: true, count: result.count };
+  }
+
+  @Post('bulk/delete')
+  async bulkDelete(@Body() body: { ids: string[] }) {
+    if (!body.ids?.length) return { error: 'No page IDs provided.' };
+    const result = await this.pages.bulkDelete(body.ids);
+    return { ok: true, count: result.count };
+  }
+
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(@Param('id') id: string) {

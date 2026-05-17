@@ -49,6 +49,41 @@ export class ProjectsService {
     });
   }
 
+  async clone(id: string, userId: string) {
+    const source = await this.prisma.client.project.findFirst({
+      where: { id, deletedAt: null },
+      include: {
+        pages: { where: { deletedAt: null } },
+      },
+    });
+    if (!source) return null;
+
+    const suffix = Date.now().toString(36);
+    const clone = await this.prisma.client.project.create({
+      data: {
+        name: `${source.name} (Clone)`,
+        slug: `${source.slug}-clone-${suffix}`,
+        description: source.description,
+        ownerId: userId,
+      },
+    });
+
+    for (const page of source.pages) {
+      await this.prisma.client.page.create({
+        data: {
+          projectId: clone.id,
+          title: page.title,
+          slug: page.slug,
+          path: page.path,
+          content: page.content as any,
+          seo: page.seo as any,
+        },
+      });
+    }
+
+    return clone;
+  }
+
   async slugExists(slug: string) {
     const project = await this.prisma.client.project.findUnique({ where: { slug } });
     return Boolean(project);

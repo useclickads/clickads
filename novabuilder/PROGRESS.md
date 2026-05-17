@@ -351,6 +351,21 @@
 - New blocks (Code, Divider, Testimonial, Pricing, FAQ, Gallery, Map, Countdown) fully supported
 - Countdown block includes inline JavaScript timer for live pages
 
+### Page Management
+- Page duplication with content and SEO cloning
+- Bulk operations: publish, unpublish, delete multiple pages at once
+- Duplicate button on each page row in project detail
+
+### Project Cloning
+- Clone entire project with all pages and content
+- Auto-generates unique slug suffix for cloned project
+- Clone button on project detail page
+
+### Dashboard Overview Enhancement
+- Quick stats row: projects count, total pages, deployments, unread notifications
+- Recent activity feed from audit log on dashboard home
+- Link to full activity page
+
 ### Lower Priority
 - Conflict resolution via OT/CRDT for concurrent block edits
 - Integrate OpenAI/Anthropic API for more intelligent generation (currently rule-based)

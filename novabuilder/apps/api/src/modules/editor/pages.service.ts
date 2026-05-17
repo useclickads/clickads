@@ -84,9 +84,45 @@ export class PagesService {
     return pages.length;
   }
 
+  async duplicate(id: string) {
+    const page = await this.prisma.client.page.findUnique({ where: { id } });
+    if (!page) return null;
+    return this.prisma.client.page.create({
+      data: {
+        projectId: page.projectId,
+        title: `${page.title} (Copy)`,
+        slug: `${page.slug}-copy-${Date.now().toString(36)}`,
+        path: `${page.path}-copy`,
+        content: page.content as any,
+        seo: page.seo as any,
+      },
+    });
+  }
+
   async softDelete(id: string) {
     return this.prisma.client.page.update({
       where: { id },
+      data: { deletedAt: new Date() },
+    });
+  }
+
+  async bulkPublish(ids: string[]) {
+    return this.prisma.client.page.updateMany({
+      where: { id: { in: ids }, deletedAt: null },
+      data: { published: true },
+    });
+  }
+
+  async bulkUnpublish(ids: string[]) {
+    return this.prisma.client.page.updateMany({
+      where: { id: { in: ids }, deletedAt: null },
+      data: { published: false },
+    });
+  }
+
+  async bulkDelete(ids: string[]) {
+    return this.prisma.client.page.updateMany({
+      where: { id: { in: ids } },
       data: { deletedAt: new Date() },
     });
   }

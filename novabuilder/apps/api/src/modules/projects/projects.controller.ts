@@ -44,6 +44,13 @@ export class ProjectsController {
     return project;
   }
 
+  @Post(':id/clone')
+  async clone(@Req() req: any, @Param('id') id: string) {
+    const clone = await this.projects.clone(id, req.user.userId);
+    if (!clone) return { error: 'Project not found.' };
+    return clone;
+  }
+
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(@Req() req: any, @Param('id') id: string) {
