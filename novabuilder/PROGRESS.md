@@ -172,9 +172,32 @@
 - Content save endpoint (`PUT /api/projects/:projectId/pages/:id/content`)
 - Blocks service + controller (list blocks by project)
 
-### Billing Module (Scaffold)
-- Subscribe endpoint, usage recording
-- Stripe provider placeholder
+### Billing Module (Full)
+- Plans definition: Free ($0), Pro ($29), Business ($99) with project/page/storage limits
+- Subscription CRUD: subscribe, cancel, get current subscription
+- Invoices endpoint (mock invoice history)
+- Usage tracking endpoint (projects, pages, storage used)
+- Frontend billing page (`/dashboard/billing`) with plan cards, upgrade/downgrade, cancel
+- Stripe provider placeholder for future integration
+
+### API Keys
+- `ApiKeysModule` with CRUD (`GET/POST/DELETE /api/api-keys`)
+- Key generation with `nova_` prefix + crypto random bytes
+- Scope-based permissions (read, write)
+- Frontend API keys page (`/dashboard/api-keys`) with generate, copy-to-clipboard, revoke
+
+### Project Import
+- `ImportModule` with import endpoint (`POST /api/import`)
+- Imports full project from JSON export (pages, CMS collections + entries, settings, theme tokens)
+- Unique slug suffix to prevent conflicts
+
+### Landing Page
+- Full marketing landing page at app root (`/`)
+- Hero section with CTA
+- 6 feature cards (Visual Editor, Instant Publish, Team Collaboration, AI-Powered, Analytics, API & Webhooks)
+- Pricing section with Free/Pro/Business plan comparison
+- Bottom CTA section
+- Footer with navigation links
 
 ### Realtime (Scaffold)
 - WebSocket gateway with Socket.io
@@ -195,8 +218,6 @@
 - Wire billing module to Stripe API (checkout, webhooks, subscription management)
 - Asset management: file upload (S3/R2), folder management, image optimization
 - Responsive email templates for invites, magic links, password reset
-- Import project from JSON export
-- API key management frontend
 - Usage metrics dashboard (storage, bandwidth, API calls)
 
 ### Lower Priority
@@ -207,7 +228,6 @@
 - Marketplace: plugin publishing, purchasing, installation
 - Webhooks and integrations (third-party service connectors)
 - Add comprehensive test suites (unit, integration, e2e)
-- Landing page (apps/landing) with marketing content
 
 ---
 

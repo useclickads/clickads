@@ -19,6 +19,9 @@ import { AuditModule } from './modules/audit/audit.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { WebhooksModule } from './modules/webhooks/webhooks.module';
 import { ExportModule } from './modules/export/export.module';
+import { ApiKeysModule } from './modules/apikeys/apikeys.module';
+import { ImportModule } from './modules/import/import.module';
+import { BillingModule } from './modules/billing/billing.module';
 
 @Module({
   imports: [
@@ -26,6 +29,7 @@ import { ExportModule } from './modules/export/export.module';
     TeamsModule, DeployModule, ThemeModule, DomainsModule, FormsModule,
     SettingsModule, SearchModule, UsersModule, AnalyticsModule,
     AuditModule, NotificationsModule, WebhooksModule, ExportModule,
+    ApiKeysModule, ImportModule, BillingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

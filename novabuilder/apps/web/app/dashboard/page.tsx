@@ -42,10 +42,12 @@ function DashboardContent() {
           <h1 style={titleStyle}>Dashboard</h1>
           <p style={subtitleStyle}>Welcome, {user?.name || user?.email}</p>
         </div>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
           <Link href="/dashboard/search" style={navBtn}>Search</Link>
           <Link href="/dashboard/notifications" style={navBtn}>Notifications</Link>
           <Link href="/dashboard/activity" style={navBtn}>Activity</Link>
+          <Link href="/dashboard/billing" style={navBtn}>Billing</Link>
+          <Link href="/dashboard/api-keys" style={navBtn}>API Keys</Link>
           <Link href="/dashboard/profile" style={navBtn}>Profile</Link>
           <button onClick={signOut} style={logoutStyle}>Sign out</button>
         </div>

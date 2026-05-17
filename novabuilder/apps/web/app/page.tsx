@@ -39,6 +39,7 @@ export default function Home() {
       </main>
 
       <section style={featuresSection}>
+        <h2 style={sectionHeading}>Everything you need to build and ship</h2>
         <div style={featureGrid}>
           <div style={featureCard}>
             <span style={featureIcon}>◆</span>
@@ -60,10 +61,77 @@ export default function Home() {
             <h3 style={featureTitle}>AI-Powered</h3>
             <p style={featureDesc}>Generate pages from prompts, get smart block suggestions, and auto-optimize content.</p>
           </div>
+          <div style={featureCard}>
+            <span style={featureIcon}>📊</span>
+            <h3 style={featureTitle}>Built-in Analytics</h3>
+            <p style={featureDesc}>Track page views, visitor sessions, and conversion events without third-party scripts.</p>
+          </div>
+          <div style={featureCard}>
+            <span style={featureIcon}>🔗</span>
+            <h3 style={featureTitle}>API & Webhooks</h3>
+            <p style={featureDesc}>Programmatic access with scoped API keys. Trigger webhooks on publish, form submissions, and more.</p>
+          </div>
         </div>
       </section>
 
+      <section style={pricingSection}>
+        <h2 style={sectionHeading}>Simple, transparent pricing</h2>
+        <p style={pricingSubtitle}>Start free. Scale when you&apos;re ready.</p>
+        <div style={pricingGrid}>
+          <div style={pricingCard}>
+            <h3 style={pricingPlanName}>Free</h3>
+            <p style={pricingAmount}>$0<span style={pricingPeriod}>/mo</span></p>
+            <ul style={pricingFeatures}>
+              <li>3 projects</li>
+              <li>10 pages per project</li>
+              <li>100MB storage</li>
+              <li>Community support</li>
+            </ul>
+            <Link href="/auth/signup" style={pricingCta}>Get Started</Link>
+          </div>
+          <div style={pricingCardPro}>
+            <span style={popularBadge}>Most Popular</span>
+            <h3 style={pricingPlanName}>Pro</h3>
+            <p style={pricingAmount}>$29<span style={pricingPeriod}>/mo</span></p>
+            <ul style={pricingFeatures}>
+              <li>20 projects</li>
+              <li>100 pages per project</li>
+              <li>5GB storage</li>
+              <li>Custom domains</li>
+              <li>Priority support</li>
+            </ul>
+            <Link href="/auth/signup" style={pricingCtaPro}>Start Free Trial</Link>
+          </div>
+          <div style={pricingCard}>
+            <h3 style={pricingPlanName}>Business</h3>
+            <p style={pricingAmount}>$99<span style={pricingPeriod}>/mo</span></p>
+            <ul style={pricingFeatures}>
+              <li>Unlimited projects</li>
+              <li>Unlimited pages</li>
+              <li>50GB storage</li>
+              <li>Team collaboration</li>
+              <li>API access</li>
+              <li>Dedicated support</li>
+            </ul>
+            <Link href="/auth/signup" style={pricingCta}>Contact Sales</Link>
+          </div>
+        </div>
+      </section>
+
+      <section style={ctaSection}>
+        <h2 style={ctaHeading}>Ready to build something great?</h2>
+        <p style={ctaSubtext}>Join thousands of teams using NovaBuilder to ship faster.</p>
+        <Link href="/auth/signup" style={primaryCta}>Start Building Free</Link>
+      </section>
+
       <footer style={footerStyle}>
+        <div style={footerInner}>
+          <span style={footerBrand}>NovaBuilder</span>
+          <div style={footerLinks}>
+            <Link href="/auth/login" style={footerLink}>Login</Link>
+            <Link href="/auth/signup" style={footerLink}>Sign Up</Link>
+          </div>
+        </div>
         <span style={footerText}>© 2026 NovaBuilder. All rights reserved.</span>
       </footer>
     </div>
@@ -88,5 +156,25 @@ const featureCard: React.CSSProperties = { padding: 28, borderRadius: 16, backgr
 const featureIcon: React.CSSProperties = { fontSize: '1.5rem' };
 const featureTitle: React.CSSProperties = { margin: '12px 0 0', fontSize: '1.05rem', fontWeight: 700, color: '#0f172a' };
 const featureDesc: React.CSSProperties = { margin: '8px 0 0', fontSize: '0.9rem', color: '#475569', lineHeight: 1.6 };
-const footerStyle: React.CSSProperties = { padding: '32px', textAlign: 'center', borderTop: '1px solid #e2e8f0' };
+const sectionHeading: React.CSSProperties = { textAlign: 'center', fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 800, color: '#0f172a', margin: '0 0 8px' };
+const pricingSection: React.CSSProperties = { padding: '80px 32px', maxWidth: 1200, margin: '0 auto' };
+const pricingSubtitle: React.CSSProperties = { textAlign: 'center', color: '#64748b', fontSize: '1rem', margin: '0 0 40px' };
+const pricingGrid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24, alignItems: 'start' };
+const pricingCard: React.CSSProperties = { padding: 28, borderRadius: 16, border: '1px solid #e2e8f0', background: '#fff', display: 'flex', flexDirection: 'column', gap: 12 };
+const pricingCardPro: React.CSSProperties = { ...pricingCard, border: '2px solid #2563eb', background: '#f0f9ff', position: 'relative' as const };
+const popularBadge: React.CSSProperties = { position: 'absolute' as const, top: -12, left: '50%', transform: 'translateX(-50%)', padding: '4px 12px', borderRadius: 20, background: '#2563eb', color: '#fff', fontSize: '0.75rem', fontWeight: 700 };
+const pricingPlanName: React.CSSProperties = { margin: 0, fontSize: '1.2rem', fontWeight: 700, color: '#0f172a' };
+const pricingAmount: React.CSSProperties = { margin: 0, fontSize: '2.5rem', fontWeight: 800, color: '#0f172a' };
+const pricingPeriod: React.CSSProperties = { fontSize: '1rem', fontWeight: 400, color: '#64748b' };
+const pricingFeatures: React.CSSProperties = { margin: 0, padding: '0 0 0 16px', fontSize: '0.9rem', color: '#475569', lineHeight: 2 };
+const pricingCta: React.CSSProperties = { marginTop: 'auto', padding: '12px 24px', borderRadius: 10, border: '2px solid #0f172a', color: '#0f172a', textDecoration: 'none', fontWeight: 700, textAlign: 'center' };
+const pricingCtaPro: React.CSSProperties = { marginTop: 'auto', padding: '12px 24px', borderRadius: 10, background: '#0f172a', color: '#fff', textDecoration: 'none', fontWeight: 700, textAlign: 'center' };
+const ctaSection: React.CSSProperties = { textAlign: 'center', padding: '80px 32px', background: '#f8fafc' };
+const ctaHeading: React.CSSProperties = { fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 800, color: '#0f172a', margin: 0 };
+const ctaSubtext: React.CSSProperties = { margin: '12px 0 24px', color: '#475569', fontSize: '1rem' };
+const footerStyle: React.CSSProperties = { padding: '32px', borderTop: '1px solid #e2e8f0', maxWidth: 1200, margin: '0 auto' };
+const footerInner: React.CSSProperties = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 };
+const footerBrand: React.CSSProperties = { fontWeight: 800, color: '#0f172a', fontSize: '1.1rem' };
+const footerLinks: React.CSSProperties = { display: 'flex', gap: 16 };
+const footerLink: React.CSSProperties = { color: '#64748b', textDecoration: 'none', fontSize: '0.85rem' };
 const footerText: React.CSSProperties = { color: '#94a3b8', fontSize: '0.85rem' };
