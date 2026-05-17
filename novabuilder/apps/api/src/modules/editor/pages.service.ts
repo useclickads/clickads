@@ -56,6 +56,34 @@ export class PagesService {
     return this.prisma.client.page.update({ where: { id }, data: { seo: seo as any } });
   }
 
+  async schedule(id: string, scheduledAt: Date) {
+    return this.prisma.client.page.update({
+      where: { id },
+      data: { scheduledAt },
+    });
+  }
+
+  async cancelSchedule(id: string) {
+    return this.prisma.client.page.update({
+      where: { id },
+      data: { scheduledAt: null },
+    });
+  }
+
+  async publishScheduledPages() {
+    const now = new Date();
+    const pages = await this.prisma.client.page.findMany({
+      where: { scheduledAt: { lte: now }, published: false, deletedAt: null },
+    });
+    for (const page of pages) {
+      await this.prisma.client.page.update({
+        where: { id: page.id },
+        data: { published: true, scheduledAt: null },
+      });
+    }
+    return pages.length;
+  }
+
   async softDelete(id: string) {
     return this.prisma.client.page.update({
       where: { id },

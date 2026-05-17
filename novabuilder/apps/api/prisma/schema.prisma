@@ -209,16 +209,18 @@ model Page {
   path      String
   content   Json?
   seo       Json?
-  published Boolean   @default(false)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  published   Boolean   @default(false)
+  scheduledAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   layouts Layout? @relation(fields: [id], references: [id])
 
   @@index([projectId])
   @@index([slug])
+  @@index([scheduledAt])
 }
 
 model Layout {

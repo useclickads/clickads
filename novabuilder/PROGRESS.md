@@ -318,6 +318,39 @@
 - `pnpm test` runs all tests via Turborepo
 - `pnpm --filter @novabuilder/api test` runs API-specific tests
 
+### Extended Block Types
+- 8 new block types: Custom Code, Divider, Testimonial, Pricing, FAQ, Gallery, Map Embed, Countdown
+- Full block renderers for canvas preview and deployed HTML generation
+- Custom Code block with HTML + CSS injection
+- Testimonial block with star rating and author info
+- Pricing block with feature list and highlighted variant
+- FAQ block with expandable accordion items
+- Gallery block with configurable grid columns
+- Map Embed block for Google Maps / OpenStreetMap iframes
+- Countdown block with live JS timer for deployed pages
+- Total block types: 19
+
+### Scheduled Publishing
+- Schedule pages to auto-publish at a future date/time
+- `PATCH /api/projects/:projectId/pages/:id/schedule` — set scheduled date
+- `PATCH /api/projects/:projectId/pages/:id/unschedule` — cancel schedule
+- `scheduledAt` field on Page model with index
+- Background method to publish all due scheduled pages
+- Frontend schedule picker with datetime-local input on project detail page
+- Scheduled badge and cancel button on page rows
+
+### Plugin Publish Page
+- Frontend plugin publish form (`/dashboard/marketplace/publish`)
+- Form fields: name, version, description, author, category, icon, price
+- 7 plugin categories (Utility, Design, Analytics, SEO, E-Commerce, Integration, Other)
+- Redirects to marketplace on successful publish
+
+### Deploy HTML Generation (Expanded)
+- All 19 block types now generate production-ready HTML on deploy
+- Navigation, Footer, Form, Video blocks added to HTML renderer
+- New blocks (Code, Divider, Testimonial, Pricing, FAQ, Gallery, Map, Countdown) fully supported
+- Countdown block includes inline JavaScript timer for live pages
+
 ### Lower Priority
 - Conflict resolution via OT/CRDT for concurrent block edits
 - Integrate OpenAI/Anthropic API for more intelligent generation (currently rule-based)

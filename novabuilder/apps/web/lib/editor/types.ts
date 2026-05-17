@@ -9,7 +9,15 @@ export type BlockType =
   | 'navigation'
   | 'footer'
   | 'form'
-  | 'video';
+  | 'video'
+  | 'code'
+  | 'divider'
+  | 'testimonial'
+  | 'pricing'
+  | 'faq'
+  | 'gallery'
+  | 'map'
+  | 'countdown';
 
 export type BlockProps = Record<string, unknown>;
 

@@ -116,8 +116,10 @@ function ProjectDetail() {
   );
 }
 
-function PageRow({ page, projectId, api, onUpdate }: { page: Page; projectId: string; api: ReturnType<typeof useApi>; onUpdate: () => void }) {
+function PageRow({ page, projectId, api, onUpdate }: { page: Page & { scheduledAt?: string | null }; projectId: string; api: ReturnType<typeof useApi>; onUpdate: () => void }) {
   const [toggling, setToggling] = useState(false);
+  const [showSchedule, setShowSchedule] = useState(false);
+  const [scheduleDate, setScheduleDate] = useState('');
 
   async function togglePublish() {
     setToggling(true);
@@ -129,19 +131,59 @@ function PageRow({ page, projectId, api, onUpdate }: { page: Page; projectId: st
     setToggling(false);
   }
 
+  async function handleSchedule() {
+    if (!scheduleDate) return;
+    try {
+      await api.patch(`/projects/${projectId}/pages/${page.id}/schedule`, { scheduledAt: scheduleDate });
+      setShowSchedule(false);
+      setScheduleDate('');
+      onUpdate();
+    } catch {}
+  }
+
+  async function handleUnschedule() {
+    try {
+      await api.patch(`/projects/${projectId}/pages/${page.id}/unschedule`, {});
+      onUpdate();
+    } catch {}
+  }
+
   return (
-    <div style={pageRow}>
-      <div>
-        <p style={pageTitle}>{page.title}</p>
-        <p style={pagePath}>{page.path}</p>
+    <div>
+      <div style={pageRow}>
+        <div>
+          <p style={pageTitle}>{page.title}</p>
+          <p style={pagePath}>{page.path}</p>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Link href={`/editor/${projectId}/${page.id}`} style={editLink}>Edit</Link>
+          <button onClick={togglePublish} disabled={toggling} style={publishBtn(page.published)}>
+            {page.published ? 'Unpublish' : 'Publish'}
+          </button>
+          {!page.published && !page.scheduledAt && (
+            <button onClick={() => setShowSchedule(!showSchedule)} style={scheduleBtn}>Schedule</button>
+          )}
+          {page.scheduledAt && (
+            <button onClick={handleUnschedule} style={scheduledBadge}>
+              Scheduled: {new Date(page.scheduledAt).toLocaleString()} ✕
+            </button>
+          )}
+          <span style={badge(page.published)}>{page.published ? 'Live' : page.scheduledAt ? 'Scheduled' : 'Draft'}</span>
+        </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <Link href={`/editor/${projectId}/${page.id}`} style={editLink}>Edit</Link>
-        <button onClick={togglePublish} disabled={toggling} style={publishBtn(page.published)}>
-          {page.published ? 'Unpublish' : 'Publish'}
-        </button>
-        <span style={badge(page.published)}>{page.published ? 'Live' : 'Draft'}</span>
-      </div>
+      {showSchedule && (
+        <div style={scheduleRow}>
+          <input
+            type="datetime-local"
+            value={scheduleDate}
+            onChange={(e) => setScheduleDate(e.target.value)}
+            min={new Date().toISOString().slice(0, 16)}
+            style={scheduleInput}
+          />
+          <button onClick={handleSchedule} style={scheduleConfirmBtn}>Confirm</button>
+          <button onClick={() => setShowSchedule(false)} style={cancelBtn}>Cancel</button>
+        </div>
+      )}
     </div>
   );
 }
@@ -243,3 +285,8 @@ const labelStyle: React.CSSProperties = { display: 'grid', gap: 6, color: '#3341
 const inputStyle: React.CSSProperties = { width: '100%', padding: '10px 12px', borderRadius: 10, border: '1px solid #cbd5e1', fontSize: '0.95rem' };
 const templateGrid: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 8, marginTop: 4 };
 const templateCard = (active: boolean): React.CSSProperties => ({ padding: 12, borderRadius: 10, border: active ? '2px solid #2563eb' : '1px solid #e2e8f0', background: active ? '#eff6ff' : '#fff', cursor: 'pointer', textAlign: 'left' });
+const scheduleBtn: React.CSSProperties = { padding: '6px 12px', borderRadius: 8, border: '1px solid #c4b5fd', background: '#fff', color: '#7c3aed', fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer' };
+const scheduledBadge: React.CSSProperties = { padding: '6px 10px', borderRadius: 8, border: 'none', background: '#ede9fe', color: '#7c3aed', fontSize: '0.7rem', fontWeight: 600, cursor: 'pointer' };
+const scheduleRow: React.CSSProperties = { display: 'flex', gap: 8, alignItems: 'center', padding: '8px 16px', background: '#faf5ff', borderRadius: '0 0 12px 12px', border: '1px solid #e2e8f0', borderTop: 'none' };
+const scheduleInput: React.CSSProperties = { padding: '6px 10px', borderRadius: 6, border: '1px solid #cbd5e1', fontSize: '0.8rem' };
+const scheduleConfirmBtn: React.CSSProperties = { padding: '6px 14px', borderRadius: 8, border: 'none', background: '#7c3aed', color: '#fff', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' };

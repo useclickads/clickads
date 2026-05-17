@@ -85,6 +85,25 @@ export class PagesController {
     return { ok: true, updatedAt: result.updatedAt };
   }
 
+  @Patch(':id/schedule')
+  async schedule(@Param('id') id: string, @Body() body: { scheduledAt: string }) {
+    if (!body.scheduledAt) return { error: 'scheduledAt is required.' };
+    const date = new Date(body.scheduledAt);
+    if (isNaN(date.getTime()) || date.getTime() <= Date.now()) return { error: 'scheduledAt must be a future date.' };
+    const page = await this.pages.getById(id);
+    if (!page) return { error: 'Page not found.' };
+    const updated = await this.pages.schedule(id, date);
+    return { ok: true, scheduledAt: updated.scheduledAt };
+  }
+
+  @Patch(':id/unschedule')
+  async unschedule(@Param('id') id: string) {
+    const page = await this.pages.getById(id);
+    if (!page) return { error: 'Page not found.' };
+    await this.pages.cancelSchedule(id);
+    return { ok: true };
+  }
+
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async delete(@Param('id') id: string) {
