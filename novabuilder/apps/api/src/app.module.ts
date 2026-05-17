@@ -22,6 +22,7 @@ import { ExportModule } from './modules/export/export.module';
 import { ApiKeysModule } from './modules/apikeys/apikeys.module';
 import { ImportModule } from './modules/import/import.module';
 import { BillingModule } from './modules/billing/billing.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { BillingModule } from './modules/billing/billing.module';
     TeamsModule, DeployModule, ThemeModule, DomainsModule, FormsModule,
     SettingsModule, SearchModule, UsersModule, AnalyticsModule,
     AuditModule, NotificationsModule, WebhooksModule, ExportModule,
-    ApiKeysModule, ImportModule, BillingModule,
+    ApiKeysModule, ImportModule, BillingModule, AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

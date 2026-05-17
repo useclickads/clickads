@@ -214,14 +214,32 @@
 - Run `prisma migrate dev` to apply latest schema changes (MagicLink, PasswordReset, User.passwordHash, Page.content)
 - Implement email delivery for magic links and password reset tokens (currently tokens returned in response for dev)
 
+### Asset Management (Full)
+- File upload via multipart (multer), stored locally in `/uploads/`
+- Static file serving from uploads directory
+- Drag-and-drop file upload on frontend with progress indicator
+- Folder management: create, list, delete folders
+- Folder filtering on asset listing
+- Asset grid with image thumbnails, file type labels, copy URL, delete
+- Size formatting and creation date display
+
+### Admin Panel
+- `AdminModule` with platform-wide stats, user management, project management, activity log
+- API endpoints: `GET /api/admin/stats`, `GET /api/admin/users`, `GET /api/admin/projects`, `GET /api/admin/activity`
+- User deletion, project soft-delete from admin
+- Admin frontend (`apps/admin`) with sidebar layout
+- Dashboard page with stats cards (users, projects, pages, deployments)
+- Users page with table, pagination, delete action
+- Projects page with table, pagination, delete action
+- Activity page with color-coded audit log
+
 ### Medium Priority
 - Wire billing module to Stripe API (checkout, webhooks, subscription management)
-- Asset management: file upload (S3/R2), folder management, image optimization
 - Responsive email templates for invites, magic links, password reset
 - Usage metrics dashboard (storage, bandwidth, API calls)
+- Asset storage migration to S3/R2 for production
 
 ### Lower Priority
-- Admin panel (apps/admin) for platform management
 - Real-time collaboration: presence cursors, conflict resolution via OT/CRDT
 - AI generation features: page generation from prompt, block suggestions
 - Analytics: page views, heatmaps, funnel tracking
