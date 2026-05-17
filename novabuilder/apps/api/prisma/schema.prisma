@@ -193,6 +193,8 @@ model Project {
   themeVersions       ThemeVersion[]
   usageMetrics        UsageMetric[]
   searchIndexes       SearchIndex[]
+  formSubmissions     FormSubmission[]
+  settings            ProjectSettings?
 
   @@index([ownerId])
   @@index([tenantId])
@@ -872,6 +874,37 @@ model SearchIndex {
   name      String
   config    Json
   createdAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model FormSubmission {
+  id        String   @id @default(uuid())
+  projectId String
+  pageId    String?
+  formName  String
+  data      Json
+  createdAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([formName])
+}
+
+model ProjectSettings {
+  id              String   @id @default(uuid())
+  projectId       String   @unique
+  globalHeader    Json?
+  globalFooter    Json?
+  headScripts     String?
+  bodyScripts     String?
+  favicon         String?
+  socialImage     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 

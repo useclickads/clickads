@@ -12,11 +12,14 @@ export class DeployService {
       where: { projectId, published: true, deletedAt: null },
     });
 
+    const settings = await this.prisma.client.projectSettings.findUnique({ where: { projectId } });
+
     const outputs: { path: string; html: string }[] = [];
     for (const page of pages) {
       const content = page.content as { blocks: Block[] } | null;
       const blocks = content?.blocks ?? [];
-      const html = this.renderPageHtml(page.title, blocks);
+      const seo = page.seo as { metaTitle?: string; metaDescription?: string; ogImage?: string; noIndex?: boolean } | null;
+      const html = this.renderPageHtml(page.title, blocks, { seo, settings });
       outputs.push({ path: page.path, html });
     }
 
@@ -43,24 +46,40 @@ export class DeployService {
     });
   }
 
-  private renderPageHtml(title: string, blocks: Block[]): string {
-    const body = blocks.map((b) => this.renderBlock(b)).join('\n');
+  private renderPageHtml(title: string, blocks: Block[], opts?: { seo?: { metaTitle?: string; metaDescription?: string; ogImage?: string; noIndex?: boolean } | null; settings?: { headScripts?: string | null; bodyScripts?: string | null; favicon?: string | null; globalHeader?: unknown; globalFooter?: unknown } | null }): string {
+    const seo = opts?.seo;
+    const settings = opts?.settings;
+    const pageTitle = seo?.metaTitle || title;
+    const headerBlocks = (Array.isArray(settings?.globalHeader) ? settings.globalHeader : []) as Block[];
+    const footerBlocks = (Array.isArray(settings?.globalFooter) ? settings.globalFooter : []) as Block[];
+    const headerHtml = headerBlocks.map((b) => this.renderBlock(b)).join('\n');
+    const bodyHtml = blocks.map((b) => this.renderBlock(b)).join('\n');
+    const footerHtml = footerBlocks.map((b) => this.renderBlock(b)).join('\n');
+
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${this.escapeHtml(title)}</title>
+  <title>${this.escapeHtml(pageTitle)}</title>
+  ${seo?.metaDescription ? `<meta name="description" content="${this.escapeHtml(seo.metaDescription)}">` : ''}
+  ${seo?.ogImage ? `<meta property="og:image" content="${this.escapeHtml(seo.ogImage)}">` : ''}
+  ${seo?.noIndex ? '<meta name="robots" content="noindex, nofollow">' : ''}
+  ${settings?.favicon ? `<link rel="icon" href="${this.escapeHtml(settings.favicon)}">` : ''}
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: ui-sans-serif, system-ui, sans-serif; color: #1e293b; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
   </style>
+  ${settings?.headScripts || ''}
 </head>
 <body>
+  ${headerHtml}
   <div class="container">
-    ${body}
+    ${bodyHtml}
   </div>
+  ${footerHtml}
+  ${settings?.bodyScripts || ''}
 </body>
 </html>`;
   }

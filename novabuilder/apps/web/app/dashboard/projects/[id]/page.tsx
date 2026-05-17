@@ -71,9 +71,11 @@ function ProjectDetail() {
         <div style={{ display: 'flex', gap: 8 }}>
           <Link href={`/dashboard/projects/${id}/cms`} style={secondaryBtn}>CMS</Link>
           <Link href={`/dashboard/projects/${id}/assets`} style={secondaryBtn}>Assets</Link>
+          <Link href={`/dashboard/projects/${id}/forms`} style={secondaryBtn}>Forms</Link>
           <Link href={`/dashboard/projects/${id}/team`} style={secondaryBtn}>Team</Link>
           <Link href={`/dashboard/projects/${id}/theme`} style={secondaryBtn}>Theme</Link>
           <Link href={`/dashboard/projects/${id}/domains`} style={secondaryBtn}>Domains</Link>
+          <Link href={`/dashboard/projects/${id}/settings`} style={secondaryBtn}>Settings</Link>
           <Link href={`/dashboard/projects/${id}/deploy`} style={deployBtnStyle}>Deploy</Link>
           <Link href={`/preview/${id}`} style={secondaryBtn} target="_blank">Preview</Link>
           <button onClick={handleDelete} style={dangerBtn} disabled={deleting}>

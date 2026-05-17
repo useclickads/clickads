@@ -106,6 +106,20 @@
 - Template selection in the "Add Page" form
 - Templates pre-populate blocks on page creation
 
+### Form Submissions
+- `FormsModule` with public submit endpoint (`POST /api/projects/:projectId/forms/submit`)
+- Submissions viewer page (`/dashboard/projects/[id]/forms`) with per-form filtering
+- List distinct form names, view/delete individual submissions
+- No auth required on submit (public-facing forms), auth required for management
+
+### Project Settings
+- `SettingsModule` with GET/PUT for project-level settings (`/api/projects/:projectId/settings`)
+- Global header/footer (JSON blocks applied to all deployed pages)
+- Code injection: head scripts and body scripts
+- Favicon and default social image
+- Frontend settings page (`/dashboard/projects/[id]/settings`) with General and Code Injection tabs
+- Deploy pipeline now includes: SEO meta, global header/footer, head/body scripts, favicon in generated HTML
+
 ### Editor Module (Backend)
 - Pages CRUD nested under projects (`/api/projects/:projectId/pages`)
 - Content save endpoint (`PUT /api/projects/:projectId/pages/:id/content`)
@@ -132,11 +146,11 @@
 
 ### Medium Priority
 - Wire billing module to Stripe API (checkout, webhooks, subscription management)
-- CMS collections frontend (create/manage dynamic content types UI)
 - Asset management: file upload (S3/R2), folder management, image optimization
-- Form submissions handling (store and view form data)
-- Site-wide global header/footer settings
-- Custom code injection (head/body scripts per page)
+- Version history / rollback for pages
+- Global search across projects, pages, CMS entries
+- User profile and account settings page
+- Responsive email templates for invites, magic links, password reset
 
 ### Lower Priority
 - Admin panel (apps/admin) for platform management
