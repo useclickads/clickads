@@ -9,7 +9,9 @@
     "start": "node dist/main.js",
     "seed": "ts-node --transpile-only prisma/seed.ts",
     "migrate:dev": "npx prisma migrate dev --schema=prisma/schema.prisma --name init --url \"${DATABASE_URL:-postgresql://novabuilder:novabuilder@localhost:5432/novabuilder}\"",
-    "db:setup": "pnpm run migrate:dev && pnpm run seed"
+    "db:setup": "pnpm run migrate:dev && pnpm run seed",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@nestjs/common": "10.3.2",

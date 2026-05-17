@@ -287,13 +287,22 @@
 - Frontend marketplace page (`/dashboard/marketplace`) with search, category filters, plugin cards
 - Install button, version display, install count, author attribution
 
+### Test Suite
+- Vitest configured at root and API app level
+- 33 unit tests covering:
+  - AI service: page generation, block suggestions, copy generation, content improvement
+  - Email templates: all 5 templates render correctly with data interpolation
+  - Stripe provider: mock mode behavior, checkout sessions, portal, webhook verification
+- `pnpm test` runs all tests via Turborepo
+- `pnpm --filter @novabuilder/api test` runs API-specific tests
+
 ### Lower Priority
 - Conflict resolution via OT/CRDT for concurrent block edits
 - Integrate OpenAI/Anthropic API for more intelligent generation (currently rule-based)
 - Analytics: page views, heatmaps, funnel tracking
 - Marketplace: plugin review/rating system, developer API docs
 - Webhooks and integrations (third-party service connectors)
-- Add comprehensive test suites (unit, integration, e2e)
+- Expand test coverage (integration tests, e2e with Playwright)
 
 ---
 
