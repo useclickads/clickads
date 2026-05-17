@@ -46,6 +46,7 @@ function DashboardContent() {
           <Link href="/dashboard/search" style={navBtn}>Search</Link>
           <Link href="/dashboard/notifications" style={navBtn}>Notifications</Link>
           <Link href="/dashboard/activity" style={navBtn}>Activity</Link>
+          <Link href="/dashboard/ai" style={navBtn}>AI Generator</Link>
           <Link href="/dashboard/billing" style={navBtn}>Billing</Link>
           <Link href="/dashboard/api-keys" style={navBtn}>API Keys</Link>
           <Link href="/dashboard/profile" style={navBtn}>Profile</Link>

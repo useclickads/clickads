@@ -239,9 +239,19 @@
 - Usage metrics dashboard (storage, bandwidth, API calls)
 - Asset storage migration to S3/R2 for production
 
+### AI Generation
+- `AiModule` with page generation, block suggestions, copy generation, content improvement
+- Generate full page from prompt: analyzes keywords and creates appropriate block layout
+- Smart block suggestions based on existing page content
+- Copy generation: headlines, paragraphs, CTAs, taglines with topic awareness
+- Content improvement endpoint with actionable suggestions
+- AI panel in editor (4th tab) with Suggest, Copy, and Generate modes
+- Standalone AI Page Generator (`/dashboard/ai`) with project selector and prompt templates
+- Prompt preset buttons for common page types (Portfolio, Ecommerce, SaaS, Restaurant)
+
 ### Lower Priority
 - Real-time collaboration: presence cursors, conflict resolution via OT/CRDT
-- AI generation features: page generation from prompt, block suggestions
+- Integrate OpenAI/Anthropic API for more intelligent generation (currently rule-based)
 - Analytics: page views, heatmaps, funnel tracking
 - Marketplace: plugin publishing, purchasing, installation
 - Webhooks and integrations (third-party service connectors)
