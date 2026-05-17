@@ -24,6 +24,7 @@ import { ImportModule } from './modules/import/import.module';
 import { BillingModule } from './modules/billing/billing.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { AiModule } from './modules/ai/ai.module';
+import { RealtimeModule } from './modules/realtime/realtime.module';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { AiModule } from './modules/ai/ai.module';
     TeamsModule, DeployModule, ThemeModule, DomainsModule, FormsModule,
     SettingsModule, SearchModule, UsersModule, AnalyticsModule,
     AuditModule, NotificationsModule, WebhooksModule, ExportModule,
-    ApiKeysModule, ImportModule, BillingModule, AdminModule, AiModule,
+    ApiKeysModule, ImportModule, BillingModule, AdminModule, AiModule, RealtimeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

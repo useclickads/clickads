@@ -199,8 +199,16 @@
 - Bottom CTA section
 - Footer with navigation links
 
-### Realtime (Scaffold)
-- WebSocket gateway with Socket.io
+### Real-time Collaboration
+- WebSocket gateway with Socket.io (namespace: `/realtime`)
+- Presence tracking: join/leave rooms per project+page
+- Remote cursor positions with smooth CSS transitions
+- Block selection broadcast (see who is editing what)
+- Live block updates broadcast to other collaborators
+- Real-time comments on pages/blocks
+- Auto-assigned unique colors per collaborator
+- Frontend presence component with cursor rendering and online user avatars
+- `socket.io-client` integration in web app
 
 ### Observability
 - OpenTelemetry initialization
@@ -250,7 +258,7 @@
 - Prompt preset buttons for common page types (Portfolio, Ecommerce, SaaS, Restaurant)
 
 ### Lower Priority
-- Real-time collaboration: presence cursors, conflict resolution via OT/CRDT
+- Conflict resolution via OT/CRDT for concurrent block edits
 - Integrate OpenAI/Anthropic API for more intelligent generation (currently rule-based)
 - Analytics: page views, heatmaps, funnel tracking
 - Marketplace: plugin publishing, purchasing, installation
