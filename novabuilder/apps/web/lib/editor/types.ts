@@ -44,4 +44,6 @@ export type EditorAction =
   | { type: 'SET_DRAGGING'; isDragging: boolean }
   | { type: 'SET_DRAG_OVER'; index: number | null }
   | { type: 'SET_BLOCKS'; blocks: Block[] }
-  | { type: 'DUPLICATE_BLOCK'; id: string };
+  | { type: 'DUPLICATE_BLOCK'; id: string }
+  | { type: 'ADD_CHILD_BLOCK'; parentId: string; columnIndex: number; block: Block }
+  | { type: 'REMOVE_CHILD_BLOCK'; parentId: string; childId: string };

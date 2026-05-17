@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useRef, useState } from 'react';
 import type { Block, BlockProps, BlockType, EditorState } from './types';
-import { editorReducer, generateId, initialEditorState } from './reducer';
+import { editorReducer, findBlockById, generateId, initialEditorState } from './reducer';
 import { getBlockDefinition } from './blocks';
 import { createHistory, pushHistory, undo as historyUndo, redo as historyRedo, type HistoryState } from './history';
 
@@ -11,7 +11,9 @@ export type Viewport = 'desktop' | 'tablet' | 'mobile';
 type EditorContextValue = {
   state: EditorState;
   addBlock: (type: BlockType, index?: number) => void;
+  addChildBlock: (parentId: string, type: BlockType) => void;
   removeBlock: (id: string) => void;
+  removeChildBlock: (parentId: string, childId: string) => void;
   moveBlock: (fromIndex: number, toIndex: number) => void;
   updateBlockProps: (id: string, props: Partial<BlockProps>) => void;
   selectBlock: (id: string | null) => void;
@@ -58,7 +60,15 @@ export function EditorProvider({ children, initialBlocks }: { children: React.Re
     applyAction({ type: 'ADD_BLOCK', block, index });
   }, [applyAction]);
 
+  const addChildBlock = useCallback((parentId: string, type: BlockType) => {
+    const def = getBlockDefinition(type);
+    if (!def) return;
+    const block: Block = { id: generateId(), type, props: { ...def.defaultProps } };
+    applyAction({ type: 'ADD_CHILD_BLOCK', parentId, columnIndex: 0, block });
+  }, [applyAction]);
+
   const removeBlock = useCallback((id: string) => applyAction({ type: 'REMOVE_BLOCK', id }), [applyAction]);
+  const removeChildBlock = useCallback((parentId: string, childId: string) => applyAction({ type: 'REMOVE_CHILD_BLOCK', parentId, childId }), [applyAction]);
   const moveBlock = useCallback((from: number, to: number) => applyAction({ type: 'MOVE_BLOCK', fromIndex: from, toIndex: to }), [applyAction]);
   const updateBlockProps = useCallback((id: string, props: Partial<BlockProps>) => applyAction({ type: 'UPDATE_BLOCK_PROPS', id, props }), [applyAction]);
   const selectBlock = useCallback((id: string | null) => applyAction({ type: 'SELECT_BLOCK', id }), [applyAction]);
@@ -85,12 +95,13 @@ export function EditorProvider({ children, initialBlocks }: { children: React.Re
   }, []);
 
   const getSelectedBlock = useCallback(() => {
-    return state.blocks.find((b) => b.id === state.selectedBlockId) ?? null;
+    if (!state.selectedBlockId) return null;
+    return findBlockById(state.blocks, state.selectedBlockId);
   }, [state.blocks, state.selectedBlockId]);
 
   return (
     <EditorContext.Provider
-      value={{ state, addBlock, removeBlock, moveBlock, updateBlockProps, selectBlock, duplicateBlock, setDragging, setDragOver, setBlocks, getSelectedBlock, undo, redo, canUndo, canRedo, viewport, setViewport }}
+      value={{ state, addBlock, addChildBlock, removeBlock, removeChildBlock, moveBlock, updateBlockProps, selectBlock, duplicateBlock, setDragging, setDragOver, setBlocks, getSelectedBlock, undo, redo, canUndo, canRedo, viewport, setViewport }}
     >
       {children}
     </EditorContext.Provider>

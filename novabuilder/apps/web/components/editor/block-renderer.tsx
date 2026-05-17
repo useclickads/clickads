@@ -13,7 +13,7 @@ export function BlockRenderer({ block }: { block: Block }) {
     case 'button':
       return <ButtonBlock props={block.props} />;
     case 'columns':
-      return <ColumnsBlock props={block.props} />;
+      return <ColumnsBlock block={block} />;
     case 'spacer':
       return <SpacerBlock props={block.props} />;
     case 'card':
@@ -78,15 +78,25 @@ function ButtonBlock({ props }: { props: Record<string, unknown> }) {
   );
 }
 
-function ColumnsBlock({ props }: { props: Record<string, unknown> }) {
-  const cols = Number(props.columns) || 2;
+function ColumnsBlock({ block }: { block: Block }) {
+  const cols = Number(block.props.columns) || 2;
+  const children = block.children || [];
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: props.gap as string, padding: '12px 0' }}>
-      {Array.from({ length: cols }).map((_, i) => (
-        <div key={i} style={{ padding: 24, background: '#f8fafc', borderRadius: 10, border: '1px dashed #cbd5e1', textAlign: 'center', color: '#94a3b8', fontSize: '0.85rem' }}>
-          Column {i + 1}
-        </div>
-      ))}
+    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: block.props.gap as string, padding: '12px 0' }}>
+      {Array.from({ length: cols }).map((_, i) => {
+        const colChild = children[i];
+        return (
+          <div key={i} style={{ padding: colChild ? 0 : 24, background: '#f8fafc', borderRadius: 10, border: '1px dashed #cbd5e1', minHeight: 60 }}>
+            {colChild ? (
+              <BlockRenderer block={colChild} />
+            ) : (
+              <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.85rem', padding: 24 }}>
+                Column {i + 1}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

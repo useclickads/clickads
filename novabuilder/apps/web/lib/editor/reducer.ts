@@ -1,4 +1,4 @@
-import type { EditorState, EditorAction } from './types';
+import type { Block, EditorState, EditorAction } from './types';
 
 export const initialEditorState: EditorState = {
   blocks: [],
@@ -16,7 +16,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
       return { ...state, blocks, selectedBlockId: action.block.id };
     }
     case 'REMOVE_BLOCK': {
-      const blocks = state.blocks.filter((b) => b.id !== action.id);
+      const blocks = removeBlockDeep(state.blocks, action.id);
       const selectedBlockId = state.selectedBlockId === action.id ? null : state.selectedBlockId;
       return { ...state, blocks, selectedBlockId };
     }
@@ -27,9 +27,10 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
       return { ...state, blocks };
     }
     case 'UPDATE_BLOCK_PROPS': {
-      const blocks = state.blocks.map((b) =>
-        b.id === action.id ? { ...b, props: { ...b.props, ...action.props } } : b
-      );
+      const blocks = updateBlockDeep(state.blocks, action.id, (b) => ({
+        ...b,
+        props: { ...b.props, ...action.props },
+      }));
       return { ...state, blocks };
     }
     case 'SELECT_BLOCK':
@@ -44,14 +45,53 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
       const idx = state.blocks.findIndex((b) => b.id === action.id);
       if (idx === -1) return state;
       const original = state.blocks[idx];
-      const copy = { ...original, id: generateId(), props: { ...original.props } };
+      const copy = deepCloneBlock(original);
       const blocks = [...state.blocks];
       blocks.splice(idx + 1, 0, copy);
       return { ...state, blocks, selectedBlockId: copy.id };
     }
+    case 'ADD_CHILD_BLOCK': {
+      const blocks = updateBlockDeep(state.blocks, action.parentId, (b) => {
+        const children = [...(b.children || [])];
+        children.push(action.block);
+        return { ...b, children };
+      });
+      return { ...state, blocks, selectedBlockId: action.block.id };
+    }
+    case 'REMOVE_CHILD_BLOCK': {
+      const blocks = updateBlockDeep(state.blocks, action.parentId, (b) => {
+        const children = (b.children || []).filter((c) => c.id !== action.childId);
+        return { ...b, children };
+      });
+      const selectedBlockId = state.selectedBlockId === action.childId ? null : state.selectedBlockId;
+      return { ...state, blocks, selectedBlockId };
+    }
     default:
       return state;
   }
+}
+
+function removeBlockDeep(blocks: Block[], id: string): Block[] {
+  return blocks
+    .filter((b) => b.id !== id)
+    .map((b) => (b.children ? { ...b, children: removeBlockDeep(b.children, id) } : b));
+}
+
+function updateBlockDeep(blocks: Block[], id: string, updater: (b: Block) => Block): Block[] {
+  return blocks.map((b) => {
+    if (b.id === id) return updater(b);
+    if (b.children) return { ...b, children: updateBlockDeep(b.children, id, updater) };
+    return b;
+  });
+}
+
+function deepCloneBlock(block: Block): Block {
+  return {
+    ...block,
+    id: generateId(),
+    props: { ...block.props },
+    children: block.children?.map(deepCloneBlock),
+  };
 }
 
 function generateId() {
@@ -59,3 +99,14 @@ function generateId() {
 }
 
 export { generateId };
+
+export function findBlockById(blocks: Block[], id: string): Block | null {
+  for (const b of blocks) {
+    if (b.id === id) return b;
+    if (b.children) {
+      const found = findBlockById(b.children, id);
+      if (found) return found;
+    }
+  }
+  return null;
+}
