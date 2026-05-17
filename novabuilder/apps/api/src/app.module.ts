@@ -15,9 +15,18 @@ import { SettingsModule } from './modules/settings/settings.module';
 import { SearchModule } from './modules/search/search.module';
 import { UsersModule } from './modules/users/users.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { AuditModule } from './modules/audit/audit.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
+import { WebhooksModule } from './modules/webhooks/webhooks.module';
+import { ExportModule } from './modules/export/export.module';
 
 @Module({
-  imports: [AuthModule, ProjectsModule, EditorModule, CmsModule, AssetsModule, TeamsModule, DeployModule, ThemeModule, DomainsModule, FormsModule, SettingsModule, SearchModule, UsersModule, AnalyticsModule],
+  imports: [
+    AuthModule, ProjectsModule, EditorModule, CmsModule, AssetsModule,
+    TeamsModule, DeployModule, ThemeModule, DomainsModule, FormsModule,
+    SettingsModule, SearchModule, UsersModule, AnalyticsModule,
+    AuditModule, NotificationsModule, WebhooksModule, ExportModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

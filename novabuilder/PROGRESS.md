@@ -146,6 +146,27 @@
 - Frontend analytics dashboard (`/dashboard/projects/[id]/analytics`) with stats cards, bar chart, and event log
 - Configurable time range (7/30/90 days)
 
+### Audit Logging
+- `AuditModule` with log creation and querying (`GET /api/audit`)
+- Query by actor or by resource/resourceId
+- Frontend activity log page (`/dashboard/activity`) with color-coded action timeline
+
+### Notifications
+- `NotificationsModule` with full CRUD (`GET /api/notifications`, `PATCH .../read`, `PATCH .../read-all`)
+- Unread count endpoint for badge display
+- Frontend notifications center (`/dashboard/notifications`) with mark-read interactions
+
+### Webhooks
+- `WebhooksModule` with CRUD + test fire (`/api/projects/:projectId/webhooks`)
+- HMAC SHA-256 signature verification on outgoing payloads
+- 6 supported events: page.published, page.updated, deployment.created, form.submitted, collaborator.invited, entry.created
+- Frontend webhooks page (`/dashboard/projects/[id]/webhooks`) with event selector and test button
+
+### Project Export
+- `ExportModule` with full project export as JSON (`GET /api/projects/:projectId/export`)
+- Exports: pages, CMS collections + entries, settings, theme tokens, domains
+- Download endpoint with Content-Disposition header for file save
+
 ### Editor Module (Backend)
 - Pages CRUD nested under projects (`/api/projects/:projectId/pages`)
 - Content save endpoint (`PUT /api/projects/:projectId/pages/:id/content`)
@@ -174,9 +195,9 @@
 - Wire billing module to Stripe API (checkout, webhooks, subscription management)
 - Asset management: file upload (S3/R2), folder management, image optimization
 - Responsive email templates for invites, magic links, password reset
-- Audit log viewer (who changed what, when)
-- Notification center (in-app notifications UI)
-- Export project as ZIP (pages + assets + config)
+- Import project from JSON export
+- API key management frontend
+- Usage metrics dashboard (storage, bandwidth, API calls)
 
 ### Lower Priority
 - Admin panel (apps/admin) for platform management
