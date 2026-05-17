@@ -8,4 +8,32 @@ export class PagesService {
   async getById(id: string) {
     return this.prisma.client.page.findUnique({ where: { id } });
   }
+
+  async listByProject(projectId: string) {
+    return this.prisma.client.page.findMany({
+      where: { projectId, deletedAt: null },
+      orderBy: { updatedAt: 'desc' },
+    });
+  }
+
+  async create(projectId: string, data: { title: string; slug: string; path: string }) {
+    return this.prisma.client.page.create({
+      data: { ...data, projectId, content: { blocks: [] } },
+    });
+  }
+
+  async update(id: string, data: { title?: string; slug?: string; path?: string; published?: boolean }) {
+    return this.prisma.client.page.update({ where: { id }, data });
+  }
+
+  async updateContent(id: string, content: unknown) {
+    return this.prisma.client.page.update({ where: { id }, data: { content: content as any } });
+  }
+
+  async softDelete(id: string) {
+    return this.prisma.client.page.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
+  }
 }
