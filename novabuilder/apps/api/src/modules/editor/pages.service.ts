@@ -126,4 +126,68 @@ export class PagesService {
       data: { deletedAt: new Date() },
     });
   }
+
+  async diffVersions(pageId: string, projectId: string, snapshotIdA: string, snapshotIdB: string) {
+    const [snapA, snapB] = await Promise.all([
+      this.prisma.client.snapshot.findUnique({ where: { id: snapshotIdA } }),
+      this.prisma.client.snapshot.findUnique({ where: { id: snapshotIdB } }),
+    ]);
+
+    if (!snapA || !snapB) return null;
+    const contentA = (snapA.data as any)?.content || { blocks: [] };
+    const contentB = (snapB.data as any)?.content || { blocks: [] };
+
+    const blocksA: any[] = contentA.blocks || [];
+    const blocksB: any[] = contentB.blocks || [];
+
+    const mapA = new Map(blocksA.map((b: any) => [b.id, b]));
+    const mapB = new Map(blocksB.map((b: any) => [b.id, b]));
+
+    const added: any[] = [];
+    const removed: any[] = [];
+    const modified: { blockId: string; type: string; changes: { field: string; before: unknown; after: unknown }[] }[] = [];
+
+    for (const [id, block] of mapB) {
+      if (!mapA.has(id)) {
+        added.push(block);
+      } else {
+        const oldBlock = mapA.get(id);
+        const changes = this.diffBlockProps(oldBlock, block);
+        if (changes.length > 0) {
+          modified.push({ blockId: id, type: block.type, changes });
+        }
+      }
+    }
+
+    for (const [id, block] of mapA) {
+      if (!mapB.has(id)) {
+        removed.push(block);
+      }
+    }
+
+    return {
+      snapshotA: { id: snapA.id, createdAt: snapA.createdAt },
+      snapshotB: { id: snapB.id, createdAt: snapB.createdAt },
+      summary: { added: added.length, removed: removed.length, modified: modified.length },
+      added,
+      removed,
+      modified,
+    };
+  }
+
+  private diffBlockProps(a: any, b: any): { field: string; before: unknown; after: unknown }[] {
+    const changes: { field: string; before: unknown; after: unknown }[] = [];
+    if (a.type !== b.type) {
+      changes.push({ field: 'type', before: a.type, after: b.type });
+    }
+    const allKeys = new Set([...Object.keys(a.props || {}), ...Object.keys(b.props || {})]);
+    for (const key of allKeys) {
+      const valA = (a.props || {})[key];
+      const valB = (b.props || {})[key];
+      if (JSON.stringify(valA) !== JSON.stringify(valB)) {
+        changes.push({ field: `props.${key}`, before: valA, after: valB });
+      }
+    }
+    return changes;
+  }
 }

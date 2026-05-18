@@ -77,7 +77,9 @@ function ProjectDetail() {
           <Link href={`/dashboard/projects/${id}/domains`} style={secondaryBtn}>Domains</Link>
           <Link href={`/dashboard/projects/${id}/analytics`} style={secondaryBtn}>Analytics</Link>
           <Link href={`/dashboard/projects/${id}/webhooks`} style={secondaryBtn}>Webhooks</Link>
+          <Link href={`/dashboard/projects/${id}/integrations`} style={secondaryBtn}>Integrations</Link>
           <Link href={`/dashboard/projects/${id}/abtests`} style={secondaryBtn}>A/B Tests</Link>
+          <Link href={`/dashboard/projects/${id}/analytics/funnels`} style={secondaryBtn}>Funnels</Link>
           <Link href={`/dashboard/projects/${id}/settings`} style={secondaryBtn}>Settings</Link>
           <Link href={`/dashboard/projects/${id}/deploy`} style={deployBtnStyle}>Deploy</Link>
           <Link href={`/preview/${id}`} style={secondaryBtn} target="_blank">Preview</Link>

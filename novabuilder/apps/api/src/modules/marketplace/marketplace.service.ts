@@ -138,4 +138,63 @@ export class MarketplaceService {
       take,
     });
   }
+
+  async publishVersion(pluginId: string, publisherId: string, data: { version: string; changelog?: string; manifest?: unknown }) {
+    const plugin = await this.prisma.client.plugin.findUnique({ where: { id: pluginId } });
+    if (!plugin || plugin.publisherId !== publisherId) return null;
+
+    const currentManifest = plugin.manifest as any;
+    const versions = Array.isArray(currentManifest?.versions) ? currentManifest.versions : [];
+
+    versions.push({
+      version: plugin.version,
+      manifest: currentManifest,
+      releasedAt: plugin.updatedAt?.toISOString() || plugin.createdAt.toISOString(),
+    });
+
+    const newManifest = {
+      ...(data.manifest || currentManifest),
+      versions,
+      changelog: data.changelog || null,
+    };
+
+    return this.prisma.client.plugin.update({
+      where: { id: pluginId },
+      data: {
+        version: data.version,
+        manifest: newManifest as any,
+      },
+    });
+  }
+
+  async getVersionHistory(pluginId: string) {
+    const plugin = await this.prisma.client.plugin.findUnique({ where: { id: pluginId } });
+    if (!plugin) return null;
+
+    const manifest = plugin.manifest as any;
+    const versions = Array.isArray(manifest?.versions) ? manifest.versions : [];
+
+    return [
+      { version: plugin.version, current: true, releasedAt: plugin.updatedAt?.toISOString(), changelog: manifest?.changelog },
+      ...versions.map((v: any) => ({ version: v.version, current: false, releasedAt: v.releasedAt, changelog: v.manifest?.changelog })),
+    ];
+  }
+
+  async rollbackVersion(pluginId: string, publisherId: string, targetVersion: string) {
+    const plugin = await this.prisma.client.plugin.findUnique({ where: { id: pluginId } });
+    if (!plugin || plugin.publisherId !== publisherId) return null;
+
+    const manifest = plugin.manifest as any;
+    const versions = Array.isArray(manifest?.versions) ? manifest.versions : [];
+    const target = versions.find((v: any) => v.version === targetVersion);
+    if (!target) return null;
+
+    return this.prisma.client.plugin.update({
+      where: { id: pluginId },
+      data: {
+        version: target.version,
+        manifest: target.manifest as any,
+      },
+    });
+  }
 }

@@ -29,6 +29,7 @@ import { MarketplaceModule } from './modules/marketplace/marketplace.module';
 import { EmailModule } from './modules/email/email.module';
 import { UsageModule } from './modules/usage/usage.module';
 import { ABTestingModule } from './modules/abtesting/abtesting.module';
+import { IntegrationsModule } from './modules/integrations/integrations.module';
 
 @Module({
   imports: [
@@ -36,7 +37,9 @@ import { ABTestingModule } from './modules/abtesting/abtesting.module';
     TeamsModule, DeployModule, ThemeModule, DomainsModule, FormsModule,
     SettingsModule, SearchModule, UsersModule, AnalyticsModule,
     AuditModule, NotificationsModule, WebhooksModule, ExportModule,
-    ApiKeysModule, ImportModule, BillingModule, AdminModule, AiModule, RealtimeModule, MarketplaceModule, EmailModule, UsageModule, ABTestingModule,
+    ApiKeysModule, ImportModule, BillingModule, AdminModule, AiModule,
+    RealtimeModule, MarketplaceModule, EmailModule, UsageModule,
+    ABTestingModule, IntegrationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

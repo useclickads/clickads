@@ -69,4 +69,35 @@ export class MarketplaceController {
   async deleteReview(@Req() req: any, @Param('pluginId') pluginId: string) {
     return this.marketplace.deleteReview(pluginId, req.user.userId);
   }
+
+  @Post('plugins/:pluginId/versions')
+  async publishVersion(
+    @Req() req: any,
+    @Param('pluginId') pluginId: string,
+    @Body() body: { version: string; changelog?: string; manifest?: unknown },
+  ) {
+    if (!body.version) return { error: 'Version is required.' };
+    const result = await this.marketplace.publishVersion(pluginId, req.user.userId, body);
+    if (!result) return { error: 'Plugin not found or not authorized.' };
+    return result;
+  }
+
+  @Get('plugins/:pluginId/versions')
+  async getVersionHistory(@Param('pluginId') pluginId: string) {
+    const result = await this.marketplace.getVersionHistory(pluginId);
+    if (!result) return { error: 'Plugin not found.' };
+    return result;
+  }
+
+  @Post('plugins/:pluginId/versions/rollback')
+  async rollbackVersion(
+    @Req() req: any,
+    @Param('pluginId') pluginId: string,
+    @Body() body: { version: string },
+  ) {
+    if (!body.version) return { error: 'Version is required.' };
+    const result = await this.marketplace.rollbackVersion(pluginId, req.user.userId, body.version);
+    if (!result) return { error: 'Plugin or version not found.' };
+    return result;
+  }
 }

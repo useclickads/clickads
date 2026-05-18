@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { PagesService } from './pages.service';
 
@@ -130,6 +130,19 @@ export class PagesController {
     if (!body.ids?.length) return { error: 'No page IDs provided.' };
     const result = await this.pages.bulkDelete(body.ids);
     return { ok: true, count: result.count };
+  }
+
+  @Get(':id/versions/diff')
+  async diffVersions(
+    @Param('projectId') projectId: string,
+    @Param('id') id: string,
+    @Query('a') snapshotA: string,
+    @Query('b') snapshotB: string,
+  ) {
+    if (!snapshotA || !snapshotB) return { error: 'Both snapshot IDs (a, b) are required.' };
+    const result = await this.pages.diffVersions(id, projectId, snapshotA, snapshotB);
+    if (!result) return { error: 'One or both snapshots not found.' };
+    return result;
   }
 
   @Delete(':id')
