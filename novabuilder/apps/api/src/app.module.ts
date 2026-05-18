@@ -30,6 +30,7 @@ import { EmailModule } from './modules/email/email.module';
 import { UsageModule } from './modules/usage/usage.module';
 import { ABTestingModule } from './modules/abtesting/abtesting.module';
 import { IntegrationsModule } from './modules/integrations/integrations.module';
+import { WorkflowsModule } from './modules/workflows/workflows.module';
 
 @Module({
   imports: [
@@ -39,7 +40,7 @@ import { IntegrationsModule } from './modules/integrations/integrations.module';
     AuditModule, NotificationsModule, WebhooksModule, ExportModule,
     ApiKeysModule, ImportModule, BillingModule, AdminModule, AiModule,
     RealtimeModule, MarketplaceModule, EmailModule, UsageModule,
-    ABTestingModule, IntegrationsModule,
+    ABTestingModule, IntegrationsModule, WorkflowsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

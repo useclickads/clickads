@@ -38,4 +38,20 @@ export class AdminController {
   async getActivity(@Query('limit') limit?: string) {
     return this.adminService.getRecentActivity(Number(limit) || 50);
   }
+
+  @Get('stats/detailed')
+  async getDetailedStats() {
+    return this.adminService.getDetailedStats();
+  }
+
+  @Get('health')
+  async getHealth() {
+    return this.adminService.getSystemHealth();
+  }
+
+  @Get('users/search')
+  async searchUsers(@Query('q') query: string) {
+    if (!query) return [];
+    return this.adminService.searchUsers(query);
+  }
 }

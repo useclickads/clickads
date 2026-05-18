@@ -413,13 +413,88 @@
 - SSL status check endpoint for verified domains
 - Returns certificate status (pending/active), issue date, expiry
 
+### LLM AI Integration
+- Real LLM API integration with Anthropic (Claude) and OpenAI (GPT-4o-mini)
+- Provider auto-detection from `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` env vars
+- Detailed system prompt describing all 19 block types and their props
+- LLM-powered copy generation (headlines, paragraphs, CTAs, taglines)
+- Graceful fallback to rule-based generation when no API keys configured
+
+### Heatmap & Funnel Tracking
+- Click heatmap data collection endpoint (`POST /analytics/heatmap`)
+- Heatmap data retrieval per page with viewport info
+- Funnel creation with named steps and event type matching
+- Funnel computation with per-step visitor counts and dropoff percentages
+- Overall conversion rate calculation across funnel steps
+- Frontend funnel analytics page with step visualization and bar charts
+
+### Third-Party Integrations
+- `IntegrationsModule` with Slack, Discord, Zapier, and custom webhook support
+- Per-integration event filtering (subscribe to specific events or all)
+- Slack: rich Block Kit message formatting
+- Discord: embed messages with color and timestamps
+- Zapier/Custom: standard webhook POST with configurable headers
+- Test endpoint to verify integration connectivity
+- Frontend integrations management page with add/remove/test UI
+
+### Plugin Versioning
+- Publish new plugin versions with changelog
+- Version history stored in plugin manifest
+- Rollback to any previous version
+- API endpoints: `POST/GET /marketplace/plugins/:id/versions`, `POST /versions/rollback`
+
+### Page Version Diff
+- Compare any two page snapshots with block-level diff
+- Detects added, removed, and modified blocks
+- Per-block property-level change tracking
+- API endpoint: `GET /pages/:id/versions/diff?a=...&b=...`
+
+### Operational Transform (OT)
+- Server-side operation transform for concurrent block edits
+- Supports insert, delete, move, and update operations
+- Index shifting for insert/delete conflicts
+- Last-write-wins for concurrent property updates on same block
+- Operation log with version tracking (200-op sliding window)
+- Sync endpoint to catch up missed operations
+
+### CMS Localization (i18n)
+- Locale-filtered entry listing (`GET /entries/locale?locale=fr`)
+- Entry translation with source entry linking
+- Translation coverage status per locale
+- Upsert behavior for translations (update if locale variant exists)
+
+### Custom Component Library
+- Save reusable block configurations as custom components
+- Full CRUD: create, update, duplicate, delete components
+- Category-based filtering
+- Nested under projects (`/projects/:id/components`)
+
+### Form Validation & Export
+- Server-side field validation rules: required, email, url, number, pattern, min/max length
+- Custom regex patterns with user-facing error messages
+- CSV export of form submissions per form name
+- Validation rules optionally passed with form submission
+
+### Conditional Block Visibility
+- Date range: show blocks only within start/end dates (client-side JS)
+- Device targeting: desktop, tablet, or mobile only (CSS media queries)
+- Auth state: show to logged-in or logged-out users (cookie check)
+- Deployed HTML includes visibility wrappers with inline scripts
+
+### Expanded Search
+- Search results now include plugins (by name) and team members (by email)
+- 5 result categories: projects, pages, CMS collections, plugins, team
+
+### Test Suite (88 tests)
+- 10 test files, 88 unit tests
+- New: funnel computation (6 tests), OT transforms (7 tests), version diff (7 tests), form validation (8 tests)
+
 ### Lower Priority
-- Conflict resolution via OT/CRDT for concurrent block edits
-- Integrate OpenAI/Anthropic API for more intelligent generation (currently rule-based)
-- Analytics: heatmaps, funnel tracking
-- Marketplace: developer API docs, plugin versioning
-- Webhooks and integrations (third-party service connectors)
+- Marketplace: developer API docs
 - Expand test coverage (integration tests, e2e with Playwright)
+- Performance optimization (lazy loading, code splitting)
+- Advanced analytics dashboard visualizations
+- Workflow automation engine
 
 ---
 
@@ -431,3 +506,4 @@
 - Magic link and password reset tokens are stored in DB (survive restarts).
 - Projects are soft-deleted (retain data for recovery).
 - All TypeScript compilation passes for both `@novabuilder/web` and `@novabuilder/api`.
+- 30 NestJS modules, 88 tests, 19 block types, 9 page templates.
