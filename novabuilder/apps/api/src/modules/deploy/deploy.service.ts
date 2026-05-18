@@ -46,6 +46,39 @@ export class DeployService {
     });
   }
 
+  async generateSitemap(projectId: string): Promise<string> {
+    const settings = await this.prisma.client.projectSettings.findUnique({ where: { projectId } });
+    const baseUrl = (settings as any)?.siteUrl || 'https://example.com';
+
+    const pages = await this.prisma.client.page.findMany({
+      where: { projectId, published: true, deletedAt: null },
+      select: { path: true, updatedAt: true },
+    });
+
+    const urls = pages.map((page) => `  <url>
+    <loc>${baseUrl}${page.path}</loc>
+    <lastmod>${page.updatedAt.toISOString().slice(0, 10)}</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>`).join('\n');
+
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls}
+</urlset>`;
+  }
+
+  async generateRobotsTxt(projectId: string): Promise<string> {
+    const settings = await this.prisma.client.projectSettings.findUnique({ where: { projectId } });
+    const custom = (settings as any)?.robotsTxt;
+    if (custom) return custom;
+
+    const baseUrl = (settings as any)?.siteUrl || 'https://example.com';
+    return `User-agent: *
+Allow: /
+
+Sitemap: ${baseUrl}/sitemap.xml`;
+  }
+
   private renderPageHtml(title: string, blocks: Block[], opts?: { seo?: { metaTitle?: string; metaDescription?: string; ogImage?: string; noIndex?: boolean } | null; settings?: { headScripts?: string | null; bodyScripts?: string | null; favicon?: string | null; globalHeader?: unknown; globalFooter?: unknown } | null }): string {
     const seo = opts?.seo;
     const settings = opts?.settings;

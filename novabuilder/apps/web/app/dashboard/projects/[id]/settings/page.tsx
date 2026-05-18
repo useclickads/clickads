@@ -13,6 +13,11 @@ type Settings = {
   bodyScripts: string;
   favicon: string;
   socialImage: string;
+  defaultLocale: string;
+  supportedLocales: string;
+  siteName: string;
+  siteUrl: string;
+  robotsTxt: string;
 };
 
 export default function SettingsPage() {
@@ -33,11 +38,16 @@ function ProjectSettings() {
     bodyScripts: '',
     favicon: '',
     socialImage: '',
+    defaultLocale: 'en',
+    supportedLocales: '',
+    siteName: '',
+    siteUrl: '',
+    robotsTxt: '',
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [activeTab, setActiveTab] = useState<'general' | 'code'>('general');
+  const [activeTab, setActiveTab] = useState<'general' | 'code' | 'seo'>('general');
 
   const load = useCallback(async () => {
     try {
@@ -49,6 +59,11 @@ function ProjectSettings() {
         bodyScripts: data.bodyScripts || '',
         favicon: data.favicon || '',
         socialImage: data.socialImage || '',
+        defaultLocale: (data as any).defaultLocale || 'en',
+        supportedLocales: (data as any).supportedLocales || '',
+        siteName: (data as any).siteName || '',
+        siteUrl: (data as any).siteUrl || '',
+        robotsTxt: (data as any).robotsTxt || '',
       });
     } catch {}
     setLoading(false);
@@ -88,6 +103,7 @@ function ProjectSettings() {
 
       <div style={tabBar}>
         <button onClick={() => setActiveTab('general')} style={tabBtn(activeTab === 'general')}>General</button>
+        <button onClick={() => setActiveTab('seo')} style={tabBtn(activeTab === 'seo')}>SEO & Site</button>
         <button onClick={() => setActiveTab('code')} style={tabBtn(activeTab === 'code')}>Code Injection</button>
       </div>
 
@@ -139,6 +155,46 @@ function ProjectSettings() {
               placeholder='[{"type": "footer", "props": {...}}]'
             />
             <span style={hint}>Define blocks that appear at the bottom of every page.</span>
+          </label>
+        </div>
+      ) : activeTab === 'seo' ? (
+        <div style={sectionStyle}>
+          <label style={labelStyle}>
+            Site Name
+            <input type="text" value={settings.siteName} onChange={(e) => setSettings({ ...settings, siteName: e.target.value })} style={inputStyle} placeholder="My Website" />
+          </label>
+
+          <label style={labelStyle}>
+            Site URL
+            <input type="url" value={settings.siteUrl} onChange={(e) => setSettings({ ...settings, siteUrl: e.target.value })} style={inputStyle} placeholder="https://mysite.com" />
+            <span style={hint}>Used for sitemap generation and canonical URLs.</span>
+          </label>
+
+          <label style={labelStyle}>
+            Default Locale
+            <select value={settings.defaultLocale} onChange={(e) => setSettings({ ...settings, defaultLocale: e.target.value })} style={inputStyle}>
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+              <option value="fr">French</option>
+              <option value="de">German</option>
+              <option value="pt">Portuguese</option>
+              <option value="ja">Japanese</option>
+              <option value="zh">Chinese</option>
+              <option value="hi">Hindi</option>
+              <option value="ar">Arabic</option>
+            </select>
+          </label>
+
+          <label style={labelStyle}>
+            Supported Locales (JSON array)
+            <input type="text" value={settings.supportedLocales} onChange={(e) => setSettings({ ...settings, supportedLocales: e.target.value })} style={inputStyle} placeholder='["en", "es", "fr"]' />
+            <span style={hint}>JSON array of supported language codes for multi-language sites.</span>
+          </label>
+
+          <label style={labelStyle}>
+            Custom robots.txt
+            <textarea value={settings.robotsTxt} onChange={(e) => setSettings({ ...settings, robotsTxt: e.target.value })} style={codeArea} placeholder={'User-agent: *\nAllow: /\n\nSitemap: https://mysite.com/sitemap.xml'} />
+            <span style={hint}>Custom robots.txt content. Leave empty for auto-generated default.</span>
           </label>
         </div>
       ) : (

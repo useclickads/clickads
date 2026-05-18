@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Header, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { DeployService } from './deploy.service';
 
@@ -16,5 +16,17 @@ export class DeployController {
   @Get('history')
   async listDeployments(@Param('projectId') projectId: string) {
     return this.deploy.listDeployments(projectId);
+  }
+
+  @Get('sitemap')
+  @Header('Content-Type', 'application/xml')
+  async getSitemap(@Param('projectId') projectId: string) {
+    return this.deploy.generateSitemap(projectId);
+  }
+
+  @Get('robots')
+  @Header('Content-Type', 'text/plain')
+  async getRobotsTxt(@Param('projectId') projectId: string) {
+    return this.deploy.generateRobotsTxt(projectId);
   }
 }

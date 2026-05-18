@@ -392,6 +392,14 @@
 - Recent activity feed from audit log on dashboard home
 - Link to full activity page
 
+### Sitemap & SEO Infrastructure
+- Auto-generated XML sitemap from published pages (`GET /api/projects/:projectId/deploy/sitemap`)
+- Auto-generated robots.txt with sitemap reference (`GET /api/projects/:projectId/deploy/robots`)
+- Custom robots.txt override in project settings
+- Site URL and site name configuration for canonical URLs
+- Default locale and supported locales configuration (i18n-ready)
+- New "SEO & Site" tab in project settings with locale selector and robots.txt editor
+
 ### Lower Priority
 - Conflict resolution via OT/CRDT for concurrent block edits
 - Integrate OpenAI/Anthropic API for more intelligent generation (currently rule-based)

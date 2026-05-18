@@ -8,6 +8,11 @@ type SettingsData = {
   bodyScripts?: string;
   favicon?: string;
   socialImage?: string;
+  defaultLocale?: string;
+  supportedLocales?: string;
+  siteName?: string;
+  siteUrl?: string;
+  robotsTxt?: string;
 };
 
 @Injectable()
@@ -43,6 +48,11 @@ export class SettingsService {
         ...(data.bodyScripts !== undefined && { bodyScripts: data.bodyScripts }),
         ...(data.favicon !== undefined && { favicon: data.favicon }),
         ...(data.socialImage !== undefined && { socialImage: data.socialImage }),
+        ...(data.defaultLocale !== undefined && { defaultLocale: data.defaultLocale }),
+        ...(data.supportedLocales !== undefined && { supportedLocales: data.supportedLocales }),
+        ...(data.siteName !== undefined && { siteName: data.siteName }),
+        ...(data.siteUrl !== undefined && { siteUrl: data.siteUrl }),
+        ...(data.robotsTxt !== undefined && { robotsTxt: data.robotsTxt }),
       },
     });
   }

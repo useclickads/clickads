@@ -926,6 +926,11 @@ model ProjectSettings {
   bodyScripts     String?
   favicon         String?
   socialImage     String?
+  defaultLocale   String   @default("en")
+  supportedLocales String? // JSON array of locale codes
+  siteName        String?
+  siteUrl         String?
+  robotsTxt       String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
