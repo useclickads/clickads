@@ -32,6 +32,7 @@ import { ABTestingModule } from './modules/abtesting/abtesting.module';
 import { IntegrationsModule } from './modules/integrations/integrations.module';
 import { WorkflowsModule } from './modules/workflows/workflows.module';
 import { QualityModule } from './modules/quality/quality.module';
+import { BackupModule } from './modules/backup/backup.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { QualityModule } from './modules/quality/quality.module';
     ApiKeysModule, ImportModule, BillingModule, AdminModule, AiModule,
     RealtimeModule, MarketplaceModule, EmailModule, UsageModule,
     ABTestingModule, IntegrationsModule, WorkflowsModule, QualityModule,
+    BackupModule,
   ],
   controllers: [AppController],
   providers: [AppService],
