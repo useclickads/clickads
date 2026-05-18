@@ -3,6 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AssetsService } from './assets.service';
 import { StorageService } from './providers/storage.provider';
+import { ImageOptimizerService } from './image-optimizer.service';
 
 @Controller('projects/:projectId/assets')
 @UseGuards(AuthGuard('jwt'))
@@ -10,6 +11,7 @@ export class AssetsController {
   constructor(
     private readonly assets: AssetsService,
     private readonly storage: StorageService,
+    private readonly imageOptimizer: ImageOptimizerService,
   ) {}
 
   @Get()
@@ -67,5 +69,34 @@ export class AssetsController {
   async deleteFolder(@Param('id') id: string) {
     await this.assets.deleteFolder(id);
     return { ok: true };
+  }
+
+  @Get('images/settings')
+  async getImageSettings(@Param('projectId') projectId: string) {
+    return this.imageOptimizer.getOptimizationSettings(projectId);
+  }
+
+  @Post('images/settings')
+  async updateImageSettings(
+    @Param('projectId') projectId: string,
+    @Body() body: { breakpoints?: number[]; formats?: string[]; quality?: number; lazyLoading?: boolean; srcSet?: boolean },
+  ) {
+    return this.imageOptimizer.updateOptimizationSettings(projectId, body);
+  }
+
+  @Post('images/responsive')
+  async generateResponsiveHtml(
+    @Param('projectId') projectId: string,
+    @Body() body: { src: string; alt: string },
+  ) {
+    const settings = await this.imageOptimizer.getOptimizationSettings(projectId);
+    const html = this.imageOptimizer.generateResponsiveHtml(body.src, body.alt, settings);
+    return { html };
+  }
+
+  @Get('images/audit')
+  async auditImages(@Param('projectId') projectId: string) {
+    const pages = await this.assets.getProjectPagesForAudit(projectId);
+    return this.imageOptimizer.analyzeProjectImages(pages);
   }
 }

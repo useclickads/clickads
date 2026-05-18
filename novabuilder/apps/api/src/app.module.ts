@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { RateLimitMiddleware } from './middleware/rate-limit.middleware';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
@@ -33,6 +34,10 @@ import { IntegrationsModule } from './modules/integrations/integrations.module';
 import { WorkflowsModule } from './modules/workflows/workflows.module';
 import { QualityModule } from './modules/quality/quality.module';
 import { BackupModule } from './modules/backup/backup.module';
+import { StagingModule } from './modules/staging/staging.module';
+import { SchedulerModule } from './modules/scheduler/scheduler.module';
+import { SeoModule } from './modules/seo/seo.module';
+import { EnvVarsModule } from './modules/envvars/envvars.module';
 
 @Module({
   imports: [
@@ -44,8 +49,16 @@ import { BackupModule } from './modules/backup/backup.module';
     RealtimeModule, MarketplaceModule, EmailModule, UsageModule,
     ABTestingModule, IntegrationsModule, WorkflowsModule, QualityModule,
     BackupModule,
+    StagingModule,
+    SchedulerModule,
+    SeoModule,
+    EnvVarsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RateLimitMiddleware).forRoutes('*');
+  }
+}

@@ -81,6 +81,8 @@ function ProjectDetail() {
           <Link href={`/dashboard/projects/${id}/abtests`} style={secondaryBtn}>A/B Tests</Link>
           <Link href={`/dashboard/projects/${id}/analytics/funnels`} style={secondaryBtn}>Funnels</Link>
           <Link href={`/dashboard/projects/${id}/workflows`} style={secondaryBtn}>Workflows</Link>
+          <Link href={`/dashboard/projects/${id}/staging`} style={secondaryBtn}>Staging</Link>
+          <Link href={`/dashboard/projects/${id}/backups`} style={secondaryBtn}>Backups</Link>
           <Link href={`/dashboard/projects/${id}/settings`} style={secondaryBtn}>Settings</Link>
           <Link href={`/dashboard/projects/${id}/deploy`} style={deployBtnStyle}>Deploy</Link>
           <Link href={`/preview/${id}`} style={secondaryBtn} target="_blank">Preview</Link>

@@ -53,4 +53,11 @@ export class AssetsService {
       data: { deletedAt: new Date() },
     });
   }
+
+  async getProjectPagesForAudit(projectId: string) {
+    return this.prisma.client.page.findMany({
+      where: { projectId, deletedAt: null },
+      select: { content: true },
+    });
+  }
 }
