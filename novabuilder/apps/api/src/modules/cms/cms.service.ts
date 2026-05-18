@@ -86,4 +86,60 @@ export class CmsService {
       data: { status: 'published' },
     });
   }
+
+  async listEntriesByLocale(collectionId: string, locale: string) {
+    return this.prisma.client.cMSEntry.findMany({
+      where: { collectionId, locale, deletedAt: null },
+      orderBy: { updatedAt: 'desc' },
+    });
+  }
+
+  async translateEntry(entryId: string, targetLocale: string, translatedData: Record<string, unknown>) {
+    const source = await this.prisma.client.cMSEntry.findUnique({ where: { id: entryId } });
+    if (!source) return null;
+
+    const existing = await this.prisma.client.cMSEntry.findFirst({
+      where: {
+        collectionId: source.collectionId,
+        locale: targetLocale,
+        data: { path: ['_sourceId'], equals: entryId },
+        deletedAt: null,
+      },
+    });
+
+    if (existing) {
+      return this.prisma.client.cMSEntry.update({
+        where: { id: existing.id },
+        data: { data: { ...translatedData, _sourceId: entryId } as any },
+      });
+    }
+
+    return this.prisma.client.cMSEntry.create({
+      data: {
+        collectionId: source.collectionId,
+        locale: targetLocale,
+        data: { ...translatedData, _sourceId: entryId } as any,
+        status: 'draft',
+      },
+    });
+  }
+
+  async getTranslationStatus(collectionId: string, locales: string[]) {
+    const entries = await this.prisma.client.cMSEntry.findMany({
+      where: { collectionId, deletedAt: null },
+      select: { id: true, locale: true },
+    });
+
+    const byLocale: Record<string, number> = {};
+    for (const entry of entries) {
+      byLocale[entry.locale] = (byLocale[entry.locale] || 0) + 1;
+    }
+
+    return locales.map((locale) => ({
+      locale,
+      count: byLocale[locale] || 0,
+      total: byLocale['en'] || 0,
+      coverage: (byLocale['en'] || 0) > 0 ? Math.round(((byLocale[locale] || 0) / byLocale['en']) * 100) : 0,
+    }));
+  }
 }

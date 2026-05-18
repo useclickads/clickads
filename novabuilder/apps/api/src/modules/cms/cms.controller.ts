@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CmsService } from './cms.service';
 
@@ -70,5 +70,28 @@ export class CmsController {
   async deleteEntry(@Param('entryId') entryId: string) {
     await this.cms.deleteEntry(entryId);
     return { ok: true };
+  }
+
+  @Get('collections/:id/entries/locale')
+  async listByLocale(@Param('id') id: string, @Query('locale') locale: string) {
+    if (!locale) return { error: 'Locale query param is required.' };
+    return this.cms.listEntriesByLocale(id, locale);
+  }
+
+  @Post('entries/:entryId/translate')
+  async translateEntry(
+    @Param('entryId') entryId: string,
+    @Body() body: { locale: string; data: Record<string, unknown> },
+  ) {
+    if (!body.locale || !body.data) return { error: 'Locale and data are required.' };
+    const result = await this.cms.translateEntry(entryId, body.locale, body.data);
+    if (!result) return { error: 'Source entry not found.' };
+    return result;
+  }
+
+  @Get('collections/:id/translations/status')
+  async translationStatus(@Param('id') id: string, @Query('locales') locales: string) {
+    const localeList = locales ? locales.split(',').map((l) => l.trim()) : ['en'];
+    return this.cms.getTranslationStatus(id, localeList);
   }
 }
