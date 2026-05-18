@@ -1,4 +1,4 @@
-export type TemplateData = Record<string, string>;
+export type TemplateData = Record<string, unknown>;
 
 const templates: Record<string, (data: any) => string> = {
   'magic-link': magicLinkTemplate,
@@ -6,6 +6,9 @@ const templates: Record<string, (data: any) => string> = {
   'team-invite': teamInviteTemplate,
   'welcome': welcomeTemplate,
   'deploy-notification': deployNotificationTemplate,
+  'form-submission': formSubmissionTemplate,
+  'backup-complete': backupCompleteTemplate,
+  'weekly-digest': weeklyDigestTemplate,
 };
 
 export function renderTemplate(name: string, data: TemplateData): string {
@@ -123,6 +126,79 @@ Your project <strong>${data.projectName}</strong> has been deployed. The page "$
 <table role="presentation" cellpadding="0" cellspacing="0">
 <tr><td style="border-radius:10px;background:#16a34a;">
 <a href="${data.url}" target="_blank" style="display:inline-block;padding:14px 28px;color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;">View Live Site</a>
+</td></tr>
+</table>
+`);
+}
+
+function formSubmissionTemplate(data: { formName: string; projectName: string; fields: Array<{ label: string; value: string }>; link: string }): string {
+  const fieldRows = (data.fields || []).map((f) =>
+    `<tr><td style="padding:8px 12px;font-size:13px;color:#64748b;border-bottom:1px solid #f1f5f9;font-weight:600;width:120px;">${f.label}</td><td style="padding:8px 12px;font-size:13px;color:#0f172a;border-bottom:1px solid #f1f5f9;">${f.value}</td></tr>`
+  ).join('');
+
+  return baseLayout(`
+<h1 style="margin:0 0 8px;font-size:22px;color:#0f172a;">New form submission</h1>
+<p style="margin:0 0 20px;font-size:15px;color:#475569;line-height:1.6;">
+A new response was submitted to <strong>${data.formName}</strong> in <strong>${data.projectName}</strong>.
+</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:24px;">
+${fieldRows}
+</table>
+<table role="presentation" cellpadding="0" cellspacing="0">
+<tr><td style="border-radius:10px;background:#0f172a;">
+<a href="${data.link}" target="_blank" style="display:inline-block;padding:14px 28px;color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;">View All Submissions</a>
+</td></tr>
+</table>
+`);
+}
+
+function backupCompleteTemplate(data: { projectName: string; backupId: string; pageCount: number; size: string; link: string }): string {
+  return baseLayout(`
+<h1 style="margin:0 0 8px;font-size:22px;color:#0f172a;">Backup completed</h1>
+<p style="margin:0 0 20px;font-size:15px;color:#475569;line-height:1.6;">
+A backup of <strong>${data.projectName}</strong> was created successfully.
+</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+<tr><td style="padding:8px 0;font-size:14px;color:#64748b;">Pages backed up:</td><td style="padding:8px 0;font-size:14px;color:#0f172a;font-weight:600;text-align:right;">${data.pageCount}</td></tr>
+<tr><td style="padding:8px 0;font-size:14px;color:#64748b;">Backup size:</td><td style="padding:8px 0;font-size:14px;color:#0f172a;font-weight:600;text-align:right;">${data.size}</td></tr>
+<tr><td style="padding:8px 0;font-size:14px;color:#64748b;">Backup ID:</td><td style="padding:8px 0;font-size:14px;color:#0f172a;font-family:monospace;text-align:right;">${data.backupId.slice(0, 12)}...</td></tr>
+</table>
+<table role="presentation" cellpadding="0" cellspacing="0">
+<tr><td style="border-radius:10px;background:#0f172a;">
+<a href="${data.link}" target="_blank" style="display:inline-block;padding:14px 28px;color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;">Manage Backups</a>
+</td></tr>
+</table>
+`);
+}
+
+function weeklyDigestTemplate(data: { name: string; projects: Array<{ name: string; pageViews: number; newPages: number }>; totalViews: number; period: string; link: string }): string {
+  const projectRows = (data.projects || []).map((p) =>
+    `<tr>
+<td style="padding:10px 12px;font-size:14px;color:#0f172a;border-bottom:1px solid #f1f5f9;font-weight:600;">${p.name}</td>
+<td style="padding:10px 12px;font-size:14px;color:#475569;border-bottom:1px solid #f1f5f9;text-align:center;">${p.pageViews.toLocaleString()}</td>
+<td style="padding:10px 12px;font-size:14px;color:#475569;border-bottom:1px solid #f1f5f9;text-align:center;">${p.newPages}</td>
+</tr>`
+  ).join('');
+
+  return baseLayout(`
+<h1 style="margin:0 0 8px;font-size:22px;color:#0f172a;">Your weekly digest</h1>
+<p style="margin:0 0 20px;font-size:15px;color:#475569;line-height:1.6;">
+Hi ${data.name}, here's a summary of your projects for ${data.period}.
+</p>
+<p style="margin:0 0 4px;font-size:13px;color:#94a3b8;text-transform:uppercase;font-weight:700;letter-spacing:0.05em;">Total page views</p>
+<p style="margin:0 0 24px;font-size:32px;color:#0f172a;font-weight:800;">${data.totalViews.toLocaleString()}</p>
+${data.projects.length > 0 ? `
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;margin-bottom:24px;">
+<tr style="background:#f8fafc;">
+<th style="padding:10px 12px;font-size:12px;color:#64748b;text-align:left;font-weight:700;">Project</th>
+<th style="padding:10px 12px;font-size:12px;color:#64748b;text-align:center;font-weight:700;">Views</th>
+<th style="padding:10px 12px;font-size:12px;color:#64748b;text-align:center;font-weight:700;">New Pages</th>
+</tr>
+${projectRows}
+</table>` : ''}
+<table role="presentation" cellpadding="0" cellspacing="0">
+<tr><td style="border-radius:10px;background:#0f172a;">
+<a href="${data.link}" target="_blank" style="display:inline-block;padding:14px 28px;color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;">View Dashboard</a>
 </td></tr>
 </table>
 `);

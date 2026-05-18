@@ -42,6 +42,8 @@ import { ActivityModule } from './modules/activity/activity.module';
 import { TemplatesModule } from './modules/templates/templates.module';
 import { PerformanceModule } from './modules/performance/performance.module';
 import { CodeInjectModule } from './modules/codeinject/codeinject.module';
+import { RedirectsModule } from './modules/redirects/redirects.module';
+import { PermissionsModule } from './modules/permissions/permissions.module';
 
 @Module({
   imports: [
@@ -61,6 +63,8 @@ import { CodeInjectModule } from './modules/codeinject/codeinject.module';
     TemplatesModule,
     PerformanceModule,
     CodeInjectModule,
+    RedirectsModule,
+    PermissionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

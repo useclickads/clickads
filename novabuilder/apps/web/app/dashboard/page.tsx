@@ -63,6 +63,7 @@ function DashboardContent() {
           <Link href="/dashboard/activity" style={navBtn}>Activity</Link>
           <Link href="/dashboard/ai" style={navBtn}>AI Generator</Link>
           <Link href="/dashboard/marketplace" style={navBtn}>Marketplace</Link>
+          <Link href="/dashboard/templates" style={navBtn}>Templates</Link>
           <Link href="/dashboard/usage" style={navBtn}>Usage</Link>
           <Link href="/dashboard/billing" style={navBtn}>Billing</Link>
           <Link href="/dashboard/api-keys" style={navBtn}>API Keys</Link>

@@ -66,4 +66,19 @@ export class EmailService {
     const html = renderTemplate('deploy-notification', data);
     return this.send({ to, subject: `${data.projectName} deployed successfully`, html });
   }
+
+  async sendFormSubmission(to: string, data: { formName: string; projectName: string; fields: Array<{ label: string; value: string }>; link: string }) {
+    const html = renderTemplate('form-submission', data);
+    return this.send({ to, subject: `New submission: ${data.formName}`, html });
+  }
+
+  async sendBackupComplete(to: string, data: { projectName: string; backupId: string; pageCount: number; size: string; link: string }) {
+    const html = renderTemplate('backup-complete', data);
+    return this.send({ to, subject: `Backup complete: ${data.projectName}`, html });
+  }
+
+  async sendWeeklyDigest(to: string, data: { name: string; projects: Array<{ name: string; pageViews: number; newPages: number }>; totalViews: number; period: string; link: string }) {
+    const html = renderTemplate('weekly-digest', data);
+    return this.send({ to, subject: `Your NovaBuilder weekly digest — ${data.period}`, html });
+  }
 }
