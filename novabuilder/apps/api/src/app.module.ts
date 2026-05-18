@@ -38,6 +38,10 @@ import { StagingModule } from './modules/staging/staging.module';
 import { SchedulerModule } from './modules/scheduler/scheduler.module';
 import { SeoModule } from './modules/seo/seo.module';
 import { EnvVarsModule } from './modules/envvars/envvars.module';
+import { ActivityModule } from './modules/activity/activity.module';
+import { TemplatesModule } from './modules/templates/templates.module';
+import { PerformanceModule } from './modules/performance/performance.module';
+import { CodeInjectModule } from './modules/codeinject/codeinject.module';
 
 @Module({
   imports: [
@@ -53,6 +57,10 @@ import { EnvVarsModule } from './modules/envvars/envvars.module';
     SchedulerModule,
     SeoModule,
     EnvVarsModule,
+    ActivityModule,
+    TemplatesModule,
+    PerformanceModule,
+    CodeInjectModule,
   ],
   controllers: [AppController],
   providers: [AppService],
