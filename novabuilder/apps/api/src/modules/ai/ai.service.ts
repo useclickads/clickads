@@ -2,13 +2,130 @@ import { Injectable } from '@nestjs/common';
 
 type Block = { id: string; type: string; props: Record<string, unknown> };
 
-const BLOCK_TYPES = ['hero', 'text', 'image', 'button', 'columns', 'spacer', 'card', 'navigation', 'footer', 'form', 'video'] as const;
+const BLOCK_TYPES = ['hero', 'text', 'image', 'button', 'columns', 'spacer', 'card', 'navigation', 'footer', 'form', 'video', 'testimonial', 'pricing', 'faq', 'countdown', 'divider', 'code', 'gallery', 'map'] as const;
 
 @Injectable()
 export class AiService {
-  async generatePage(prompt: string): Promise<{ blocks: Block[] }> {
+  private readonly apiKey = process.env.ANTHROPIC_API_KEY || process.env.OPENAI_API_KEY;
+  private readonly provider = process.env.ANTHROPIC_API_KEY ? 'anthropic' : process.env.OPENAI_API_KEY ? 'openai' : null;
+
+  async generatePage(prompt: string): Promise<{ blocks: Block[]; source: string }> {
+    if (this.provider) {
+      try {
+        const blocks = await this.llmGeneratePage(prompt);
+        return { blocks, source: 'llm' };
+      } catch (err) {
+        console.warn('LLM generation failed, falling back to rule-based:', (err as Error).message);
+      }
+    }
     const blocks = this.buildBlocksFromPrompt(prompt);
-    return { blocks };
+    return { blocks, source: 'rule-based' };
+  }
+
+  private async llmGeneratePage(prompt: string): Promise<Block[]> {
+    const systemPrompt = `You are a web page builder AI. Given a user's description, generate a JSON array of page blocks.
+Available block types: ${BLOCK_TYPES.join(', ')}.
+Each block has: { id: string, type: string, props: Record<string, unknown> }.
+Block props by type:
+- hero: heading, subheading, buttonText, buttonUrl, align
+- text: content, fontSize, color, align
+- image: src, alt, width, height, borderRadius
+- button: text, url, variant (primary/secondary/outline), size, align
+- columns: columns (number), gap
+- spacer: height
+- card: title, description, imageUrl, linkUrl, linkText
+- navigation: brand, links (JSON string of [{label, url}])
+- footer: text, links (JSON string of [{label, url}])
+- form: heading, fields (JSON string of [{name, type, label, required}]), submitText
+- video: url, autoplay, muted, aspectRatio
+- testimonial: quote, author, role, avatarUrl, rating (1-5)
+- pricing: planName, price, period, features (JSON string array), buttonText, buttonUrl, highlighted
+- faq: heading, items (JSON string of [{question, answer}])
+- countdown: targetDate, heading, expiredText
+- divider: style, color, thickness, width, margin
+- gallery: images (JSON string array of URLs), columns, gap, borderRadius
+- map: embedUrl, height, borderRadius
+- code: html, css
+Generate 5-15 blocks that create a professional page. Use unique IDs like "blk_1", "blk_2" etc. Return ONLY valid JSON array, no markdown.`;
+
+    if (this.provider === 'anthropic') {
+      return this.callAnthropic(systemPrompt, prompt);
+    }
+    return this.callOpenAI(systemPrompt, prompt);
+  }
+
+  private async callAnthropic(systemPrompt: string, userPrompt: string): Promise<Block[]> {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': this.apiKey!,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 4096,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: `Generate a web page for: ${userPrompt}` }],
+      }),
+    });
+    if (!res.ok) throw new Error(`Anthropic API error: ${res.status}`);
+    const data = await res.json() as { content: { type: string; text: string }[] };
+    const text = data.content.find((c: any) => c.type === 'text')?.text || '[]';
+    return JSON.parse(text);
+  }
+
+  private async callOpenAI(systemPrompt: string, userPrompt: string): Promise<Block[]> {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.apiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: `Generate a web page for: ${userPrompt}` },
+        ],
+        max_tokens: 4096,
+        temperature: 0.7,
+      }),
+    });
+    if (!res.ok) throw new Error(`OpenAI API error: ${res.status}`);
+    const data = await res.json() as { choices: { message: { content: string } }[] };
+    const text = data.choices[0]?.message?.content || '[]';
+    const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    return JSON.parse(cleaned);
+  }
+
+  async generateCopyWithLLM(params: { type: string; topic?: string; tone?: string }): Promise<{ text: string; source: string }> {
+    if (this.provider) {
+      try {
+        const prompt = `Generate a single ${params.type} for a website about "${params.topic || 'a modern product'}". Tone: ${params.tone || 'professional'}. Return only the text, no quotes or explanation.`;
+        let text: string;
+        if (this.provider === 'anthropic') {
+          const res = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-api-key': this.apiKey!, 'anthropic-version': '2023-06-01' },
+            body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 256, messages: [{ role: 'user', content: prompt }] }),
+          });
+          const data = await res.json() as { content: { text: string }[] };
+          text = data.content[0]?.text || '';
+        } else {
+          const res = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.apiKey}` },
+            body: JSON.stringify({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: prompt }], max_tokens: 256 }),
+          });
+          const data = await res.json() as { choices: { message: { content: string } }[] };
+          text = data.choices[0]?.message?.content || '';
+        }
+        if (text) return { text: text.trim(), source: 'llm' };
+      } catch {}
+    }
+    const result = await this.generateCopy(params as any);
+    return { ...result, source: 'rule-based' };
   }
 
   async suggestBlocks(context: { existingBlocks: Block[]; prompt?: string }): Promise<Block[]> {

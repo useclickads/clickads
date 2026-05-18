@@ -24,7 +24,7 @@ export class AiController {
   @Post('generate-copy')
   async generateCopy(@Body() body: { type: 'headline' | 'paragraph' | 'cta' | 'tagline'; topic?: string; tone?: string }) {
     if (!body.type) return { error: 'Type is required.' };
-    return this.ai.generateCopy(body);
+    return this.ai.generateCopyWithLLM(body);
   }
 
   @Post('improve')
