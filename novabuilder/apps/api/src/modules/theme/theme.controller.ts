@@ -34,4 +34,22 @@ export class ThemeController {
   async listVersions(@Param('projectId') projectId: string) {
     return this.theme.listThemeVersions(projectId);
   }
+
+  @Post('versions/:versionId/restore')
+  async restoreVersion(@Param('projectId') projectId: string, @Param('versionId') versionId: string) {
+    const result = await this.theme.restoreThemeVersion(projectId, versionId);
+    if (!result) return { error: 'Theme version not found.' };
+    return { ok: true, tokens: result.length };
+  }
+
+  @Get('css')
+  async getCssVariables(@Param('projectId') projectId: string) {
+    const css = await this.theme.generateCssVariables(projectId);
+    return { css };
+  }
+
+  @Get('tailwind')
+  async getTailwindConfig(@Param('projectId') projectId: string) {
+    return this.theme.generateTailwindConfig(projectId);
+  }
 }

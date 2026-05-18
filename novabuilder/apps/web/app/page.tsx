@@ -42,34 +42,40 @@ export default function Home() {
         <h2 style={sectionHeading}>Everything you need to build and ship</h2>
         <div style={featureGrid}>
           <div style={featureCard}>
-            <span style={featureIcon}>◆</span>
             <h3 style={featureTitle}>Visual Editor</h3>
-            <p style={featureDesc}>Drag-and-drop blocks to compose pages. 11+ block types with live preview and responsive design.</p>
+            <p style={featureDesc}>19 block types with drag-and-drop, live preview, responsive toggle, and keyboard shortcuts.</p>
           </div>
           <div style={featureCard}>
-            <span style={featureIcon}>⚡</span>
             <h3 style={featureTitle}>Instant Publish</h3>
-            <p style={featureDesc}>Go from draft to live in one click. Custom domains, SSL, and edge deployment included.</p>
+            <p style={featureDesc}>One-click deploy with custom domains, SSL, sitemap generation, and scheduled publishing.</p>
           </div>
           <div style={featureCard}>
-            <span style={featureIcon}>👥</span>
-            <h3 style={featureTitle}>Team Collaboration</h3>
-            <p style={featureDesc}>Invite team members, assign roles, and build together with real-time presence.</p>
+            <h3 style={featureTitle}>Real-time Collaboration</h3>
+            <p style={featureDesc}>Live cursors, presence tracking, and OT-based conflict resolution for concurrent editing.</p>
           </div>
           <div style={featureCard}>
-            <span style={featureIcon}>🤖</span>
             <h3 style={featureTitle}>AI-Powered</h3>
-            <p style={featureDesc}>Generate pages from prompts, get smart block suggestions, and auto-optimize content.</p>
+            <p style={featureDesc}>Generate pages from prompts with Claude or GPT-4o. Smart block suggestions and copy generation.</p>
           </div>
           <div style={featureCard}>
-            <span style={featureIcon}>📊</span>
-            <h3 style={featureTitle}>Built-in Analytics</h3>
-            <p style={featureDesc}>Track page views, visitor sessions, and conversion events without third-party scripts.</p>
+            <h3 style={featureTitle}>Analytics & Funnels</h3>
+            <p style={featureDesc}>Page views, heatmaps, funnel tracking, A/B testing, and conversion rate analysis.</p>
           </div>
           <div style={featureCard}>
-            <span style={featureIcon}>🔗</span>
-            <h3 style={featureTitle}>API & Webhooks</h3>
-            <p style={featureDesc}>Programmatic access with scoped API keys. Trigger webhooks on publish, form submissions, and more.</p>
+            <h3 style={featureTitle}>Integrations</h3>
+            <p style={featureDesc}>Connect Slack, Discord, Zapier, and custom webhooks. Workflow automation for event-driven actions.</p>
+          </div>
+          <div style={featureCard}>
+            <h3 style={featureTitle}>CMS & i18n</h3>
+            <p style={featureDesc}>Headless CMS with collections, entries, localization, and translation coverage tracking.</p>
+          </div>
+          <div style={featureCard}>
+            <h3 style={featureTitle}>Quality Audits</h3>
+            <p style={featureDesc}>Automated accessibility, SEO, performance, and content checks with actionable suggestions.</p>
+          </div>
+          <div style={featureCard}>
+            <h3 style={featureTitle}>Plugin Marketplace</h3>
+            <p style={featureDesc}>Browse, install, and publish plugins. Version management with changelog and rollback support.</p>
           </div>
         </div>
       </section>

@@ -31,6 +31,7 @@ import { UsageModule } from './modules/usage/usage.module';
 import { ABTestingModule } from './modules/abtesting/abtesting.module';
 import { IntegrationsModule } from './modules/integrations/integrations.module';
 import { WorkflowsModule } from './modules/workflows/workflows.module';
+import { QualityModule } from './modules/quality/quality.module';
 
 @Module({
   imports: [
@@ -40,7 +41,7 @@ import { WorkflowsModule } from './modules/workflows/workflows.module';
     AuditModule, NotificationsModule, WebhooksModule, ExportModule,
     ApiKeysModule, ImportModule, BillingModule, AdminModule, AiModule,
     RealtimeModule, MarketplaceModule, EmailModule, UsageModule,
-    ABTestingModule, IntegrationsModule, WorkflowsModule,
+    ABTestingModule, IntegrationsModule, WorkflowsModule, QualityModule,
   ],
   controllers: [AppController],
   providers: [AppService],
