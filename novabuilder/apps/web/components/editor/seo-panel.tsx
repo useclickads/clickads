@@ -85,10 +85,27 @@ export function SeoPanel({ projectId, pageId }: { projectId: string; pageId: str
         <span>No Index (hide from search engines)</span>
       </label>
 
-      <div style={previewBox}>
-        <p style={previewTitle}>{seo.metaTitle || 'Page Title'}</p>
-        <p style={previewUrl}>yoursite.com/page</p>
-        <p style={previewDesc}>{seo.metaDescription || 'Page description will appear here...'}</p>
+      <div style={{ display: 'grid', gap: 10 }}>
+        <p style={{ margin: 0, fontSize: '0.7rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Google Preview</p>
+        <div style={previewBox}>
+          <p style={previewTitle}>{seo.metaTitle || 'Page Title'}</p>
+          <p style={previewUrl}>yoursite.com/page</p>
+          <p style={previewDesc}>{seo.metaDescription || 'Page description will appear here...'}</p>
+        </div>
+
+        <p style={{ margin: 0, fontSize: '0.7rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Social Share Preview</p>
+        <div style={ogCard}>
+          {seo.ogImage ? (
+            <div style={ogImageBox}><img src={seo.ogImage} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>
+          ) : (
+            <div style={{ ...ogImageBox, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: '0.75rem' }}>No OG image</div>
+          )}
+          <div style={ogContent}>
+            <p style={ogDomain}>yoursite.com</p>
+            <p style={ogTitle}>{seo.metaTitle || 'Page Title'}</p>
+            <p style={ogDesc}>{seo.metaDescription || 'Description will appear here'}</p>
+          </div>
+        </div>
       </div>
 
       <button onClick={handleSave} style={saveBtn} disabled={saving}>
@@ -108,4 +125,10 @@ const previewBox: React.CSSProperties = { padding: 12, borderRadius: 8, backgrou
 const previewTitle: React.CSSProperties = { margin: 0, color: '#1a0dab', fontSize: '0.9rem', fontWeight: 500 };
 const previewUrl: React.CSSProperties = { margin: '2px 0', color: '#006621', fontSize: '0.75rem' };
 const previewDesc: React.CSSProperties = { margin: 0, color: '#545454', fontSize: '0.8rem', lineHeight: 1.4 };
+const ogCard: React.CSSProperties = { borderRadius: 8, border: '1px solid #e2e8f0', overflow: 'hidden', background: '#fff' };
+const ogImageBox: React.CSSProperties = { width: '100%', height: 100, background: '#f1f5f9', overflow: 'hidden' };
+const ogContent: React.CSSProperties = { padding: '8px 10px' };
+const ogDomain: React.CSSProperties = { margin: 0, fontSize: '0.65rem', color: '#64748b', textTransform: 'uppercase' };
+const ogTitle: React.CSSProperties = { margin: '2px 0', fontSize: '0.8rem', fontWeight: 600, color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' };
+const ogDesc: React.CSSProperties = { margin: 0, fontSize: '0.7rem', color: '#475569', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' };
 const saveBtn: React.CSSProperties = { padding: '8px 16px', borderRadius: 8, border: 'none', background: '#0f172a', color: '#fff', fontWeight: 600, cursor: 'pointer', fontSize: '0.85rem' };

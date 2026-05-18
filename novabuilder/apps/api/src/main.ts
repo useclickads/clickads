@@ -6,6 +6,8 @@ import { mkdirSync } from 'fs';
 import { AppModule } from './app.module';
 import { initSentry } from './observability/sentry';
 import { initOTel, shutdownOTel } from './observability/otel';
+import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 
 async function bootstrap() {
   initSentry();
@@ -21,6 +23,8 @@ async function bootstrap() {
   });
   app.useStaticAssets(uploadsDir, { prefix: '/uploads/' });
   app.setGlobalPrefix('api');
+  app.useGlobalFilters(new GlobalExceptionFilter());
+  app.useGlobalInterceptors(new LoggingInterceptor());
 
   const port = process.env.PORT ? Number(process.env.PORT) : 3001;
   await app.listen(port);

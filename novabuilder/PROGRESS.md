@@ -317,8 +317,20 @@
 - Restaurant: nav, hero, menu cards, testimonial, map, reservation form
 - Templates use all 19 block types for rich starting points
 
-### Health Check (Enhanced)
+### Health Check & API Docs
 - `GET /api/` returns status, version, uptime seconds, start time, Node.js version
+- `GET /api/docs` returns full API endpoint documentation with methods, paths, descriptions, auth requirements
+
+### Global Error Handling & Logging
+- `GlobalExceptionFilter` catches all exceptions with consistent JSON error responses
+- `LoggingInterceptor` logs slow requests (>1s) as warnings
+- Environment config validation with required env var checking in production
+- Consistent error format: `{ statusCode, message, timestamp }`
+
+### SEO Panel Enhancement
+- Social share (OpenGraph) card preview alongside Google SERP preview
+- Shows OG image, title, description, and domain in card format
+- Visual preview of how the page appears when shared on social media
 
 ### Test Suite (60 tests)
 - Vitest configured at root and API app level
