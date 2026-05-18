@@ -309,12 +309,26 @@
 - Plugin detail page (`/dashboard/marketplace/[pluginId]`) with reviews, rating display, review submission form
 - Install button, version display, install count, review count, author attribution
 
-### Test Suite
+### Page Templates (Expanded)
+- 9 page templates: Blank, Landing Page, About, Contact, Blog Post, SaaS Landing, Portfolio, Coming Soon, Restaurant
+- SaaS Landing: nav, hero, features, testimonial, 3-tier pricing, FAQ, footer
+- Portfolio: nav, hero, gallery, testimonial, contact form
+- Coming Soon: countdown timer, email signup
+- Restaurant: nav, hero, menu cards, testimonial, map, reservation form
+- Templates use all 19 block types for rich starting points
+
+### Health Check (Enhanced)
+- `GET /api/` returns status, version, uptime seconds, start time, Node.js version
+
+### Test Suite (60 tests)
 - Vitest configured at root and API app level
-- 33 unit tests covering:
+- 60 unit tests across 6 test files:
   - AI service: page generation, block suggestions, copy generation, content improvement
   - Email templates: all 5 templates render correctly with data interpolation
   - Stripe provider: mock mode behavior, checkout sessions, portal, webhook verification
+  - Deploy block rendering: all new block types, HTML escaping, XSS protection
+  - Marketplace reviews: average rating calculation, rating validation
+  - Analytics summary: event counting, unique visitors, top pages, referrers, time series, limits
 - `pnpm test` runs all tests via Turborepo
 - `pnpm --filter @novabuilder/api test` runs API-specific tests
 
