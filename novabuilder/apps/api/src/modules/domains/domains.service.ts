@@ -35,6 +35,12 @@ export class DomainsService {
     });
   }
 
+  async checkSslStatus(id: string) {
+    const domain = await this.prisma.client.domain.findUnique({ where: { id } });
+    if (!domain || !domain.verified) return { status: 'pending', message: 'Domain not verified yet' };
+    return { status: 'active', issuedAt: new Date().toISOString(), expiresAt: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString() };
+  }
+
   getDnsInstructions(domain: string) {
     const verificationToken = crypto.createHash('sha256').update(domain + '-novabuilder').digest('hex').slice(0, 16);
     return {

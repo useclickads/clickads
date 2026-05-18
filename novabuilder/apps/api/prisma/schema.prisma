@@ -938,3 +938,31 @@ model ProjectSettings {
 
   @@index([projectId])
 }
+
+model ABTest {
+  id          String    @id @default(uuid())
+  projectId   String
+  pageId      String
+  name        String
+  status      String    @default("draft")
+  variants    Json
+  startedAt   DateTime?
+  endedAt     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([projectId])
+  @@index([pageId])
+}
+
+model ABTestResult {
+  id        String   @id @default(uuid())
+  testId    String
+  variantId String
+  visitorId String
+  converted Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([testId])
+  @@index([testId, variantId])
+}

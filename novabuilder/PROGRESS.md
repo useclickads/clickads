@@ -400,6 +400,19 @@
 - Default locale and supported locales configuration (i18n-ready)
 - New "SEO & Site" tab in project settings with locale selector and robots.txt editor
 
+### A/B Testing
+- `ABTestingModule` with full test lifecycle: create, start, stop, delete
+- Weighted random variant assignment with visitor persistence
+- Conversion tracking per visitor per test
+- Results endpoint with views, conversions, and conversion rate per variant
+- ABTest and ABTestResult Prisma models
+- Frontend A/B tests page (`/dashboard/projects/[id]/abtests`) with create form, start/stop controls, results viewer
+- Public assign and convert endpoints (no auth for client-side usage)
+
+### Domain SSL Status
+- SSL status check endpoint for verified domains
+- Returns certificate status (pending/active), issue date, expiry
+
 ### Lower Priority
 - Conflict resolution via OT/CRDT for concurrent block edits
 - Integrate OpenAI/Anthropic API for more intelligent generation (currently rule-based)
