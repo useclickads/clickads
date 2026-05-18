@@ -21,11 +21,27 @@ export type BlockType =
 
 export type BlockProps = Record<string, unknown>;
 
+export type ResponsiveOverrides = {
+  tablet?: Partial<BlockProps>;
+  mobile?: Partial<BlockProps>;
+};
+
+export type BlockVisibility = {
+  condition: 'always' | 'logged_in' | 'logged_out' | 'date_range' | 'device';
+  startDate?: string;
+  endDate?: string;
+  device?: 'desktop' | 'mobile' | 'tablet';
+};
+
 export type Block = {
   id: string;
   type: BlockType;
   props: BlockProps;
   children?: Block[];
+  responsive?: ResponsiveOverrides;
+  visibility?: BlockVisibility;
+  cssClass?: string;
+  animation?: 'none' | 'fade-in' | 'slide-up' | 'slide-left' | 'zoom-in';
 };
 
 export type BlockDefinition = {
