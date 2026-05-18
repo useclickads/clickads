@@ -49,10 +49,29 @@ export class SearchService {
       }),
     ]);
 
+    const [plugins, teamMembers] = await Promise.all([
+      this.prisma.client.plugin.findMany({
+        where: { name: { contains: query, mode: 'insensitive' } },
+        select: { id: true, name: true, version: true },
+        take: 5,
+      }),
+      this.prisma.client.collaborator.findMany({
+        where: {
+          project: { ownerId: userId, deletedAt: null },
+          email: { contains: query, mode: 'insensitive' },
+          deletedAt: null,
+        },
+        select: { id: true, email: true, role: true, projectId: true },
+        take: 5,
+      }),
+    ]);
+
     return {
       projects: projects.map((p) => ({ type: 'project' as const, id: p.id, title: p.name, subtitle: `/${p.slug}` })),
       pages: pages.map((p) => ({ type: 'page' as const, id: p.id, title: p.title, subtitle: p.path, projectId: p.projectId })),
       collections: collections.map((c) => ({ type: 'collection' as const, id: c.id, title: c.name, subtitle: `/${c.slug}`, projectId: c.projectId })),
+      plugins: plugins.map((p) => ({ type: 'plugin' as const, id: p.id, title: p.name, subtitle: `v${p.version}` })),
+      team: teamMembers.map((t) => ({ type: 'team' as const, id: t.id, title: t.email, subtitle: t.role, projectId: t.projectId })),
     };
   }
 }

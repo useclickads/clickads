@@ -1,7 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 
-type Block = { id: string; type: string; props: Record<string, unknown>; children?: Block[] };
+type Block = {
+  id: string;
+  type: string;
+  props: Record<string, unknown>;
+  children?: Block[];
+  visibility?: { condition: 'always' | 'logged_in' | 'logged_out' | 'date_range' | 'device'; startDate?: string; endDate?: string; device?: 'desktop' | 'mobile' | 'tablet' };
+};
 
 @Injectable()
 export class DeployService {
@@ -118,6 +124,41 @@ Sitemap: ${baseUrl}/sitemap.xml`;
   }
 
   private renderBlock(block: Block): string {
+    const vis = block.visibility;
+    let wrapper = '';
+    let wrapperEnd = '';
+
+    if (vis && vis.condition !== 'always') {
+      switch (vis.condition) {
+        case 'date_range': {
+          const start = vis.startDate ? `new Date("${vis.startDate}").getTime()` : '0';
+          const end = vis.endDate ? `new Date("${vis.endDate}").getTime()` : 'Infinity';
+          wrapper = `<div data-visibility="date_range" style="display:none" data-start="${vis.startDate || ''}" data-end="${vis.endDate || ''}"><script>!function(){var e=document.currentScript.parentElement,n=Date.now();(n>=${start}&&n<=${end})&&(e.style.display="")}()</script>`;
+          wrapperEnd = '</div>';
+          break;
+        }
+        case 'device': {
+          const media = vis.device === 'mobile' ? '(max-width:767px)' : vis.device === 'tablet' ? '(min-width:768px) and (max-width:1023px)' : '(min-width:1024px)';
+          wrapper = `<div data-visibility="device" data-device="${vis.device}" style="display:none"><style>@media ${media}{[data-device="${vis.device}"][data-visibility="device"]{display:block!important}}</style>`;
+          wrapperEnd = '</div>';
+          break;
+        }
+        case 'logged_in':
+          wrapper = `<div data-visibility="logged_in" style="display:none"><script>document.cookie.includes("nb_auth=")&&(document.currentScript.parentElement.style.display="")</script>`;
+          wrapperEnd = '</div>';
+          break;
+        case 'logged_out':
+          wrapper = `<div data-visibility="logged_out"><script>document.cookie.includes("nb_auth=")&&(document.currentScript.parentElement.style.display="none")</script>`;
+          wrapperEnd = '</div>';
+          break;
+      }
+    }
+
+    const html = this.renderBlockInner(block);
+    return wrapper + html + wrapperEnd;
+  }
+
+  private renderBlockInner(block: Block): string {
     const p = block.props;
     switch (block.type) {
       case 'hero':
