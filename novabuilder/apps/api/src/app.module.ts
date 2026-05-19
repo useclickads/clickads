@@ -1,5 +1,7 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { RateLimitMiddleware } from './middleware/rate-limit.middleware';
+import { CacheMiddleware } from './middleware/cache.middleware';
+import { TenantMiddleware } from './middleware/tenant.middleware';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
@@ -44,6 +46,8 @@ import { PerformanceModule } from './modules/performance/performance.module';
 import { CodeInjectModule } from './modules/codeinject/codeinject.module';
 import { RedirectsModule } from './modules/redirects/redirects.module';
 import { PermissionsModule } from './modules/permissions/permissions.module';
+import { ApiDocsModule } from './modules/apidocs/apidocs.module';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
@@ -65,12 +69,16 @@ import { PermissionsModule } from './modules/permissions/permissions.module';
     CodeInjectModule,
     RedirectsModule,
     PermissionsModule,
+    ApiDocsModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    consumer.apply(TenantMiddleware).forRoutes('*');
+    consumer.apply(CacheMiddleware).forRoutes('*');
     consumer.apply(RateLimitMiddleware).forRoutes('*');
   }
 }

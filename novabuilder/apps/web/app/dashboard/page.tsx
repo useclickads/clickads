@@ -67,6 +67,7 @@ function DashboardContent() {
           <Link href="/dashboard/usage" style={navBtn}>Usage</Link>
           <Link href="/dashboard/billing" style={navBtn}>Billing</Link>
           <Link href="/dashboard/api-keys" style={navBtn}>API Keys</Link>
+          <Link href="/dashboard/docs" style={navBtn}>API Docs</Link>
           <Link href="/dashboard/profile" style={navBtn}>Profile</Link>
           <button onClick={signOut} style={logoutStyle}>Sign out</button>
         </div>
