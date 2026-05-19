@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font-heading: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+}
+
+/* Headings use Barlow Condensed */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), sans-serif;
+  letter-spacing: 0.05em;
+}
+
+/* Body uses Barlow */
+body, p, a, span, button, input, textarea, select {
+  font-family: var(--font-body), sans-serif;
+}
+
+/* Cursor blink */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Ticker */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.hp-ticker {
+  animation: ticker 30s linear infinite;
+  display: flex;
+  width: max-content;
+  align-items: center;
+}
+
+.hp-ticker:hover {
+  animation-play-state: paused;
+}
+
+.ticker-track {
+  animation: ticker 30s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+.ticker-link {
+  color: #52525b;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 0 24px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.ticker-link:hover { color: #ffffff; }
+.ticker-link.active { color: #3b82f6; }
+
+/* Hide scrollbar */
+::-webkit-scrollbar { display: none; }
+* { scrollbar-width: none; }
+
+/* Mobile responsive base */
+@media (max-width: 768px) {
+  html { font-size: 14px; }
+}
