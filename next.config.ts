@@ -7,17 +7,13 @@ const bundleAnalyzer = withBundleAnalyzer({
 
 const nextConfig: NextConfig = {
 
-  // ── Your existing setting ─────────────────────────────────────────────────
   allowedDevOrigins: ['10.174.207.91'],
 
-  // ── Core ─────────────────────────────────────────────────────────────────
   reactStrictMode: true,
   compress: true,
 
-  // ── Turbopack config (replaces webpack in Next.js 16) ────────────────────
   turbopack: {},
 
-  // ── Tree-shake heavy packages ─────────────────────────────────────────────
   experimental: {
     optimizePackageImports: [
       'lucide-react',
@@ -26,7 +22,6 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // ── Image optimisation ────────────────────────────────────────────────────
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
@@ -40,21 +35,22 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // ── Security headers ──────────────────────────────────────────────────────
   async headers() {
     return [
       {
         source: '/(.*)',
         headers: [
-          { key: 'X-Frame-Options',                    value: 'SAMEORIGIN' },
-          { key: 'X-Content-Type-Options',              value: 'nosniff' },
-          { key: 'Strict-Transport-Security',           value: 'max-age=31536000; includeSubDomains; preload' },
-          { key: 'Cross-Origin-Opener-Policy',          value: 'same-origin' },
-          { key: 'Cross-Origin-Resource-Policy',        value: 'same-origin' },
-          { key: 'Referrer-Policy',                     value: 'strict-origin-when-cross-origin' },
-          { key: 'Permissions-Policy',                  value: 'camera=(), microphone=(), geolocation=()' },
+          { key: 'X-Frame-Options',            value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options',      value: 'nosniff' },
+          { key: 'Strict-Transport-Security',   value: 'max-age=31536000; includeSubDomains; preload' },
+          { key: 'Cross-Origin-Opener-Policy',  value: 'same-origin' },
+          { key: 'Cross-Origin-Resource-Policy',value: 'same-origin' },
+          { key: 'Referrer-Policy',             value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy',          value: 'camera=(), microphone=(), geolocation=()' },
+          // CHANGED: Report-Only → enforced CSP
+          // Safe to enforce now since we tested it in report-only mode
           {
-            key: 'Content-Security-Policy-Report-Only',
+            key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
