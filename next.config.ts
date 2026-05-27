@@ -8,10 +8,8 @@ const bundleAnalyzer = withBundleAnalyzer({
 const nextConfig: NextConfig = {
 
   allowedDevOrigins: ['10.174.207.91'],
-
   reactStrictMode: true,
   compress: true,
-
   turbopack: {},
 
   experimental: {
@@ -28,10 +26,7 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 30,
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'www.useclickads.com',
-      },
+      { protocol: 'https', hostname: 'www.useclickads.com' },
     ],
   },
 
@@ -40,23 +35,23 @@ const nextConfig: NextConfig = {
       {
         source: '/(.*)',
         headers: [
-          { key: 'X-Frame-Options',            value: 'SAMEORIGIN' },
-          { key: 'X-Content-Type-Options',      value: 'nosniff' },
-          { key: 'Strict-Transport-Security',   value: 'max-age=31536000; includeSubDomains; preload' },
-          { key: 'Cross-Origin-Opener-Policy',  value: 'same-origin' },
-          { key: 'Cross-Origin-Resource-Policy',value: 'same-origin' },
-          { key: 'Referrer-Policy',             value: 'strict-origin-when-cross-origin' },
-          { key: 'Permissions-Policy',          value: 'camera=(), microphone=(), geolocation=()' },
-          // CHANGED: Report-Only → enforced CSP
-          // Safe to enforce now since we tested it in report-only mode
+          { key: 'X-Frame-Options',             value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options',       value: 'nosniff' },
+          { key: 'Strict-Transport-Security',    value: 'max-age=31536000; includeSubDomains; preload' },
+          { key: 'Cross-Origin-Opener-Policy',   value: 'same-origin' },
+          { key: 'Cross-Origin-Resource-Policy', value: 'same-origin' },
+          { key: 'Referrer-Policy',              value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy',           value: 'camera=(), microphone=(), geolocation=()' },
           {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-              "style-src 'self' 'unsafe-inline'",
+              // FIXED: added fonts.googleapis.com and fonts.gstatic.com
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: https:",
-              "font-src 'self' data:",
+              // FIXED: added fonts.gstatic.com for font files
+              "font-src 'self' data: https://fonts.gstatic.com",
               "connect-src 'self' https:",
               "frame-ancestors 'none'",
             ].join('; '),
