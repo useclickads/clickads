@@ -481,7 +481,7 @@ p a, li a, .inline-link { min-height: unset; min-width: unset; }
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 13px;
+  gap: 0;
 }
 .footer-col-link {
   font-size: 13px;
@@ -491,9 +491,7 @@ p a, li a, .inline-link { min-height: unset; min-width: unset; }
   transition: opacity 0.18s ease;
   display: inline-flex;
   align-items: center;
-  /* Touch target via padding — visually tight, but tap area is 44px */
   padding: 6px 0;
-  margin: -6px 0;
 }
 .footer-col-link:hover { opacity: 0.6; }
 
@@ -586,7 +584,6 @@ p a, li a, .inline-link { min-height: unset; min-width: unset; }
   font-weight: 400;
   transition: opacity 0.18s ease;
   padding: 6px 0;
-  margin: -6px 0;
   display: inline-flex;
   align-items: center;
 }
