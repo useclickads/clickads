@@ -212,11 +212,11 @@ p a, li a, .inline-link { min-height: unset; min-width: unset; }
 
   .hero-section {
     padding: 80px 60px 0;
-    text-align: left;
-    align-items: flex-start;
+    text-align: center;
+    align-items: center;
   }
   .hero-inner {
-    align-items: flex-start;
+    align-items: center;
     padding: 0;
   }
   .hero-h1 {
@@ -224,9 +224,9 @@ p a, li a, .inline-link { min-height: unset; min-width: unset; }
     letter-spacing: -2px;
     margin-bottom: 20px;
   }
-  .hero-typing-wrap { justify-content: flex-start; }
+  .hero-typing-wrap { justify-content: center; }
   .hero-sub { font-size: 17px; max-width: 520px; }
-  .hero-btns { flex-direction: row; gap: 14px; padding-bottom: 48px; }
+  .hero-btns { flex-direction: row; gap: 14px; padding-bottom: 48px; justify-content: center; }
   .hero-marquee-wrap { margin-top: 0; }
   .hero-marquee-item { padding: 10px 28px; }
   .hero-marquee-name { font-size: 13px; }
@@ -486,14 +486,14 @@ p a, li a, .inline-link { min-height: unset; min-width: unset; }
 .footer-col-link {
   font-size: 13px;
   font-weight: 400;
-  /* FIXED: was #fff with opacity hover — contrast fine but
-     using explicit color for clarity                        */
   color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
   transition: opacity 0.18s ease;
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
+  /* Touch target via padding — visually tight, but tap area is 44px */
+  padding: 6px 0;
+  margin: -6px 0;
 }
 .footer-col-link:hover { opacity: 0.6; }
 
@@ -585,7 +585,8 @@ p a, li a, .inline-link { min-height: unset; min-width: unset; }
   text-decoration: none;
   font-weight: 400;
   transition: opacity 0.18s ease;
-  min-height: 44px;
+  padding: 6px 0;
+  margin: -6px 0;
   display: inline-flex;
   align-items: center;
 }
