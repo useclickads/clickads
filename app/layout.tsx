@@ -91,7 +91,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" data-scroll-behavior="smooth" className={inter.variable}>
       <head>
         {/* Preconnect to any external origins your site uses.
             Add/remove based on your actual third-party services. */}
