@@ -1,0 +1,384 @@
+/* ── ProductsSection.css ─────────────────────────────────────────────────────
+   Mobile-first scoped styles for components/products/ProductsSection.tsx
+─────────────────────────────────────────────────────────────────────────── */
+
+/* ── Section wrapper ─────────────────────────────────────────────────────── */
+.ps-section {
+  background: #000;
+  overflow: hidden;
+}
+
+/* ── Product block ───────────────────────────────────────────────────────── */
+.ps-block {
+  padding: 64px 20px 80px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.ps-block--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Product identity ────────────────────────────────────────────────────── */
+.ps-identity {
+  margin-bottom: 32px;
+}
+.ps-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin: 0 0 12px;
+}
+.ps-name {
+  font-size: clamp(32px, 9vw, 52px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  margin: 0 0 10px;
+}
+.ps-tagline {
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.65;
+  margin: 0 0 8px;
+}
+.ps-target {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.28);
+  letter-spacing: 1px;
+}
+
+/* ── Mockup ──────────────────────────────────────────────────────────────── */
+.ps-mockup-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #0f1020;
+  margin-bottom: 40px;
+}
+
+/* ── Stats row ───────────────────────────────────────────────────────────── */
+.ps-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 40px;
+}
+.ps-stat {
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+}
+.ps-stat-num {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  margin: 0 0 4px;
+}
+.ps-stat-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ── Section label ───────────────────────────────────────────────────────── */
+.ps-section-title {
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin: 0 0 14px;
+}
+
+/* ── Features grid ───────────────────────────────────────────────────────── */
+.ps-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+.ps-feature-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.ps-feature-card:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.12);
+}
+.ps-feature-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.ps-feature-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4px;
+  letter-spacing: -0.2px;
+}
+.ps-feature-desc {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ── Pricing ─────────────────────────────────────────────────────────────── */
+.ps-pricing {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+.ps-plan {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 20px;
+  position: relative;
+  transition: border-color 0.2s ease;
+}
+.ps-plan:hover { border-color: rgba(255,255,255,0.15); }
+.ps-plan--featured {
+  background: rgba(255,255,255,0.05);
+}
+.ps-plan-badge {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #000;
+  background: #fff;
+  padding: 3px 12px;
+  border-radius: 100px;
+  letter-spacing: 0.5px;
+}
+.ps-plan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+.ps-plan-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 3px;
+}
+.ps-plan-desc {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  margin: 0;
+}
+.ps-plan-price {
+  text-align: right;
+}
+.ps-plan-amount {
+  font-size: 26px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+.ps-plan-period {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+}
+.ps-plan-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  margin-bottom: 14px;
+}
+.ps-plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.ps-plan-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.5;
+}
+.ps-plan-check {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.ps-plan-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+.ps-plan-cta:hover { opacity: 0.85; }
+
+/* ── FAQ ─────────────────────────────────────────────────────────────────── */
+.ps-faq {
+  margin-bottom: 40px;
+}
+.ps-faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.ps-faq-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 18px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 44px;
+  text-align: left;
+}
+.ps-faq-q {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.2px;
+  line-height: 1.4;
+}
+.ps-faq-icon {
+  font-size: 18px;
+  color: rgba(255,255,255,0.35);
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+  display: inline-block;
+  font-style: normal;
+}
+.ps-faq-icon--open { transform: rotate(45deg); }
+.ps-faq-answer {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease;
+}
+.ps-faq-answer--open { max-height: 300px; }
+.ps-faq-answer-inner {
+  padding: 0 0 18px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.75;
+}
+
+/* ── CTA ─────────────────────────────────────────────────────────────────── */
+.ps-cta-wrap {
+  border-radius: 20px;
+  padding: 32px 20px;
+  text-align: center;
+}
+.ps-cta-title {
+  font-size: clamp(22px, 5vw, 32px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin: 0 0 10px;
+}
+.ps-cta-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.65;
+  margin: 0 0 24px;
+}
+.ps-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+.ps-cta-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+.ps-cta-note {
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  margin: 12px 0 0;
+}
+
+/* ── Desktop ─────────────────────────────────────────────────────────────── */
+@media (min-width: 769px) {
+  .ps-block {
+    padding: 100px 40px 120px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .ps-section {
+    /* reset max-width centering per block */
+  }
+  .ps-block-outer {
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .ps-block-outer .ps-block {
+    border-bottom: none;
+  }
+  .ps-identity {
+    margin-bottom: 48px;
+    max-width: 700px;
+  }
+  .ps-name { font-size: clamp(44px, 5vw, 64px); }
+  .ps-features {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .ps-pricing {
+    flex-direction: row;
+    gap: 12px;
+    align-items: flex-end;
+  }
+  .ps-plan {
+    flex: 1;
+  }
+  .ps-plan--featured {
+    transform: translateY(-8px);
+  }
+  .ps-cta-wrap { padding: 48px 40px; }
+}

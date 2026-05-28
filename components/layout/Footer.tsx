@@ -16,21 +16,21 @@ function ClickAdsLogo({ size = 22 }: { size?: number }) {
 }
 
 const quickLinks = [
-  { label: "Services",   href: "/services" },
-  { label: "Lidflow",    href: "/lidflow" },
-  { label: "GrwFit",     href: "/grwfit" },
-  { label: "Pricing",    href: "/pricing" },
+  { label: "Services", href: "/services" },
+  { label: "Lidflow",  href: "/products#lidflow" },
+  { label: "GrwFit",   href: "/products#grwfit" },
+  { label: "Pricing",  href: "/services#pricing" },
 ];
 const resources = [
-  { label: "Blog",         href: "/blog" },
-  { label: "Documentation",href: "/docs" },
-  { label: "Case Studies", href: "/case-studies" },
-  { label: "Help Center",  href: "/help" },
+  { label: "Blog",          href: "/blog" },
+  { label: "Documentation", href: "/docs" },
+  { label: "Case Studies",  href: "/case-studies" },
+  { label: "Help Center",   href: "/help" },
 ];
 const company = [
-  { label: "Contact",    href: "/contact" },
-  { label: "Partners",   href: "/partners" },
-  { label: "Careers",    href: "/careers" },
+  { label: "Contact",      href: "/contact" },
+  { label: "Partners",     href: "/partners" },
+  { label: "Careers",      href: "/careers" },
   { label: "Why ClickAds", href: "/why" },
 ];
 const legalLinks = ["Privacy Policy", "Terms of Service", "Cookie Policy"];
@@ -70,15 +70,8 @@ function BrandBlock() {
       </p>
       <div className="footer-socials" role="list" aria-label="Social media links">
         {socials.map((s) => (
-          <a
-            key={s.label}
-            href={s.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Follow us on ${s.label}`}
-            role="listitem"
-            className="footer-social-btn"
-          >
+          <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
+            aria-label={`Follow us on ${s.label}`} role="listitem" className="footer-social-btn">
             {s.icon}
           </a>
         ))}
@@ -107,25 +100,14 @@ function AccordionColumn({ title, items }: { title: string; items: { label: stri
   const id = `accordion-${title.toLowerCase().replace(/\s+/g, "-")}`;
   return (
     <div className="accordion">
-      <button
-        onClick={() => setOpen(!open)}
-        aria-expanded={open}
-        aria-controls={id}
-        className="accordion-btn"
-      >
+      <button onClick={() => setOpen(!open)} aria-expanded={open} aria-controls={id} className="accordion-btn">
         <span className="footer-col-title" style={{ margin: 0 }}>{title}</span>
-        <svg
-          width="16" height="16" viewBox="0 0 16 16" fill="none"
-          aria-hidden="true"
-          className={`accordion-icon ${open ? "accordion-icon--open" : ""}`}
-        >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"
+          className={`accordion-icon ${open ? "accordion-icon--open" : ""}`}>
           <path d="M4 6l4 4 4-4" stroke="rgba(255,255,255,0.5)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
-      <div
-        id={id}
-        className={`accordion-body ${open ? "accordion-body--open" : ""}`}
-      >
+      <div id={id} className={`accordion-body ${open ? "accordion-body--open" : ""}`}>
         <ul className="footer-col-list" style={{ paddingBottom: "16px" }}>
           {items.map((item) => (
             <li key={item.label}>
@@ -142,16 +124,12 @@ export default function Footer() {
   return (
     <footer className="footer" aria-label="Site footer">
       <div className="footer-divider" />
-
-      {/* Desktop layout — CSS hides on mobile */}
       <div className="footer-desktop">
         <BrandBlock />
         <FooterColumn title="Quick Links" items={quickLinks} />
         <FooterColumn title="Resources"   items={resources} />
         <FooterColumn title="Company"     items={company} />
       </div>
-
-      {/* Mobile layout — CSS hides on desktop */}
       <div className="footer-mobile">
         <BrandBlock />
         <div className="footer-mobile-accordions">
@@ -160,8 +138,6 @@ export default function Footer() {
           <AccordionColumn title="Company"     items={company} />
         </div>
       </div>
-
-      {/* Bottom bar */}
       <div className="footer-bottom">
         <div className="footer-bottom-inner">
           <span className="footer-copyright">

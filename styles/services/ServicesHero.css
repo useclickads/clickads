@@ -1,0 +1,107 @@
+/* ── ServicesHero.css ───────────────────────────────────────────────────────
+   Scoped styles for components/services/ServicesHero.tsx
+   Import directly inside that component — do NOT add to globals.css
+─────────────────────────────────────────────────────────────────────────── */
+
+/* Section wrapper */
+.sh-section {
+  background: #000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px; /* 60px navbar + 60px breathing room */
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Inner content container */
+.sh-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 960px;
+}
+
+/* Eyebrow label — same look as home hero-label */
+.sh-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* Main headline */
+.sh-h1 {
+  font-size: clamp(32px, 6.5vw, 65px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -2px;
+  line-height: 1.05;
+  margin: 0 0 28px;
+  text-align: center;
+  word-break: break-word;
+}
+
+/* Sub-copy — 2 lines */
+.sh-sub {
+  font-size: clamp(13px, 1.5vw, 17px);
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.7;
+  max-width: 700px;
+  margin: 0 0 40px;
+  font-weight: 400;
+  text-align: center;
+  white-space: normal;
+}
+
+/* CTA row — reuses btn styles from globals but defined here too as fallback */
+.sh-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sh-section {
+    padding: 80px 20px 72px;
+    min-height: 90vh;
+  }
+
+  .sh-h1 {
+    font-size: clamp(25px, 7.7vw, 36px);
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+  }
+
+  .sh-sub {
+    font-size: clamp(11px, 1.28vw, 14px);
+    margin-bottom: 32px;
+  }
+}
+
+/* ── Desktop ──────────────────────────────────────────────────────────────── */
+@media (min-width: 769px) {
+  .sh-section {
+    padding: 140px 60px 100px;
+  }
+
+  .sh-h1 {
+    font-size: clamp(45px, 5.7vw, 71px);
+    letter-spacing: -3px;
+  }
+
+  .sh-btns {
+    flex-direction: row;
+    gap: 14px;
+  }
+}
