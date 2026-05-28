@@ -4,6 +4,7 @@ import ContactHero from "@/components/contact/ContactHero";
 import ContactForm from "@/components/contact/ContactForm";
 import ContactProcess from "@/components/contact/ContactProcess";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -15,7 +16,7 @@ export default function ContactPage() {
     <main id="main-content">
       <Navbar />
       <ContactHero />
-      <ContactForm />
+      <Suspense fallback={null}><ContactForm /></Suspense>
       <ContactProcess />
       <Footer />
     </main>
