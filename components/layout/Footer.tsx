@@ -23,38 +23,30 @@ const quickLinks = [
 ];
 const resources = [
   { label: "Blog",          href: "/blog" },
-  { label: "Documentation", href: "/docs" },
-  { label: "Case Studies",  href: "/case-studies" },
-  { label: "Help Center",   href: "/help" },
+  // Documentation, Case Studies, and Help Center to be built
 ];
 const company = [
   { label: "Contact",      href: "/contact" },
-  { label: "Partners",     href: "/partners" },
-  { label: "Careers",      href: "/careers" },
-  { label: "Why ClickAds", href: "/why" },
+  // Partners, Careers, and Why ClickAds to be built
 ];
-const legalLinks = ["Privacy Policy", "Terms of Service", "Cookie Policy"];
+const legalLinks = [
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
+  { label: "Cookie Policy", href: "/cookies" },
+];
 
 const socials = [
   {
-    label: "Twitter / X", href: "https://twitter.com",
+    label: "Twitter / X", href: "https://twitter.com/useclickads",
     icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M12.6 2h2.1L9.9 7.3 15.5 14h-3.9l-3.5-4.6L4 14H1.9l5.2-5.7L1.5 2h4l3.2 4.2L12.6 2Zm-.7 10.8h1.2L4.2 3.2H2.9l9 9.6Z" fill="currentColor" /></svg>,
   },
   {
-    label: "LinkedIn", href: "https://linkedin.com",
+    label: "LinkedIn", href: "https://linkedin.com/company/useclickads",
     icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 5.5H1.2v9.3h2.4V5.5ZM2.4 4.4a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8ZM14.8 9.8c0-2.4-1.3-4.5-3.6-4.5-1 0-1.9.5-2.4 1.2V5.5H6.4v9.3h2.4V9.9c0-1 .7-1.8 1.7-1.8s1.9.8 1.9 1.8v4.9h2.4V9.8Z" fill="currentColor" /></svg>,
   },
   {
-    label: "Instagram", href: "https://instagram.com",
+    label: "Instagram", href: "https://instagram.com/useclickads",
     icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" rx="4" stroke="currentColor" strokeWidth="1.4" /><circle cx="8" cy="8" r="3" stroke="currentColor" strokeWidth="1.4" /><circle cx="11.8" cy="4.2" r="0.8" fill="currentColor" /></svg>,
-  },
-  {
-    label: "YouTube", href: "https://youtube.com",
-    icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14.5 4.5s-.2-1.2-.7-1.7c-.6-.7-1.3-.7-1.7-.7C10.3 2 8 2 8 2s-2.3 0-4.1.1c-.4 0-1.1 0-1.7.7-.5.5-.7 1.7-.7 1.7S1.3 5.9 1.3 7.3v1.3c0 1.4.2 2.8.2 2.8s.2 1.2.7 1.7c.6.7 1.5.6 1.9.7C5.3 14 8 14 8 14s2.3 0 4.1-.1c.4-.1 1.1-.1 1.7-.7.5-.5.7-1.7.7-1.7s.2-1.4.2-2.8V7.3c0-1.4-.2-2.8-.2-2.8ZM6.5 10V5.7l4.3 2.2L6.5 10Z" fill="currentColor" /></svg>,
-  },
-  {
-    label: "Facebook", href: "https://facebook.com",
-    icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 1.5H3A1.5 1.5 0 0 0 1.5 3v10A1.5 1.5 0 0 0 3 14.5h4.5V10H6V8h1.5V6.5A2.5 2.5 0 0 1 10 4h1.5v2H10a.5.5 0 0 0-.5.5V8H11.5l-.5 2H9.5v4.5H13A1.5 1.5 0 0 0 14.5 13V3A1.5 1.5 0 0 0 13 1.5Z" fill="currentColor"/></svg>,
   },
 ];
 
@@ -145,7 +137,7 @@ export default function Footer() {
           </span>
           <nav aria-label="Legal links" className="footer-legal">
             {legalLinks.map((item) => (
-              <Link key={item} href="#" className="footer-legal-link">{item}</Link>
+              <Link key={item.label} href={item.href} className="footer-legal-link">{item.label}</Link>
             ))}
           </nav>
         </div>

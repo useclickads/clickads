@@ -129,9 +129,9 @@ const products: Product[] = [
       { icon:"🔗", name:"Integrations & automation", desc:"Connect with WhatsApp, Gmail, Razorpay, and more. Automate follow-ups and reminders." },
     ],
     plans: [
-      { name:"Starter", desc:"For solo agents & small agencies", price:"$49", period:"/mo", featured:false, ctaText:"Start Free Trial", ctaHref:"#",
+      { name:"Starter", desc:"For solo agents & small agencies", price:"$49", period:"/mo", featured:false, ctaText:"Start Free Trial", ctaHref:"/signup?product=lidflow",
         features:["Up to 3 team members","500 leads/month","Basic pipeline & CRM","Itinerary builder (10/mo)","Email support"] },
-      { name:"Growth", desc:"For growing travel agencies", price:"$99", period:"/mo", featured:true, ctaText:"Start Free Trial", ctaHref:"#",
+      { name:"Growth", desc:"For growing travel agencies", price:"$99", period:"/mo", featured:true, ctaText:"Start Free Trial", ctaHref:"/signup?product=lidflow",
         features:["Up to 10 team members","Unlimited leads","Full pipeline & CRM","Unlimited itineraries","AI-powered follow-ups","WhatsApp & Gmail integration","Priority support"] },
       { name:"Enterprise", desc:"For large agencies & operators", price:"Custom", period:"", featured:false, ctaText:"Contact Us", ctaHref:"/contact",
         features:["Unlimited team members","Custom integrations","Dedicated account manager","White-label option","SLA guarantee","24/7 support"] },
@@ -145,7 +145,7 @@ const products: Product[] = [
     ],
     ctaTitle: "Ready to grow your travel business?",
     ctaSub: "Join hundreds of travel agencies closing more bookings with Lidflow.",
-    ctaHref: "#",
+    ctaHref: "/signup?product=lidflow",
     mockup: <LidflowMockup />,
   },
   {
@@ -171,9 +171,9 @@ const products: Product[] = [
       { icon:"📊", name:"Performance & revenue reports", desc:"Daily, weekly, monthly reports on attendance, revenue, renewals, and churn — all automated." },
     ],
     plans: [
-      { name:"Solo", desc:"For personal trainers & small studios", price:"$39", period:"/mo", featured:false, ctaText:"Start Free Trial", ctaHref:"#",
+      { name:"Solo", desc:"For personal trainers & small studios", price:"$39", period:"/mo", featured:false, ctaText:"Start Free Trial", ctaHref:"/signup?product=grwfit",
         features:["Up to 50 members","Attendance tracking","Basic payment tracking","Lead management","Email support"] },
-      { name:"Studio", desc:"For gyms & fitness studios", price:"$89", period:"/mo", featured:true, ctaText:"Start Free Trial", ctaHref:"#",
+      { name:"Studio", desc:"For gyms & fitness studios", price:"$89", period:"/mo", featured:true, ctaText:"Start Free Trial", ctaHref:"/signup?product=grwfit",
         features:["Unlimited members","Full payment automation","Trainer management","Churn risk alerts","Lead to member pipeline","Razorpay & Stripe","Priority support"] },
       { name:"Chain", desc:"For multi-location gym chains", price:"Custom", period:"", featured:false, ctaText:"Contact Us", ctaHref:"/contact",
         features:["Multi-location support","Centralised dashboard","Custom branding","Dedicated account manager","API access","24/7 support"] },
@@ -187,7 +187,7 @@ const products: Product[] = [
     ],
     ctaTitle: "Ready to run a smarter gym?",
     ctaSub: "Join fitness studios growing faster with GrwFit.",
-    ctaHref: "#",
+    ctaHref: "/signup?product=grwfit",
     mockup: <GrwFitMockup />,
   },
 ];

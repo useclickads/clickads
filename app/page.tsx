@@ -1,6 +1,11 @@
 import dynamic from "next/dynamic";
-import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
+import JsonLd from "@/components/common/JsonLd";
+import type { Metadata } from "next";
+
+const Navbar = dynamic(() => import("@/components/layout/Navbar"), {
+  loading: () => null,
+});
 
 const IntroAnimation = dynamic(
   () => import("@/components/intro/IntroAnimation"),
@@ -61,21 +66,58 @@ function SectionSkeleton({ height }: { height: number }) {
   );
 }
 
+// SEO Metadata for Homepage
+export const metadata: Metadata = {
+  title: "ClickAds — AI Marketing Agency & SaaS Studio",
+  description: "We build AI-powered growth engines for ambitious businesses. Marketing automation, SaaS development, lead generation and more.",
+  openGraph: {
+    title: "ClickAds — AI Marketing Agency & SaaS Studio",
+    description: "We build AI-powered growth engines for ambitious businesses. Marketing automation, SaaS development, lead generation and more.",
+    url: "https://www.useclickads.com",
+    type: "website",
+  },
+  alternates: {
+    canonical: "https://www.useclickads.com",
+  },
+};
+
 export default function Home() {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ClickAds",
+    "url": "https://www.useclickads.com",
+    "logo": "https://www.useclickads.com/logo.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-9334433557",
+      "contactType": "customer service",
+      "email": "contact@useclickads.com"
+    },
+    "sameAs": [
+      "https://twitter.com/useclickads",
+      "https://linkedin.com/company/useclickads",
+      "https://instagram.com/useclickads"
+    ]
+  };
+
   return (
-    <main id="main-content">
-      <IntroAnimation />
-      <Navbar />
-      <Hero />
-      <Services />
-      <OurProcess />
-      <OurProducts />
-      <CampaignDemo />
-      <Pricing />
-      <TrustMarquee />
-      <BlogPreview />
-      <CTABanner />
-      <Footer />
-    </main>
+    <>
+      <JsonLd data={organizationSchema} />
+      <main id="main-content">
+        <IntroAnimation />
+        <Navbar />
+        <Hero />
+        <Services />
+        <OurProcess />
+        <OurProducts />
+        <CampaignDemo />
+        <Pricing />
+        <TrustMarquee />
+        <BlogPreview />
+        <CTABanner />
+        <Footer />
+      </main>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 
-const WORDS = ["AI Systems", "SaaS Products", "Web Applications", "Automation Tools"];
+const WORDS = ["Engines", "Systems", "AI Tools", "Growth Machines"];
 const PX_PER_SECOND = 55;
 
 const LOGOS = [
@@ -59,7 +59,7 @@ const MARQUEE_LOGOS = [...LOGOS, ...LOGOS];
 
 export default function Hero() {
   const [visible, setVisible] = useState(false);
-  const [displayed, setDisplayed] = useState("");
+  const [displayed, setDisplayed] = useState(WORDS[0]); // Default fallback to first word
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
