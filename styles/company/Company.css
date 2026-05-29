@@ -71,7 +71,7 @@
 .co-section-eyebrow {
   font-size: 9px;
   font-weight: 700;
-  color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.45);
   letter-spacing: 2.5px;
   text-transform: uppercase;
   margin: 0 0 10px;
@@ -258,7 +258,7 @@
 }
 
 .co-field input::placeholder,
-.co-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+.co-field textarea::placeholder { color: rgba(255,255,255,0.45); }
 
 .co-field input:focus,
 .co-field select:focus,

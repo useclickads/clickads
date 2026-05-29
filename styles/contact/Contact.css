@@ -6,7 +6,7 @@
 .ct-label {
   font-size: 9px;
   font-weight: 700;
-  color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.45);
   letter-spacing: 2.5px;
   text-transform: uppercase;
   margin: 0 0 10px;
@@ -141,7 +141,7 @@
 }
 
 .ct-field input::placeholder,
-.ct-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+.ct-field textarea::placeholder { color: rgba(255,255,255,0.45); }
 
 .ct-field input:focus,
 .ct-field select:focus,
@@ -210,7 +210,7 @@
 .ct-info-title {
   font-size: 11px;
   font-weight: 700;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.5);
   letter-spacing: 1.5px;
   text-transform: uppercase;
   margin: 0 0 3px;
@@ -349,7 +349,7 @@
 .ct-process-num {
   font-size: 11px;
   font-weight: 700;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.45);
   letter-spacing: 2px;
   flex-shrink: 0;
   margin-top: 2px;

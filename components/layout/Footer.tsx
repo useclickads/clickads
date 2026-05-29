@@ -131,7 +131,7 @@ function AccordionColumn({ title, items }: { title: string; items: { label: stri
   const id = `accordion-${title.toLowerCase().replace(/\s+/g, "-")}`;
   return (
     <div className="accordion">
-      <button onClick={() => setOpen(!open)} aria-expanded={open} aria-controls={id} className="accordion-btn">
+      <button onClick={() => setOpen(!open)} aria-expanded={open} aria-controls={id} aria-label={`Toggle ${title} menu`} className="accordion-btn">
         <span className="footer-col-title" style={{ margin: 0 }}>{title}</span>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"
           className={`accordion-icon ${open ? "accordion-icon--open" : ""}`}>

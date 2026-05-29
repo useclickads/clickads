@@ -71,7 +71,7 @@
 .rs-section-eyebrow {
   font-size: 9px;
   font-weight: 700;
-  color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.45);
   letter-spacing: 2.5px;
   text-transform: uppercase;
   margin: 0 0 10px;
@@ -315,7 +315,7 @@
 }
 
 .rs-field input::placeholder,
-.rs-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+.rs-field textarea::placeholder { color: rgba(255,255,255,0.45); }
 
 .rs-field input:focus,
 .rs-field select:focus,

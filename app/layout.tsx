@@ -2,32 +2,20 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-// ─── Font optimisation ────────────────────────────────────────────────────────
-// next/font automatically:
-//   • Self-hosts the font (no render-blocking Google Fonts network request)
-//   • Adds font-display: swap (text stays visible while font loads)
-//   • Eliminates layout shift from font loading (fixes CLS)
-//   • Preloads only the subsets you actually use
 const inter = Inter({
   subsets: ["latin"],
-  display: "swap",          // show fallback font immediately, swap when ready
-  preload: true,            // preload the font file in <head>
-  variable: "--font-inter", // exposes as CSS variable if needed
-  // Only include weights you actually use — reduces font file size
+  display: "swap",
+  preload: true,
+  variable: "--font-inter",
   weight: ["400", "500", "600", "700"],
 });
 
-// ─── Metadata ─────────────────────────────────────────────────────────────────
-// Moved to proper Metadata object — Next.js renders these in <head> correctly
 export const metadata: Metadata = {
   title: {
     default: "clickAds — AI Marketing Agency & SaaS Studio",
-    // Template for inner pages: "About | clickAds"
     template: "%s | clickAds",
   },
   description: "We build AI-powered growth engines for ambitious businesses.",
-
-  // ── Open Graph (social sharing) ──────────────────────────────────────────
   openGraph: {
     title: "clickAds — AI Marketing Agency & SaaS Studio",
     description: "We build AI-powered growth engines for ambitious businesses.",
@@ -35,24 +23,15 @@ export const metadata: Metadata = {
     siteName: "clickAds",
     locale: "en_US",
     type: "website",
-    // Add your OG image:
-    // images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
   },
-
-  // ── Twitter card ─────────────────────────────────────────────────────────
   twitter: {
     card: "summary_large_image",
     title: "clickAds — AI Marketing Agency & SaaS Studio",
     description: "We build AI-powered growth engines for ambitious businesses.",
-    // images: ['/og-image.jpg'],
   },
-
-  // ── Canonical URL (important for SEO) ────────────────────────────────────
   alternates: {
     canonical: "https://www.useclickads.com",
   },
-
-  // ── Robots ───────────────────────────────────────────────────────────────
   robots: {
     index: true,
     follow: true,
@@ -63,8 +42,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-
-  // ── Icons ────────────────────────────────────────────────────────────────
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
@@ -72,19 +49,45 @@ export const metadata: Metadata = {
   },
 };
 
-// ─── Viewport (separate export — Next.js 14+ requirement) ────────────────────
-// Fixes: missing viewport meta warning in Lighthouse
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,          // allow zoom for accessibility (don't set to 1)
+  maximumScale: 5,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#0d0d0d" },
   ],
 };
 
-// ─── Layout ───────────────────────────────────────────────────────────────────
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ClickAds",
+  "url": "https://www.useclickads.com",
+  "logo": "https://www.useclickads.com/logo.png",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+91-9334433557",
+    "email": "contact@useclickads.com",
+    "contactType": "customer service",
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "D-12, Akshardham",
+    "addressLocality": "New Delhi",
+    "addressRegion": "Delhi",
+    "postalCode": "110092",
+    "addressCountry": "IN",
+  },
+  "sameAs": [
+    "https://twitter.com/useclickads",
+    "https://www.linkedin.com/company/useclickads",
+    "https://www.instagram.com/useclickads/",
+    "https://www.facebook.com/useclickads",
+    "https://www.youtube.com/@UseClickAds",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -93,21 +96,14 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth" className={inter.variable}>
       <head>
-        {/* Preconnect to any external origins your site uses.
-            Add/remove based on your actual third-party services. */}
-
-        {/* Example: if you use Google Analytics */}
-        {/* <link rel="preconnect" href="https://www.googletagmanager.com" /> */}
-
-        {/* Example: if you use an external video/media CDN */}
-        {/* <link rel="preconnect" href="https://cdn.useclickads.com" /> */}
-
-        {/* DNS prefetch for less critical third parties */}
-        {/* <link rel="dns-prefetch" href="https://widget.intercom.io" /> */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
       </head>
       <body
         className={inter.className}
-        suppressHydrationWarning // keeps your existing setting
+        suppressHydrationWarning
       >
         {children}
       </body>
