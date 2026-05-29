@@ -1,0 +1,365 @@
+/* ── Resources.css ───────────────────────────────────────────────────────────
+   Scoped styles for all resources page components
+─────────────────────────────────────────────────────────────────────────── */
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+.rs-hero {
+  background: #000;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 24px 80px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.rs-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+.rs-hero-inner {
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+}
+
+.rs-hero-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+}
+
+.rs-hero-h1 {
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -2.5px;
+  line-height: 1.02;
+  margin: 0 0 20px;
+}
+
+.rs-hero-sub {
+  font-size: clamp(13px, 1.5vw, 16px);
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ── Shared ──────────────────────────────────────────────────────────────── */
+.rs-section {
+  background: #000;
+  padding: 80px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.rs-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.rs-section-eyebrow {
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.rs-section-title {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin: 0 0 8px;
+}
+
+.rs-section-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.6;
+  margin: 0 0 40px;
+}
+
+/* ── Cards grid ──────────────────────────────────────────────────────────── */
+.rs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.rs-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.rs-card:hover {
+  border-color: rgba(255,255,255,0.13);
+  background: rgba(255,255,255,0.04);
+}
+
+.rs-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.rs-card-body { flex: 1; }
+
+.rs-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+  margin: 0 0 6px;
+}
+
+.rs-card-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── FAQ ─────────────────────────────────────────────────────────────────── */
+.rs-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 800px;
+}
+
+.rs-faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.rs-faq-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 44px;
+  text-align: left;
+}
+
+.rs-faq-q {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.2px;
+  line-height: 1.4;
+}
+
+.rs-faq-icon {
+  font-size: 18px;
+  color: rgba(255,255,255,0.4);
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+  font-style: normal;
+}
+.rs-faq-icon--open { transform: rotate(45deg); }
+
+.rs-faq-answer {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease;
+}
+.rs-faq-answer--open { max-height: 300px; }
+
+.rs-faq-answer-inner {
+  padding: 0 0 20px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.75;
+}
+
+/* ── Help Center CTA ─────────────────────────────────────────────────────── */
+.rs-help-cta {
+  margin-top: 40px;
+  padding: 32px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rs-help-cta-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.rs-help-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rs-btn-primary {
+  background: #fff;
+  color: #000;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.rs-btn-primary:hover { opacity: 0.88; }
+.rs-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.rs-btn-secondary {
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.12);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.rs-btn-secondary:hover {
+  border-color: rgba(255,255,255,0.3);
+  color: #fff;
+}
+
+/* ── Form ────────────────────────────────────────────────────────────────── */
+.rs-form-wrap {
+  margin-top: 24px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.rs-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rs-field-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.rs-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rs-field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.5px;
+}
+
+.rs-field input,
+.rs-field select,
+.rs-field textarea {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #fff;
+  font-family: inherit;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  -webkit-appearance: none;
+}
+
+.rs-field input::placeholder,
+.rs-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+.rs-field input:focus,
+.rs-field select:focus,
+.rs-field textarea:focus {
+  border-color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.06);
+}
+
+.rs-field select option { background: #111; color: #fff; }
+
+.rs-field textarea { resize: vertical; min-height: 120px; }
+
+.rs-form-success {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(99,153,34,0.9);
+  background: rgba(99,153,34,0.08);
+  border: 1px solid rgba(99,153,34,0.25);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.rs-form-error {
+  font-size: 13px;
+  color: rgba(255,80,80,0.8);
+  margin: 0;
+}
+
+/* ── Fade ────────────────────────────────────────────────────────────────── */
+.rs-fade {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.rs-fade--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Desktop ─────────────────────────────────────────────────────────────── */
+@media (min-width: 769px) {
+  .rs-hero { padding: 180px 40px 100px; min-height: 55vh; }
+  .rs-section { padding: 100px 40px; }
+  .rs-grid { grid-template-columns: 1fr 1fr; }
+  .rs-help-cta { flex-direction: row; align-items: center; justify-content: space-between; }
+  .rs-field-row { grid-template-columns: 1fr 1fr; }
+}

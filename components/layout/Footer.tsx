@@ -23,30 +23,69 @@ const quickLinks = [
 ];
 const resources = [
   { label: "Blog",          href: "/blog" },
-  // Documentation, Case Studies, and Help Center to be built
+  { label: "Documentation", href: "/resources#documentation" },
+  { label: "FAQs",          href: "/resources#faqs" },
+  { label: "Help Center",   href: "/resources#help-center" },
 ];
 const company = [
-  { label: "Contact",      href: "/contact" },
-  // Partners, Careers, and Why ClickAds to be built
+  { label: "Contact",  href: "/contact" },
+  { label: "About Us", href: "/company#about" },
+  { label: "Careers",  href: "/company#careers" },
+  { label: "Partners", href: "/company#partners" },
 ];
 const legalLinks = [
-  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Privacy Policy",   href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
-  { label: "Cookie Policy", href: "/cookies" },
+  { label: "Cookie Policy",    href: "/cookies" },
 ];
 
 const socials = [
   {
-    label: "Twitter / X", href: "https://twitter.com/useclickads",
-    icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M12.6 2h2.1L9.9 7.3 15.5 14h-3.9l-3.5-4.6L4 14H1.9l5.2-5.7L1.5 2h4l3.2 4.2L12.6 2Zm-.7 10.8h1.2L4.2 3.2H2.9l9 9.6Z" fill="currentColor" /></svg>,
+    label: "Twitter / X",
+    href: "https://twitter.com/useclickads",
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M12.6 2h2.1L9.9 7.3 15.5 14h-3.9l-3.5-4.6L4 14H1.9l5.2-5.7L1.5 2h4l3.2 4.2L12.6 2Zm-.7 10.8h1.2L4.2 3.2H2.9l9 9.6Z" fill="currentColor" />
+      </svg>
+    ),
   },
   {
-    label: "LinkedIn", href: "https://linkedin.com/company/useclickads",
-    icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.6 5.5H1.2v9.3h2.4V5.5ZM2.4 4.4a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8ZM14.8 9.8c0-2.4-1.3-4.5-3.6-4.5-1 0-1.9.5-2.4 1.2V5.5H6.4v9.3h2.4V9.9c0-1 .7-1.8 1.7-1.8s1.9.8 1.9 1.8v4.9h2.4V9.8Z" fill="currentColor" /></svg>,
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/useclickads",
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M3.6 5.5H1.2v9.3h2.4V5.5ZM2.4 4.4a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8ZM14.8 9.8c0-2.4-1.3-4.5-3.6-4.5-1 0-1.9.5-2.4 1.2V5.5H6.4v9.3h2.4V9.9c0-1 .7-1.8 1.7-1.8s1.9.8 1.9 1.8v4.9h2.4V9.8Z" fill="currentColor" />
+      </svg>
+    ),
   },
   {
-    label: "Instagram", href: "https://instagram.com/useclickads",
-    icon: <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" rx="4" stroke="currentColor" strokeWidth="1.4" /><circle cx="8" cy="8" r="3" stroke="currentColor" strokeWidth="1.4" /><circle cx="11.8" cy="4.2" r="0.8" fill="currentColor" /></svg>,
+    label: "Instagram",
+    href: "https://www.instagram.com/useclickads/",
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <rect x="1.5" y="1.5" width="13" height="13" rx="4" stroke="currentColor" strokeWidth="1.4" />
+        <circle cx="8" cy="8" r="3" stroke="currentColor" strokeWidth="1.4" />
+        <circle cx="11.8" cy="4.2" r="0.8" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/useclickads",
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M15 8a7 7 0 1 0-8.094 6.915V10.31H4.93V8h1.976V6.291c0-1.95 1.164-3.027 2.941-3.027.852 0 1.744.152 1.744.152V5.36h-.983c-.968 0-1.27.6-1.27 1.216V8h2.162l-.345 2.31H9.338v4.605A7.002 7.002 0 0 0 15 8Z" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@UseClickAds",
+    icon: (
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M15.6 4.8s-.2-1.3-.7-1.8c-.7-.7-1.5-.7-1.8-.8C11.1 2 8 2 8 2s-3.1 0-5.1.2c-.4 0-1.2.1-1.8.8C.6 3.5.4 4.8.4 4.8S.2 6.3.2 7.8v1.4c0 1.5.2 3 .2 3s.2 1.3.7 1.8c.7.7 1.6.7 2 .7C4.3 14 8 14 8 14s3.1 0 5.1-.2c.4 0 1.2-.1 1.8-.8.5-.5.7-1.8.7-1.8s.2-1.5.2-3V7.8c0-1.5-.2-3-.2-3ZM6.4 10.2V5.7l4.8 2.3-4.8 2.2Z" fill="currentColor" />
+      </svg>
+    ),
   },
 ];
 

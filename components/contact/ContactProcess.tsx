@@ -9,7 +9,6 @@ const stats = [
   { num:"4yr",  label:"Building growth systems since 2021" },
 ];
 
-// Inline SVGs — no CDN dependency
 const PhoneIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/>
@@ -39,10 +38,10 @@ const TrendingIcon = () => (
 );
 
 const steps = [
-  { num:"01", icon:<PhoneIcon />,   title:"Discovery Call",      desc:"You tell us what you're building and where you're stuck. We listen, ask the right questions, and map out exactly what needs to happen. No pitch, no fluff — just clarity." },
-  { num:"02", icon:<BulbIcon />,    title:"Strategy & Proposal", desc:"Within 48 hours, we send a detailed proposal — scope, timeline, deliverables, and pricing. No surprises, no hidden costs. You know exactly what you're getting." },
-  { num:"03", icon:<RocketIcon />,  title:"Build & Execute",     desc:"We get to work. Weekly updates, async communication, and a shared dashboard so you always know where things stand. You're never in the dark." },
-  { num:"04", icon:<TrendingIcon />,title:"Launch & Scale",      desc:"We don't disappear at launch. We monitor performance, fix issues fast, and identify the next lever to pull. Growth doesn't stop — neither do we." },
+  { num:"01", icon:<PhoneIcon />,    title:"Discovery Call",       desc:"You tell us what you're building and where you're stuck. We listen, ask the right questions, and map out exactly what needs to happen. No pitch, no fluff — just clarity." },
+  { num:"02", icon:<BulbIcon />,     title:"Strategy & Proposal",  desc:"Within 48 hours, we send a detailed proposal — scope, timeline, deliverables, and pricing. No surprises, no hidden costs. You know exactly what you're getting." },
+  { num:"03", icon:<RocketIcon />,   title:"Build & Execute",      desc:"We get to work. Weekly updates, async communication, and a shared dashboard so you always know where things stand. You're never in the dark." },
+  { num:"04", icon:<TrendingIcon />, title:"Launch & Scale",       desc:"We don't disappear at launch. We monitor performance, fix issues fast, and identify the next lever to pull. Growth doesn't stop — neither do we." },
 ];
 
 const faqs = [
@@ -53,6 +52,13 @@ const faqs = [
   { q:"How do you measure success?",              a:"We agree on clear KPIs before we start — ROAS, CAC, conversion rate, velocity, or whatever metrics matter most to your business. We report against those weekly." },
   { q:"Do you sign NDAs?",                        a:"Yes, always. We treat your business information with complete confidentiality and are happy to sign an NDA before any discussions begin." },
 ];
+
+type SiteConfig = {
+  email: string;
+  emailDisplay: string;
+  phone: string;
+  phoneDisplay: string;
+};
 
 function FadeBlock({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const [visible, setVisible] = useState(false);
@@ -87,6 +93,22 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 }
 
 export default function ContactProcess() {
+  const [config, setConfig] = useState<SiteConfig>({
+    email: "",
+    emailDisplay: "",
+    phone: "",
+    phoneDisplay: "",
+  });
+
+  useEffect(() => {
+    fetch("/api/config")
+      .then(res => res.json())
+      .then(data => setConfig(data))
+      .catch(() => {
+        // fallback — silently keep empty strings
+      });
+  }, []);
+
   return (
     <>
       {/* Stats */}
@@ -163,8 +185,16 @@ export default function ContactProcess() {
             <h2 className="ct-cta-h2">Let's build something that scales.</h2>
             <p className="ct-cta-sub">No long-term contracts. No hidden fees. Just results.</p>
             <div className="ct-cta-btns">
-              <a href="mailto:contact@useclickads.com" className="hero-btn-primary">Email Us Directly</a>
-              <a href="tel:+919334433557" className="hero-btn-secondary">Call Us →</a>
+              {config.email && (
+                <a href={`mailto:${config.email}`} className="hero-btn-primary">
+                  {config.emailDisplay || config.email}
+                </a>
+              )}
+              {config.phone && (
+                <a href={`tel:${config.phone}`} className="hero-btn-secondary">
+                  {config.phoneDisplay ? `${config.phoneDisplay} →` : "Call Us →"}
+                </a>
+              )}
             </div>
           </div>
         </FadeBlock>

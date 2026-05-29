@@ -1,0 +1,308 @@
+/* ── Company.css ─────────────────────────────────────────────────────────────
+   Scoped styles for all company page components
+─────────────────────────────────────────────────────────────────────────── */
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+.co-hero {
+  background: #000;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 24px 80px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.co-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+.co-hero-inner {
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+}
+
+.co-hero-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  margin: 0 0 20px;
+}
+
+.co-hero-h1 {
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -2.5px;
+  line-height: 1.02;
+  margin: 0 0 20px;
+}
+
+.co-hero-sub {
+  font-size: clamp(13px, 1.5vw, 16px);
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ── Shared ──────────────────────────────────────────────────────────────── */
+.co-section {
+  background: #000;
+  padding: 80px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.co-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.co-section-eyebrow {
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.co-section-title {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin: 0 0 8px;
+}
+
+.co-section-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.6;
+  margin: 0 0 40px;
+}
+
+/* ── Cards grid ──────────────────────────────────────────────────────────── */
+.co-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.co-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.co-card:hover {
+  border-color: rgba(255,255,255,0.13);
+  background: rgba(255,255,255,0.04);
+}
+
+.co-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.co-card-body { flex: 1; }
+
+.co-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+  margin: 0 0 6px;
+}
+
+.co-card-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── Careers CTA ─────────────────────────────────────────────────────────── */
+.co-careers-cta {
+  margin-top: 40px;
+  padding: 32px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.co-careers-cta-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.co-careers-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.co-btn-primary {
+  background: #fff;
+  color: #000;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.co-btn-primary:hover { opacity: 0.88; }
+.co-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.co-btn-secondary {
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.12);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.co-btn-secondary:hover {
+  border-color: rgba(255,255,255,0.3);
+  color: #fff;
+}
+
+/* ── Form ────────────────────────────────────────────────────────────────── */
+.co-form-wrap {
+  margin-top: 24px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.co-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.co-field-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.co-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.co-field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.5px;
+}
+
+.co-field input,
+.co-field select,
+.co-field textarea {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #fff;
+  font-family: inherit;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  -webkit-appearance: none;
+}
+
+.co-field input::placeholder,
+.co-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+
+.co-field input:focus,
+.co-field select:focus,
+.co-field textarea:focus {
+  border-color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.06);
+}
+
+.co-field select option { background: #111; color: #fff; }
+
+.co-field textarea { resize: vertical; min-height: 120px; }
+
+.co-form-success {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(99,153,34,0.9);
+  background: rgba(99,153,34,0.08);
+  border: 1px solid rgba(99,153,34,0.25);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.co-form-error {
+  font-size: 13px;
+  color: rgba(255,80,80,0.8);
+  margin: 0;
+}
+
+/* ── Fade ────────────────────────────────────────────────────────────────── */
+.co-fade {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.co-fade--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Desktop ─────────────────────────────────────────────────────────────── */
+@media (min-width: 769px) {
+  .co-hero { padding: 180px 40px 100px; min-height: 55vh; }
+  .co-section { padding: 100px 40px; }
+  .co-grid { grid-template-columns: 1fr 1fr; }
+  .co-careers-cta { flex-direction: row; align-items: center; justify-content: space-between; }
+  .co-field-row { grid-template-columns: 1fr 1fr; }
+}
