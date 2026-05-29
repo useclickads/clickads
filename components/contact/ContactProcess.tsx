@@ -81,7 +81,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="ct-faq-item">
-      <button className="ct-faq-btn" onClick={() => setOpen(!open)} aria-expanded={open}>
+      <button className="ct-faq-btn" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={`${open ? "Hide" : "Show"} answer: ${q}`}>
         <span className="ct-faq-q">{q}</span>
         <span className={`ct-faq-icon${open ? " ct-faq-icon--open" : ""}`} aria-hidden="true" style={{ fontSize:20, color:"rgba(255,255,255,0.4)", flexShrink:0, transition:"transform 0.25s ease", display:"inline-block" }}>+</span>
       </button>

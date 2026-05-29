@@ -30,7 +30,7 @@
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.6);
   margin: 0 0 12px;
 }
 .ps-name {
@@ -50,7 +50,7 @@
 .ps-target {
   font-size: 11px;
   font-weight: 600;
-  color: rgba(255,255,255,0.28);
+  color: rgba(255,255,255,0.55);
   letter-spacing: 1px;
 }
 
@@ -94,7 +94,7 @@
 .ps-section-title {
   font-size: 9px;
   font-weight: 700;
-  color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.55);
   letter-spacing: 2.5px;
   text-transform: uppercase;
   margin: 0 0 14px;
@@ -190,7 +190,7 @@
 }
 .ps-plan-desc {
   font-size: 11px;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.65);
   margin: 0;
 }
 .ps-plan-price {
@@ -205,7 +205,7 @@
 }
 .ps-plan-period {
   font-size: 11px;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.65);
 }
 .ps-plan-divider {
   height: 1px;
@@ -297,7 +297,7 @@
 .ps-faq-answer-inner {
   padding: 0 0 18px;
   font-size: 13px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,white,0.65);
   line-height: 1.75;
 }
 
@@ -317,7 +317,7 @@
 }
 .ps-cta-sub {
   font-size: 13px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.7);
   line-height: 1.65;
   margin: 0 0 24px;
 }
@@ -340,7 +340,7 @@
 }
 .ps-cta-note {
   font-size: 11px;
-  color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.55);
   margin: 12px 0 0;
 }
 

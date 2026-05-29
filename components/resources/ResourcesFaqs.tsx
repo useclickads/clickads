@@ -60,6 +60,7 @@ export default function ResourcesFaqs() {
                 className="rs-faq-btn"
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                 aria-expanded={openIndex === i}
+                aria-label={`${openIndex === i ? "Hide" : "Show"} answer: ${item.q}`}
               >
                 <span className="rs-faq-q">{item.q}</span>
                 <i className={`rs-faq-icon ${openIndex === i ? "rs-faq-icon--open" : ""}`}>+</i>

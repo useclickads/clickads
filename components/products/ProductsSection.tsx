@@ -197,7 +197,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="ps-faq-item">
-      <button className="ps-faq-btn" onClick={() => setOpen(!open)} aria-expanded={open}>
+      <button className="ps-faq-btn" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={`${open ? "Hide" : "Show"} answer: ${q}`}>
         <span className="ps-faq-q">{q}</span>
         <span className={`ps-faq-icon${open ? " ps-faq-icon--open" : ""}`} aria-hidden="true">+</span>
       </button>
