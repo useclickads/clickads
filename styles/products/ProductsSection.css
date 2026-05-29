@@ -43,7 +43,7 @@
 }
 .ps-tagline {
   font-size: 15px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.7);
   line-height: 1.65;
   margin: 0 0 8px;
 }
@@ -140,7 +140,7 @@
 }
 .ps-feature-desc {
   font-size: 12px;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.7);
   line-height: 1.55;
   margin: 0;
 }
@@ -350,9 +350,6 @@
     padding: 100px 40px 120px;
     max-width: 1200px;
     margin: 0 auto;
-  }
-  .ps-section {
-    /* reset max-width centering per block */
   }
   .ps-block-outer {
     border-bottom: 1px solid rgba(255,255,255,0.07);

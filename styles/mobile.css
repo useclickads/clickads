@@ -91,7 +91,7 @@ body {
 /* FIX 3: font-weight 400 instead of 300 for better Android rendering */
 .hero-sub {
   font-size: 14px;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.7);
   line-height: 1.7;
   font-weight: 400;
   margin-bottom: 28px;

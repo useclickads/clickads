@@ -141,7 +141,7 @@ export default function Pricing() {
           </div>
           <div style={{ display:"flex", justifyContent:"center", gap:"6px", marginTop:"24px" }}>
             {plans.map((_, i) => (
-              <button key={i} onClick={() => scrollTo(i)}
+              <button key={i} onClick={() => scrollTo(i)} aria-label={`Go to pricing plan ${i + 1}`}
                 style={{ width: i===activeIndex ? "20px" : "6px", height:"6px", borderRadius:"100px", background: i===activeIndex ? "#fff" : "rgba(255,255,255,0.2)", border:"none", cursor:"pointer", padding:0, transition:"width 0.3s ease, background 0.3s ease" }} />
             ))}
           </div>

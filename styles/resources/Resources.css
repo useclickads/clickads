@@ -50,7 +50,7 @@
 
 .rs-hero-sub {
   font-size: clamp(13px, 1.5vw, 16px);
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.65);
   line-height: 1.7;
   max-width: 500px;
   margin: 0 auto;
@@ -88,7 +88,7 @@
 
 .rs-section-sub {
   font-size: 13px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.65);
   line-height: 1.6;
   margin: 0 0 40px;
 }
@@ -140,7 +140,7 @@
 
 .rs-card-desc {
   font-size: 13px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.7);
   line-height: 1.65;
   margin: 0;
 }

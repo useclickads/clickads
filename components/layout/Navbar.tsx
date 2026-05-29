@@ -70,7 +70,6 @@ export default function Navbar() {
   return (
     <>
       <nav
-        role="navigation"
         aria-label="Main navigation"
         className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}
       >

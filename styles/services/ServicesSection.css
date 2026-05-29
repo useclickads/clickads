@@ -110,7 +110,7 @@
 }
 .ss-tagline {
   font-size: 13px;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.6);
   margin: 0;
 }
 
@@ -125,7 +125,7 @@
 }
 .ss-desc {
   font-size: 14px;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.75);
   line-height: 1.8;
   margin: 0;
 }
@@ -177,7 +177,7 @@
 }
 .ss-bestfor-text {
   font-size: 11px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.75);
   line-height: 1.6;
   margin: 0;
 }

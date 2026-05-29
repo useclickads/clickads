@@ -247,7 +247,7 @@ export default function BlogGrid() {
       {/* grid */}
       <div className="blog-grid">
         {filtered.map((post) => (
-          <article
+          <div
             key={post.id}
             className="blog-card"
             onClick={() => setOpenPost(post)}
@@ -266,7 +266,7 @@ export default function BlogGrid() {
               <span className="blog-card__date">{post.date}</span>
               <span className="blog-card__arrow" aria-hidden="true">→</span>
             </div>
-          </article>
+          </div>
         ))}
       </div>
 
