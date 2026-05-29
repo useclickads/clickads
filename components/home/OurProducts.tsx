@@ -67,14 +67,15 @@ function ProductCard({ isMobile, emoji, accentColor, accentGlow, name, tagline, 
     <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
       style={{ background:"rgba(255,255,255,0.05)", border:`1px solid ${hovered ? accentColor + "66" : "rgba(255,255,255,0.1)"}`, borderRadius:"22px", padding: isMobile ? "24px 18px" : "32px 36px", display:"flex", flexDirection: isMobile ? "column" : reverse ? "row-reverse" : "row", gap: isMobile ? "24px" : "40px", alignItems:"center", transition:"border-color 0.3s ease, box-shadow 0.3s ease", boxShadow: hovered ? `0 0 60px ${accentGlow}` : "none", cursor:"default" }}>
 
-      <div style={{ flex:"0 0 auto", width: isMobile ? "100%" : "420px", borderRadius:"14px", overflow:"hidden", border:`1px solid ${accentColor}22`, background:"#0f1020" }}>{mockup}</div>
+      {/* aria-hidden hides decorative mockup from accessibility tools */}
+      <div aria-hidden="true" style={{ flex:"0 0 auto", width: isMobile ? "100%" : "420px", borderRadius:"14px", overflow:"hidden", border:`1px solid ${accentColor}22`, background:"#0f1020" }}>{mockup}</div>
 
       <div style={{ flex:1, display:"flex", flexDirection:"column", gap:"18px" }}>
         <div style={{ display:"flex", alignItems:"center", gap:"12px" }}>
           <div style={{ width:"46px", height:"46px", borderRadius:"13px", background:accentGlow, border:`1px solid ${accentColor}44`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"24px", flexShrink:0 }}>{emoji}</div>
           <div>
             <h3 style={{ margin:0, fontSize:"24px", fontWeight:700, color:"#ffffff", letterSpacing:"-0.3px" }}>{name}</h3>
-            <p style={{ margin:0, fontSize:"11px", color:"rgba(255,255,255,0.4)", letterSpacing:"0.04em" }}>{target}</p>
+            <p style={{ margin:0, fontSize:"11px", color:"rgba(255,255,255,0.55)", letterSpacing:"0.04em" }}>{target}</p>
           </div>
         </div>
 

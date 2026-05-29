@@ -66,17 +66,17 @@ function BlogCard({ post }: { post: typeof posts[0] }) {
         <h3 style={{ fontSize: "16px", fontWeight: 600, letterSpacing: "-0.3px", lineHeight: 1.4, color: "#fff", margin: 0, flex: 1 }}>
           {post.title}
         </h3>
-        <p style={{ fontSize: "13.5px", fontWeight: 300, lineHeight: 1.65, color: "rgba(255,255,255,0.4)", margin: 0 }}>
+        <p style={{ fontSize: "13.5px", fontWeight: 300, lineHeight: 1.65, color: "rgba(255,255,255,0.6)", margin: 0 }}>
           {post.excerpt}
         </p>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "16px", borderTop: "0.5px solid #1a1a1a" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "16px", borderTop: "0.5px solid #2a2a2a" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <span style={{ fontSize: "11.5px", color: "#444" }}>{post.date}</span>
-            <span style={{ fontSize: "11.5px", color: "#333" }}>·</span>
-            <span style={{ fontSize: "11.5px", color: "#444" }}>{post.readTime}</span>
+            <span style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.5)" }}>{post.date}</span>
+            <span style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.3)" }}>·</span>
+            <span style={{ fontSize: "11.5px", color: "rgba(255,255,255,0.5)" }}>{post.readTime}</span>
           </div>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="#333" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="rgba(255,255,255,0.4)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function BlogPreview() {
           <div>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
               <div style={{ width: "20px", height: "0.5px", background: "#555" }} />
-              <span style={{ fontSize: "10px", fontWeight: 500, letterSpacing: "3px", textTransform: "uppercase", color: "#666" }}>
+              <span style={{ fontSize: "10px", fontWeight: 500, letterSpacing: "3px", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>
                 Insights & Resources
               </span>
             </div>
@@ -132,11 +132,11 @@ export default function BlogPreview() {
           </div>
           <Link href="/blog" style={{
             display: "inline-flex", alignItems: "center", gap: "6px",
-            fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.4)",
-            textDecoration: "none", border: "0.5px solid #222", borderRadius: "100px", padding: "8px 16px", transition: "color 0.2s, border-color 0.2s",
+            fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,0.5)",
+            textDecoration: "none", border: "0.5px solid #333", borderRadius: "100px", padding: "8px 16px", transition: "color 0.2s, border-color 0.2s",
           }}
             onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "#444"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.4)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "#222"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.5)"; (e.currentTarget as HTMLAnchorElement).style.borderColor = "#333"; }}
           >
             View all posts
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -175,13 +175,17 @@ export default function BlogPreview() {
             {/* Dots */}
             <div style={{ display: "flex", justifyContent: "center", gap: "6px", marginTop: "20px" }}>
               {posts.map((_, i) => (
-                <button key={i} onClick={() => scrollTo(i)} style={{
-                  width: i === activeIndex ? "20px" : "6px", height: "6px",
-                  borderRadius: "100px",
-                  background: i === activeIndex ? "#fff" : "rgba(255,255,255,0.2)",
-                  border: "none", cursor: "pointer", padding: 0,
-                  transition: "width 0.3s ease, background 0.3s ease",
-                }} />
+                <button
+                  key={i}
+                  onClick={() => scrollTo(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                  style={{
+                    width: i === activeIndex ? "20px" : "6px", height: "6px",
+                    borderRadius: "100px",
+                    background: i === activeIndex ? "#fff" : "rgba(255,255,255,0.2)",
+                    border: "none", cursor: "pointer", padding: 0,
+                    transition: "width 0.3s ease, background 0.3s ease",
+                  }} />
               ))}
             </div>
           </div>
