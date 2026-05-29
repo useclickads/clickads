@@ -1,77 +1,43 @@
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import JsonLd from "@/components/common/JsonLd";
+// app/blog/page.tsx
+
 import type { Metadata } from "next";
+import Navbar   from "@/components/layout/Navbar";
+import Footer   from "@/components/layout/Footer";
+import BlogHero from "@/components/blog/BlogHero";
+import BlogGrid from "@/components/blog/BlogGrid";
 
 export const metadata: Metadata = {
-  title: "Blog | ClickAds",
-  description: "Insights on AI marketing, ad strategy, SaaS growth, and performance advertising from the ClickAds team.",
+  title: "Blog — clickAds",
+  description:
+    "Every post is a lesson from a live campaign. Read it, apply it, measure it.",
   openGraph: {
-    title: "Blog | ClickAds",
-    description: "Insights on AI marketing, ad strategy, SaaS growth, and performance advertising from the ClickAds team.",
+    title: "Blog — clickAds",
+    description:
+      "Every post is a lesson from a live campaign. Read it, apply it, measure it.",
     url: "https://www.useclickads.com/blog",
+    siteName: "clickAds",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog — clickAds",
+    description:
+      "Every post is a lesson from a live campaign. Read it, apply it, measure it.",
   },
   alternates: {
     canonical: "https://www.useclickads.com/blog",
   },
 };
 
-// Placeholder blog posts array — replace with actual data source (CMS, database, etc.)
-const blogPosts = [
-  {
-    id: 1,
-    title: "Coming Soon: Blog Posts",
-    description: "Check back soon for insights on AI marketing, SaaS growth, and performance advertising.",
-    date: new Date().toISOString(),
-    slug: "coming-soon",
-  },
-];
-
-export default function Blog() {
-  const blogSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://www.useclickads.com"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Blog",
-        "item": "https://www.useclickads.com/blog"
-      }
-    ]
-  };
-
+export default function BlogPage() {
   return (
     <>
-      <JsonLd data={blogSchema} />
-      <main id="main-content">
-        <Navbar />
-        <section style={{ minHeight: "60vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem" }}>
-          <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem", textAlign: "center" }}>Blog</h1>
-          <p style={{ fontSize: "1.1rem", color: "#999", maxWidth: "600px", textAlign: "center", marginBottom: "2rem" }}>
-            Insights on AI marketing, ad strategy, SaaS growth, and performance advertising from the ClickAds team.
-          </p>
-          <div style={{ display: "grid", gap: "2rem", maxWidth: "800px", width: "100%" }}>
-            {blogPosts.map((post) => (
-              <article key={post.id} style={{ borderBottom: "1px solid #222", paddingBottom: "2rem" }}>
-                <h2 style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>{post.title}</h2>
-                <p style={{ color: "#999", marginBottom: "1rem" }}>{post.description}</p>
-                <time style={{ color: "#666", fontSize: "0.9rem" }}>
-                  {new Date(post.date).toLocaleDateString()}
-                </time>
-              </article>
-            ))}
-          </div>
-        </section>
-        <Footer />
+      <Navbar />
+      <main>
+        <BlogHero />
+        <BlogGrid />
       </main>
+      <Footer />
     </>
   );
 }
