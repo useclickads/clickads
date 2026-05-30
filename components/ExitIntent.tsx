@@ -1,33 +1,46 @@
 "use client";
+
 import { useEffect, useState } from "react";
+
+const STORAGE_KEY = "ca_exit_dismissed";
+
 export default function ExitIntent() {
   const [show, setShow] = useState(false);
-  const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [email, setEmail] = useState("");
+
   useEffect(() => {
-    const isContactPage = window.location.pathname === "/contact";
-    if (isContactPage) return;
-    const dismissed = sessionStorage.getItem("exit_intent_dismissed") || localStorage.getItem("exit_intent_dismissed_perm");
-    if (dismissed) return;
+    try {
+      if (localStorage.getItem(STORAGE_KEY)) return;
+    } catch { return; }
+
+    let triggered = false;
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0) setShow(true);
+      if (triggered) return;
+      if (e.clientY <= 0) {
+        triggered = true;
+        setShow(true);
+      }
     };
+
     document.addEventListener("mouseleave", handleMouseLeave);
     return () => document.removeEventListener("mouseleave", handleMouseLeave);
   }, []);
+
   const dismiss = () => {
-    sessionStorage.setItem("exit_intent_dismissed", "true");
-    localStorage.setItem("exit_intent_dismissed_perm", "true");
+    try { localStorage.setItem(STORAGE_KEY, "1"); } catch {}
     setShow(false);
   };
+
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    sessionStorage.setItem("exit_intent_dismissed", "true");
-    localStorage.setItem("exit_intent_dismissed_perm", "true");
+    try { localStorage.setItem(STORAGE_KEY, "1"); } catch {}
     setTimeout(() => setShow(false), 2000);
   };
+
   if (!show) return null;
+
   return (
     <div style={{
       position: "fixed", inset: 0, zIndex: 99999,
