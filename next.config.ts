@@ -55,6 +55,7 @@ const nextConfig: NextConfig = {
               // FIXED: added fonts.gstatic.com for font files
               "font-src 'self' data: https://fonts.gstatic.com",
               "connect-src 'self' https:",
+              "worker-src 'self' blob:",
               "frame-ancestors 'none'",
             ].join('; '),
           },
