@@ -54,8 +54,9 @@ const nextConfig: NextConfig = {
               "img-src 'self' data: https:",
               // FIXED: added fonts.gstatic.com for font files
               "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' https:",
+              "connect-src 'self' https: wss:",
               "worker-src 'self' blob:",
+              "frame-src 'self' https://calendly.com",
               "frame-ancestors 'none'",
             ].join('; '),
           },
