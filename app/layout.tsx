@@ -6,6 +6,7 @@ import CookieConsent from "@/components/CookieConsent";
 import { Analytics } from "@vercel/analytics/react";
 import Contentsquare from "@/components/Contentsquare";
 import CrispChat from "@/components/CrispChat";
+import ExitIntent from "@/components/ExitIntent";
 import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({
@@ -130,6 +131,7 @@ export default function RootLayout({
         <Analytics />
         <Contentsquare />
         <CrispChat />
+        <ExitIntent />
         <NextTopLoader color="#7c3aed" showSpinner={false} />
       </body>
     </html>
