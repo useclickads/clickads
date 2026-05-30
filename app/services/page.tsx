@@ -19,64 +19,45 @@ export const metadata: Metadata = {
   },
 };
 
-const services = [
-  {
-    name: "AI Marketing",
-    description: "AI-powered marketing campaigns with intelligent targeting and optimization",
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home",     item: "https://www.useclickads.com" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.useclickads.com/services" },
+  ],
+};
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "ClickAds",
+  url: "https://www.useclickads.com",
+  logo: "https://www.useclickads.com/icon1.png",
+  description: "AI-powered marketing agency offering performance ads, SaaS development, automation, lead generation, analytics and brand design.",
+  areaServed: "Worldwide",
+  priceRange: "$$",
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "ClickAds Services",
+    itemListElement: [
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Marketing",      description: "AI-powered marketing campaigns with intelligent targeting and optimization." } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "SaaS Development",  description: "Full-stack SaaS product development and deployment." } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Web Development",   description: "Custom web applications and websites." } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Automation",     description: "Workflow automation powered by artificial intelligence." } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Lead Generation",   description: "High-quality lead generation and nurturing." } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Performance Ads",   description: "Data-driven performance advertising campaigns." } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Analytics",         description: "Advanced analytics and data insights." } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Brand Design",      description: "Strategic brand design and visual identity." } },
+    ],
   },
-  {
-    name: "SaaS Development",
-    description: "Full-stack SaaS product development and deployment",
-  },
-  {
-    name: "Web Development",
-    description: "Custom web applications and websites",
-  },
-  {
-    name: "AI Automation",
-    description: "Workflow automation powered by artificial intelligence",
-  },
-  {
-    name: "Lead Generation",
-    description: "High-quality lead generation and nurturing",
-  },
-  {
-    name: "Performance Ads",
-    description: "Data-driven performance advertising campaigns",
-  },
-  {
-    name: "Analytics",
-    description: "Advanced analytics and data insights",
-  },
-  {
-    name: "Brand Design",
-    description: "Strategic brand design and visual identity",
-  },
-];
+};
 
 export default function ServicesPage() {
-  const servicesSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://www.useclickads.com"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Services",
-        "item": "https://www.useclickads.com/services"
-      }
-    ]
-  };
-
   return (
     <>
-      <JsonLd data={servicesSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={serviceSchema} />
       <main id="main-content">
         <Navbar />
         <ServicesHero />
