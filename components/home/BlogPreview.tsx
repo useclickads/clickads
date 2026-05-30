@@ -38,7 +38,7 @@ const posts = [
 
 function BlogCard({ post }: { post: typeof posts[0] }) {
   return (
-    <Link href={`/blog/${post.slug}`} style={{ textDecoration: "none", display: "block", height: "100%" }}>
+    <Link href="/blog" style={{ textDecoration: "none", display: "block", height: "100%" }}>
       <div
         style={{
           background: "#0f0f0f", border: "0.5px solid #1e1e1e",
