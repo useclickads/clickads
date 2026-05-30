@@ -52,6 +52,13 @@ export default function ContactForm() {
       });
       if (!res.ok) throw new Error("Failed to send");
       setSubmitted(true);
+      if (typeof window !== "undefined" && (window as any).gtag) {
+        (window as any).gtag("event", "form_submit", {
+          event_category: "Contact",
+          event_label: form.service || "Unknown Service",
+          value: 1,
+        });
+      }
       setTimeout(() => {
         successRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 100);
