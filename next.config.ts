@@ -13,7 +13,6 @@ const nextConfig: NextConfig = {
   turbopack: {},
 
   experimental: {
-    browserslistForSwc: true,
     optimizeCss: true,
     optimizePackageImports: [
       'lucide-react',
