@@ -15,7 +15,7 @@ export async function POST(req: Request) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        from: "ClickAds <onboarding@resend.dev>",
+        from: "ClickAds <hello@useclickads.com>",
         to: "contact@useclickads.com",
         subject: "New Newsletter Signup",
         html: `<p>New subscriber: <strong>${email}</strong></p>`,
