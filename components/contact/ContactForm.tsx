@@ -4,19 +4,76 @@ import { useSearchParams } from "next/navigation";
 import "@/styles/contact/Contact.css";
 
 function CalendlyEmbed() {
+  const openCalendly = () => {
+    if (typeof window !== "undefined" && (window as any).Calendly) {
+      (window as any).Calendly.initPopupWidget({
+        url: "https://calendly.com/useclickads/30min?hide_landing_page_details=1&hide_gdpr_banner=1&primary_color=7c3aed",
+      });
+    }
+  };
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://assets.calendly.com/assets/external/widget.js";
     script.async = true;
     document.body.appendChild(script);
-    return () => { document.body.removeChild(script); };
+
+    const link = document.createElement("link");
+    link.href = "https://assets.calendly.com/assets/external/widget.css";
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+
+    return () => {
+      document.body.removeChild(script);
+      document.head.removeChild(link);
+    };
   }, []);
+
   return (
-    <div
-      className="calendly-inline-widget"
-      data-url="https://calendly.com/useclickads/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=0d0d0d&text_color=ffffff&primary_color=7c3aed"
-      style={{ minWidth: "320px", height: "700px", width: "100%" }}
-    />
+    <div style={{
+      background: "rgba(255,255,255,0.03)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderRadius: "16px",
+      padding: "32px",
+      textAlign: "center",
+      display: "flex",
+      flexDirection: "column",
+      gap: "16px",
+      alignItems: "center",
+    }}>
+      <div style={{ fontSize: "40px" }}>📅</div>
+      <h3 style={{ color: "#fff", fontSize: "20px", fontWeight: 700, margin: 0, letterSpacing: "-0.5px" }}>
+        Book a 30-Min Call
+      </h3>
+      <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "13px", lineHeight: 1.6, margin: 0 }}>
+        Prefer to talk? Schedule a free strategy call with our team. We'll map out exactly what needs to happen.
+      </p>
+      <button
+        onClick={openCalendly}
+        style={{
+          background: "#7c3aed",
+          color: "#fff",
+          border: "none",
+          borderRadius: "100px",
+          padding: "14px 32px",
+          fontSize: "14px",
+          fontWeight: 700,
+          cursor: "pointer",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "8px",
+          transition: "opacity 0.2s ease",
+          width: "fit-content",
+        }}
+        onMouseOver={e => (e.currentTarget.style.opacity = "0.85")}
+        onMouseOut={e => (e.currentTarget.style.opacity = "1")}
+      >
+        Schedule a Call →
+      </button>
+      <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "11px", margin: 0 }}>
+        Free • 30 minutes • No obligation
+      </p>
+    </div>
   );
 }
 
