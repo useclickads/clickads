@@ -5,6 +5,7 @@ import ResourcesDocumentation from "@/components/resources/ResourcesDocumentatio
 import ResourcesFaqs from "@/components/resources/ResourcesFaqs";
 import ResourcesHelpCenter from "@/components/resources/ResourcesHelpCenter";
 import type { Metadata } from "next";
+import { faqSchema } from "./structured-data";
 
 export const metadata: Metadata = {
   title: "Resources | ClickAds",
@@ -23,6 +24,10 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <main id="main-content">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Navbar />
       <ResourcesHero />
       <ResourcesDocumentation />
