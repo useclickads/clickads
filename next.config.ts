@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
   turbopack: {},
 
   experimental: {
-    optimizeCss: true,
+    // optimizeCss: true, // disabled: causes CSS MIME type issues on Vercel
     optimizePackageImports: [
       'lucide-react',
       '@heroicons/react',
@@ -53,7 +53,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://client.crisp.chat",
               "img-src 'self' data: https:",
               // FIXED: added fonts.gstatic.com for font files
-              "font-src 'self' data: https://fonts.gstatic.com",
+              "font-src 'self' data: https:",
               "connect-src 'self' https: wss:",
               "worker-src 'self' blob:",
               "frame-src 'self' https://calendly.com",
