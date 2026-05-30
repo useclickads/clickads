@@ -9,47 +9,47 @@ const Navbar = dynamic(() => import("@/components/layout/Navbar"), {
 
 const IntroAnimation = dynamic(
   () => import("@/components/intro/IntroAnimation"),
-  { loading: () => null }
+  { loading: () => null, ssr: false }
 );
 
 const Services = dynamic(
   () => import("@/components/home/Services"),
-  { loading: () => <SectionSkeleton height={500} /> }
+  { loading: () => <SectionSkeleton height={500} />, ssr: false }
 );
 
 const OurProcess = dynamic(
   () => import("@/components/home/OurProcess"),
-  { loading: () => <SectionSkeleton height={400} /> }
+  { loading: () => <SectionSkeleton height={400} />, ssr: false }
 );
 
 const OurProducts = dynamic(
   () => import("@/components/home/OurProducts"),
-  { loading: () => <SectionSkeleton height={500} /> }
+  { loading: () => <SectionSkeleton height={500} />, ssr: false }
 );
 
 const CampaignDemo = dynamic(
   () => import("@/components/home/CampaignDemo"),
-  { loading: () => <SectionSkeleton height={400} /> }
+  { loading: () => <SectionSkeleton height={400} />, ssr: false }
 );
 
 const Pricing = dynamic(
   () => import("@/components/home/Pricing"),
-  { loading: () => <SectionSkeleton height={500} /> }
+  { loading: () => <SectionSkeleton height={500} />, ssr: false }
 );
 
 const TrustMarquee = dynamic(
   () => import("@/components/home/TrustMarquee"),
-  { loading: () => <SectionSkeleton height={100} /> }
+  { loading: () => <SectionSkeleton height={100} />, ssr: false }
 );
 
 const BlogPreview = dynamic(
   () => import("@/components/home/BlogPreview"),
-  { loading: () => <SectionSkeleton height={400} /> }
+  { loading: () => <SectionSkeleton height={400} />, ssr: false }
 );
 
 const CTABanner = dynamic(
   () => import("@/components/home/CTABanner"),
-  { loading: () => <SectionSkeleton height={200} /> }
+  { loading: () => <SectionSkeleton height={200} />, ssr: false }
 );
 
 const Footer = dynamic(

@@ -99,15 +99,17 @@ export default function BlogPreview() {
   const handleScroll = () => {
     if (!scrollRef.current) return;
     const el = scrollRef.current;
-    const index = Math.round(el.scrollLeft / (el.offsetWidth * 0.82 + 12));
+    const cardWidth = el.offsetWidth * 0.82 + 12;
+    const index = Math.round(el.scrollLeft / cardWidth);
     setActiveIndex(Math.min(index, posts.length - 1));
   };
 
   const scrollTo = (i: number) => {
     if (!scrollRef.current) return;
-    const cardWidth = scrollRef.current.offsetWidth * 0.82 + 12;
-    scrollRef.current.scrollTo({ left: i * cardWidth, behavior: "smooth" });
+    const el = scrollRef.current;
+    const cardWidth = el.offsetWidth * 0.82 + 12;
     setActiveIndex(i);
+    el.scrollTo({ left: i * cardWidth, behavior: "smooth" });
   };
 
   return (

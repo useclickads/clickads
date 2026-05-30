@@ -30,7 +30,7 @@ function LidflowMockup() {
         <span style={{ fontSize:"12px", fontWeight:700, color:"#4f8cff", letterSpacing:"0.12em" }}>LIDFLOW</span>
         <div style={{ display:"flex", gap:"6px" }}>
           {["Pipeline","Bookings","Clients"].map((t) => (
-            <span key={t} style={{ fontSize:"9px", padding:"2px 8px", borderRadius:"4px", background: t==="Pipeline"?"rgba(79,140,255,0.25)":"rgba(255,255,255,0.06)", color: t==="Pipeline"?"#7ab0ff":"rgba(255,255,255,0.3)" }}>{t}</span>
+            <span key={t} style={{ fontSize:"9px", padding:"2px 8px", borderRadius:"4px", background: t==="Pipeline"?"rgba(79,140,255,0.25)":"rgba(255,255,255,0.06)", color: t==="Pipeline"?"#7ab0ff":"rgba(255,255,255,0.7)" }}>{t}</span>
           ))}
         </div>
       </div>
@@ -38,7 +38,7 @@ function LidflowMockup() {
         {[{label:"New Leads",val:"48",color:"#6aaaff"},{label:"Bookings",val:"21",color:"#b89eff"},{label:"Revenue",val:"₹2.4L",color:"#4eeaaa"}].map((s) => (
           <div key={s.label} style={{ background:"rgba(255,255,255,0.06)", borderRadius:"8px", padding:"10px", border:"1px solid rgba(255,255,255,0.08)" }}>
             <div style={{ fontSize:"18px", fontWeight:700, color:s.color }}>{s.val}</div>
-            <div style={{ fontSize:"8px", color:"rgba(255,255,255,0.4)", marginTop:"2px" }}>{s.label}</div>
+            <div style={{ fontSize:"8px", color:"rgba(255,255,255,0.7)", marginTop:"2px" }}>{s.label}</div>
           </div>
         ))}
       </div>
@@ -66,7 +66,7 @@ function GrwFitMockup() {
         <span style={{ fontSize:"12px", fontWeight:700, color:"#22d68a", letterSpacing:"0.12em" }}>GRWFIT</span>
         <div style={{ display:"flex", gap:"6px" }}>
           {["Members","Payments","Trainers"].map((t) => (
-            <span key={t} style={{ fontSize:"9px", padding:"2px 8px", borderRadius:"4px", background: t==="Members"?"rgba(34,214,138,0.2)":"rgba(255,255,255,0.06)", color: t==="Members"?"#4eeaaa":"rgba(255,255,255,0.3)" }}>{t}</span>
+            <span key={t} style={{ fontSize:"9px", padding:"2px 8px", borderRadius:"4px", background: t==="Members"?"rgba(34,214,138,0.2)":"rgba(255,255,255,0.06)", color: t==="Members"?"#4eeaaa":"rgba(255,255,255,0.7)" }}>{t}</span>
           ))}
         </div>
       </div>
@@ -74,7 +74,7 @@ function GrwFitMockup() {
         {[{label:"Active Members",val:"312",color:"#4eeaaa"},{label:"Due Renewals",val:"27",color:"#fbbf5a"},{label:"Revenue",val:"₹1.8L",color:"#b89eff"}].map((s) => (
           <div key={s.label} style={{ background:"rgba(255,255,255,0.06)", borderRadius:"8px", padding:"10px", border:"1px solid rgba(255,255,255,0.08)" }}>
             <div style={{ fontSize:"18px", fontWeight:700, color:s.color }}>{s.val}</div>
-            <div style={{ fontSize:"8px", color:"rgba(255,255,255,0.4)", marginTop:"2px" }}>{s.label}</div>
+            <div style={{ fontSize:"8px", color:"rgba(255,255,255,0.7)", marginTop:"2px" }}>{s.label}</div>
           </div>
         ))}
       </div>
@@ -83,7 +83,7 @@ function GrwFitMockup() {
         {[{day:"M",h:72},{day:"T",h:85},{day:"W",h:60},{day:"T",h:90},{day:"F",h:78},{day:"S",h:100},{day:"S",h:45}].map((b,i) => (
           <div key={i} style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", gap:"3px" }}>
             <div style={{ width:"100%", height:`${b.h}%`, borderRadius:"3px 3px 0 0", background: b.h===100?"#22d68a":"rgba(34,214,138,0.28)" }} />
-            <span style={{ fontSize:"7px", color:"rgba(255,255,255,0.3)" }}>{b.day}</span>
+            <span style={{ fontSize:"7px", color:"rgba(255,255,255,0.7)" }}>{b.day}</span>
           </div>
         ))}
       </div>
@@ -94,7 +94,7 @@ function GrwFitMockup() {
             <div style={{ width:"24px", height:"24px", borderRadius:"50%", background:"rgba(34,214,138,0.15)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:"10px", color:"#4eeaaa", fontWeight:700 }}>{m.name[0]}</div>
             <div>
               <div style={{ fontSize:"11px", color:"rgba(255,255,255,0.85)", fontWeight:600 }}>{m.name}</div>
-              <div style={{ fontSize:"9px", color:"rgba(255,255,255,0.38)" }}>{m.days}</div>
+              <div style={{ fontSize:"9px", color:"rgba(255,255,255,0.7)" }}>{m.days}</div>
             </div>
           </div>
           <span style={{ fontSize:"9px", padding:"2px 8px", borderRadius:"4px", background:m.rc+"22", color:m.rc, fontWeight:700 }}>{m.risk}</span>

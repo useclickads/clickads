@@ -100,6 +100,21 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
+        {/* Preload CSS with async loading to prevent render-blocking */}
+        <link
+          rel="preload"
+          as="style"
+          href="/_next/static/css/app.css"
+          onLoad={(e: any) => {
+            e.rel = 'stylesheet';
+          }}
+          onError={(e: any) => {
+            e.rel = 'stylesheet';
+          }}
+        />
+        <noscript>
+          <link rel="stylesheet" href="/_next/static/css/app.css" />
+        </noscript>
       </head>
       <body
         className={inter.className}

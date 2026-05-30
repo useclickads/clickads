@@ -41,19 +41,19 @@ function ResultCard({ result }: { result: typeof results[0] }) {
         <div style={{ fontSize: "12px", fontWeight: 600, color: "#fff", marginBottom: "4px" }}>{result.label}</div>
         <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
           {result.tags.map((t) => (
-            <span key={t} style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "4px", background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.4)", border: "1px solid #2a2a2a" }}>{t}</span>
+            <span key={t} style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "4px", background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.7)", border: "1px solid #2a2a2a" }}>{t}</span>
           ))}
         </div>
       </div>
       <MiniBar bars={result.bars} color={result.platformColor} />
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
         <div>
-          <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)", marginBottom: "2px" }}>{result.metric}</div>
+          <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.7)", marginBottom: "2px" }}>{result.metric}</div>
           <div style={{ fontSize: "18px", fontWeight: 700, color: "#fff", letterSpacing: "-0.5px" }}>{result.value}</div>
-          <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)" }}>{result.impressions} impressions</div>
+          <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.65)" }}>{result.impressions} impressions</div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", background: "#0a0a0a", border: "1.5px solid #2a2a2a", borderRadius: "8px", padding: "6px 10px" }}>
-          <span style={{ fontSize: "8px", color: "rgba(255,255,255,0.35)", letterSpacing: "0.05em" }}>SCORE</span>
+          <span style={{ fontSize: "8px", color: "rgba(255,255,255,0.7)", letterSpacing: "0.05em" }}>SCORE</span>
           <span style={{ fontSize: "18px", fontWeight: 900, color: "#c8f135", letterSpacing: "-0.5px", lineHeight: 1 }}>{result.score}</span>
         </div>
       </div>
@@ -85,7 +85,7 @@ export default function CampaignDemo() {
       <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "48px 48px", pointerEvents: "none" }} />
 
       <div style={{ textAlign: "center", marginBottom: isMobile ? "32px" : "60px", padding: "0 24px", position: "relative" }}>
-        <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "11px", letterSpacing: "4px", textTransform: "uppercase", marginBottom: "12px", fontWeight: 700 }}>SEE IT IN ACTION</p>
+        <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "11px", letterSpacing: "4px", textTransform: "uppercase", marginBottom: "12px", fontWeight: 700 }}>SEE IT IN ACTION</p>
         <h2 style={{ color: "#ffffff", fontSize: isMobile ? "clamp(24px, 7vw, 34px)" : "clamp(32px, 4vw, 42px)", fontWeight: 900, letterSpacing: "-1.5px", lineHeight: 1.05, margin: "0 auto" }}>
           Your goal in. Results out.
         </h2>
@@ -97,11 +97,11 @@ export default function CampaignDemo() {
             <div style={{ display: "flex", gap: "6px" }}>
               {["#ff5f57", "#febc2e", "#28c840"].map((c) => <div key={c} style={{ width: "10px", height: "10px", borderRadius: "50%", background: c }} />)}
             </div>
-            <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Campaign Brief</span>
+            <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.65)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Campaign Brief</span>
             <span style={{ fontSize: "10px", padding: "3px 8px", borderRadius: "6px", background: "rgba(200,241,53,0.1)", color: "#c8f135", border: "1px solid rgba(200,241,53,0.2)" }}>AI Ready</span>
           </div>
           <div style={{ background: "#0a0a0a", borderRadius: "12px", padding: "14px 16px", border: "1.5px solid #1e1e1e", marginBottom: "12px", overflowX: "auto" }}>
-            <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.3)", marginBottom: "8px", letterSpacing: "0.08em" }}>GOAL</div>
+            <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.65)", marginBottom: "8px", letterSpacing: "0.08em" }}>GOAL</div>
             <div style={{ fontFamily: "monospace", fontSize: isMobile ? "11px" : "13px", lineHeight: 1.7, whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
               <span style={{ color: "#666" }}>// campaign goal</span>{"\n"}
               <span style={{ color: "#c8f135" }}>const</span>
@@ -114,7 +114,7 @@ export default function CampaignDemo() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
             {[{ label: "Budget", val: "$1,200" }, { label: "Duration", val: "30 days" }, { label: "Platforms", val: "All 5" }].map((m) => (
               <div key={m.label} style={{ background: "#0a0a0a", border: "1.5px solid #1e1e1e", borderRadius: "8px", padding: isMobile ? "8px 10px" : "10px 12px" }}>
-                <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)", marginBottom: "4px" }}>{m.label}</div>
+                <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.65)", marginBottom: "4px" }}>{m.label}</div>
                 <div style={{ fontSize: isMobile ? "12px" : "14px", fontWeight: 700, color: "#fff" }}>{m.val}</div>
               </div>
             ))}
@@ -162,7 +162,7 @@ export default function CampaignDemo() {
             {p.icon}
           </div>
         ))}
-        <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", marginLeft: "4px" }}>& more platforms</span>
+        <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.65)", marginLeft: "4px" }}>& more platforms</span>
       </div>
 
       <style>{".demo-scroll::-webkit-scrollbar { display: none; }"}</style>

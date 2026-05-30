@@ -88,7 +88,9 @@ export default function Pricing() {
     if (isMobile && scrollRef.current) {
       const el = scrollRef.current;
       const cardWidth = el.offsetWidth * 0.82;
-      el.scrollTo({ left: 1 * (cardWidth + 16), behavior:"instant" });
+      requestAnimationFrame(() => {
+        el.scrollTo({ left: 1 * (cardWidth + 16), behavior:"instant" });
+      });
     }
   }, [isMobile]);
 
@@ -104,8 +106,10 @@ export default function Pricing() {
     if (!scrollRef.current) return;
     const el = scrollRef.current;
     const cardWidth = el.offsetWidth * 0.82;
-    el.scrollTo({ left: i * (cardWidth + 16), behavior:"smooth" });
     setActiveIndex(i);
+    requestAnimationFrame(() => {
+      el.scrollTo({ left: i * (cardWidth + 16), behavior:"smooth" });
+    });
   };
 
   if (!mounted) return null;
