@@ -1,30 +1,25 @@
 "use client";
-
 import { useEffect, useState } from "react";
-
 export default function ExitIntent() {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-
   useEffect(() => {
+    const isContactPage = window.location.pathname === "/contact";
+    if (isContactPage) return;
     const dismissed = sessionStorage.getItem("exit_intent_dismissed") || localStorage.getItem("exit_intent_dismissed_perm");
     if (dismissed) return;
-
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0) setShow(true);
     };
-
     document.addEventListener("mouseleave", handleMouseLeave);
     return () => document.removeEventListener("mouseleave", handleMouseLeave);
   }, []);
-
   const dismiss = () => {
     sessionStorage.setItem("exit_intent_dismissed", "true");
     localStorage.setItem("exit_intent_dismissed_perm", "true");
     setShow(false);
   };
-
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
@@ -32,9 +27,7 @@ export default function ExitIntent() {
     localStorage.setItem("exit_intent_dismissed_perm", "true");
     setTimeout(() => setShow(false), 2000);
   };
-
   if (!show) return null;
-
   return (
     <div style={{
       position: "fixed", inset: 0, zIndex: 99999,
@@ -50,7 +43,6 @@ export default function ExitIntent() {
           position: "absolute", top: 16, right: 16, background: "none",
           border: "none", color: "rgba(255,255,255,0.4)", fontSize: 20, cursor: "pointer"
         }}>✕</button>
-
         <div style={{ fontSize: 40, marginBottom: 16 }}>⚡</div>
         <h2 style={{ color: "#fff", fontSize: 24, fontWeight: 700, marginBottom: 8 }}>
           Wait! Before you go...
@@ -58,7 +50,6 @@ export default function ExitIntent() {
         <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 14, marginBottom: 24 }}>
           Get a free AI marketing audit for your business. No strings attached.
         </p>
-
         {submitted ? (
           <p style={{ color: "#7c3aed", fontWeight: 600 }}>✓ We'll be in touch soon!</p>
         ) : (
