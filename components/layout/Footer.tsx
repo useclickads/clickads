@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import { useState } from "react";
 
 function ClickAdsLogo({ size = 22 }: { size?: number }) {
@@ -153,7 +154,9 @@ function AccordionColumn({ title, items }: { title: string; items: { label: stri
 
 export default function Footer() {
   return (
-    <footer className="footer" aria-label="Site footer">
+    <>
+      <NewsletterSignup />
+      <footer className="footer" aria-label="Site footer">
       <div className="footer-divider" />
       <div className="footer-desktop">
         <BrandBlock />
@@ -182,5 +185,6 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+    </> 
   );
 }

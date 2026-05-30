@@ -7,7 +7,6 @@ import { Analytics } from "@vercel/analytics/react";
 import Contentsquare from "@/components/Contentsquare";
 import CrispChat from "@/components/CrispChat";
 import ExitIntent from "@/components/ExitIntent";
-import NewsletterSignup from "@/components/NewsletterSignup";
 import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({
@@ -128,7 +127,6 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         {children}
-        <NewsletterSignup />
         <CookieConsent />
         <Analytics />
         <Contentsquare />
