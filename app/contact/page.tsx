@@ -84,8 +84,8 @@ export default function ContactPage() {
       <main id="main-content">
         <Navbar />
         <ContactHero />
-        <Suspense fallback={null}><ContactForm /></Suspense>
         <CalendlyWidget />
+        <Suspense fallback={null}><ContactForm /></Suspense>
         <ContactProcess />
         <Footer />
       </main>
