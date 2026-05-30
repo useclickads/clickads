@@ -6,6 +6,7 @@ import CookieConsent from "@/components/CookieConsent";
 import { Analytics } from "@vercel/analytics/react";
 import Contentsquare from "@/components/Contentsquare";
 import CrispChat from "@/components/CrispChat";
+import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -129,6 +130,7 @@ export default function RootLayout({
         <Analytics />
         <Contentsquare />
         <CrispChat />
+        <NextTopLoader color="#7c3aed" showSpinner={false} />
       </body>
     </html>
   );
