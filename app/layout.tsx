@@ -4,6 +4,7 @@ import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CookieConsent from "@/components/CookieConsent";
 import { Analytics } from "@vercel/analytics/react";
+import Contentsquare from "@/components/Contentsquare";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -125,6 +126,7 @@ export default function RootLayout({
         {children}
         <CookieConsent />
         <Analytics />
+        <Contentsquare />
       </body>
     </html>
   );
