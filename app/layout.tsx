@@ -5,6 +5,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import CookieConsent from "@/components/CookieConsent";
 import { Analytics } from "@vercel/analytics/react";
 import Contentsquare from "@/components/Contentsquare";
+import CrispChat from "@/components/CrispChat";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -127,6 +128,7 @@ export default function RootLayout({
         <CookieConsent />
         <Analytics />
         <Contentsquare />
+        <CrispChat />
       </body>
     </html>
   );
