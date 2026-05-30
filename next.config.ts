@@ -48,7 +48,7 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://client.crisp.chat https://static.hotjar.com https://www.googletagmanager.com https://t.contentsquare.net https://browser.sentry-cdn.com https://*.sentry.io",
               // FIXED: added fonts.googleapis.com and fonts.gstatic.com
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: https:",
