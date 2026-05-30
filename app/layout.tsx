@@ -18,6 +18,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.useclickads.com"),
   title: {
     default: "clickAds — AI Marketing Agency & SaaS Studio",
     template: "%s | clickAds",
