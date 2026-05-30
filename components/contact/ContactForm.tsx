@@ -3,6 +3,23 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import "@/styles/contact/Contact.css";
 
+function CalendlyEmbed() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => { document.body.removeChild(script); };
+  }, []);
+  return (
+    <div
+      className="calendly-inline-widget"
+      data-url="https://calendly.com/useclickads/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=0d0d0d&text_color=ffffff&primary_color=7c3aed"
+      style={{ minWidth: "320px", height: "700px", width: "100%" }}
+    />
+  );
+}
+
 const SERVICES = [
   "AI Marketing","SaaS Development","Web Development","AI Automation",
   "Lead Generation","Performance Ads","Analytics","Brand Design","Multiple Services",
@@ -71,12 +88,13 @@ export default function ContactForm() {
 
   return (
     <section className="ct-form-section">
-      <div
-        ref={ref}
-        className={`ct-form-wrap ct-fade${visible ? " ct-fade--visible" : ""}`}
-      >
+      {/* Top: Form + Calendly */}
+      <div style={{ maxWidth: "1200px", margin: "0 auto 60px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px", alignItems: "start" }}>
         {/* Left — Form */}
-        <div className="ct-form-left">
+        <div
+          ref={ref}
+          className={`ct-form-left ct-fade${visible ? " ct-fade--visible" : ""}`}
+        >
           <div>
             <h2 className="ct-form-title">Start Your Project</h2>
             <p className="ct-form-sub">Fill in the details below and we'll get back to you within 24 hours.</p>
@@ -142,8 +160,16 @@ export default function ContactForm() {
           )}
         </div>
 
-        {/* Right — Info */}
-        <div className="ct-info">
+        {/* Right — Calendly */}
+        <div style={{ position: "sticky", top: "100px" }}>
+          <p className="ct-label" style={{ marginBottom: "16px" }}>Book a Call</p>
+          <CalendlyEmbed />
+        </div>
+      </div>
+
+      {/* Bottom: Contact Info */}
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <div className="ct-info" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }}>
           <div className="ct-card">
             <p className="ct-label">Contact Details</p>
             <div style={{ display:"flex", flexDirection:"column", gap:16 }}>

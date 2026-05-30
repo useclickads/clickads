@@ -6,7 +6,6 @@ import ContactProcess from "@/components/contact/ContactProcess";
 import JsonLd from "@/components/common/JsonLd";
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import CalendlyWidget from "@/components/CalendlyWidget";
 
 export const metadata: Metadata = {
   title: "Contact | ClickAds",
@@ -84,7 +83,6 @@ export default function ContactPage() {
       <main id="main-content">
         <Navbar />
         <ContactHero />
-        <CalendlyWidget />
         <Suspense fallback={null}><ContactForm /></Suspense>
         <ContactProcess />
         <Footer />
