@@ -8,7 +8,7 @@ export default function ExitIntent() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    const dismissed = sessionStorage.getItem("exit_intent_dismissed");
+    const dismissed = sessionStorage.getItem("exit_intent_dismissed") || localStorage.getItem("exit_intent_dismissed_perm");
     if (dismissed) return;
 
     const handleMouseLeave = (e: MouseEvent) => {
@@ -21,6 +21,7 @@ export default function ExitIntent() {
 
   const dismiss = () => {
     sessionStorage.setItem("exit_intent_dismissed", "true");
+    localStorage.setItem("exit_intent_dismissed_perm", "true");
     setShow(false);
   };
 
@@ -28,6 +29,7 @@ export default function ExitIntent() {
     e.preventDefault();
     setSubmitted(true);
     sessionStorage.setItem("exit_intent_dismissed", "true");
+    localStorage.setItem("exit_intent_dismissed_perm", "true");
     setTimeout(() => setShow(false), 2000);
   };
 
