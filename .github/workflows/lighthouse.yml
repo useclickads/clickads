@@ -1,0 +1,24 @@
+name: Lighthouse CI
+on:
+  push:
+    branches: [main]
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://www.useclickads.com
+      - uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            https://www.useclickads.com
+            https://www.useclickads.com/services
+            https://www.useclickads.com/contact
+          uploadArtifacts: true
+          temporaryPublicStorage: true
